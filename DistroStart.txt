@@ -1,0 +1,3 @@
+:~# mkdir -pv lifo
+:~# mount --bind /mnt/d/Knut/Tools/LiFo ./lifo
+:~# lifo/bin/lfdistroprepare

@@ -1,0 +1,45 @@
+#!/bin/bash
+
+source $(dirname $0)/tools/functions.sh
+
+# lfs
+#     +-- bootstrap
+#         +-- build             tmpfs 
+#             +-- work          overlay workdir
+#             +-- root          overlay upperdir
+#                 +-- sources   bound to ~/lfs/sources
+#                 +-- tools     installation target
+#         +-- consolidated      overlay lowerdir 2
+#             +-- tools         consolidated from previous builds
+#             +-- <artefacts>   other stuff from builds
+#         +-- host              overlay lowerdir 1 / shadow of host root
+#         +-- root              overlay merge / chroot root
+#     +-- iterim
+#     +-- final
+#     +-- sources
+
+LfsTop=~/lfs
+
+Boot=${LfsTop}/bootstrap
+
+mkdir --verbose --parents ${Boot}/{build,consolidated/tools,host,root}
+
+mount --verbose --types tmpfs tmpfs ${Boot}/build
+
+mkdir --verbose --parents ${Boot}/build/{work,root/{sources,tools}}
+
+for dir in bin boot etc home lib lib64 media opt root sbin srv tmp usr var; do
+    mkdir --verbose --parent ${Boot}/host/${dir}
+    mount --verbose --bind /${dir} ${Boot}/host/${dir}
+done
+for dir in dev mnt proc run sys; do
+    mkdir --verbose --parent ${Boot}/host/${dir}
+    mount --verbose --rbind /${dir} ${Boot}/host/${dir}
+done
+
+mount --verbose --types overlay overlay \
+    --options lowerdir=${Boot}/consolidated:${Boot}/host,upperdir=${Boot}/build/root,workdir=${Boot}/build/work ${Boot}/root
+
+#unmount-all root/lfs
+
+
