@@ -1,8 +1,14 @@
-scriptlocation=$(dirname $0)
-etclocation=${scriptlocation}/../etc
+if [ "${LifoTop}" == "" ]; then
 
-source ${scriptlocation}/tools/functions.sh
+    scriptlocation=$(dirname $0)
+    etclocation=${scriptlocation}/../etc
 
-LifoTop=~/lifo
-LfsTop=~/lfs
+    source ${scriptlocation}/tools/functions.sh
+
+    LifoTop=/root/lifo
+    LfsTop=/root/lfs
+
+    mkdir ${verbose} --parents ${LfsTop}/{bootstrap,iterim,final,tools,sources}
+
+fi
 

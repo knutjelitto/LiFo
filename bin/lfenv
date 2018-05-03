@@ -5,57 +5,71 @@ verbose=''
 
 source $(dirname $0)/tools/init.sh
 
+# ~/lifo
+#     +-- bin
+#     +-- etc
+#     +-- lib
+#         +-- bootstrap
+#         +-- interim
+#         +-- package
+#
+
 # ~/lfs
 #     +-- bootstrap
-#         +-- build             tmpfs 
-#             +-- tmp           overlay workdir
-#             +-- root          overlay upperdir
-#                 +-- sources   bound to ~/lfs/sources
-#                 +-- tools     installation target
+#         +-- build             overlay upperdir
 #         +-- consolidated      overlay lowerdir 2
-#             +-- tools         consolidated from previous builds
+#             +-- tools         bound to ~/lfs/tools
+#             +-- sources       bound to ~/lfs/sources
 #             +-- <artefacts>   other stuff from builds
 #         +-- host              overlay lowerdir 1 / shadow of host root
 #         +-- root              overlay merge / chroot root
+#         +-- work              overlay workdir
 #     +-- iterim
 #     +-- final
+#     +-- tools
 #     +-- sources
 
 Boot=${LfsTop}/bootstrap
 
-export LFS=${Boot}/root
+export LFS=/root/lfs
 
-mkdir ${verbose} --parents ${Boot}/{build,consolidated/{bin,tools},host,root}
+mkdir ${verbose} --parents ${Boot}/{build,consolidated,host,root,work}
 
-#mount ${verbose} --types tmpfs tmpfs ${Boot}/build
+mkdir ${verbose} --parents ${Boot}/consolidated/{bin,tools,sources}
 
-mkdir ${verbose} --parents ${Boot}/build/{tmp,root/{sources,tools}}
+mkdir ${verbose} --parents ${LfsTop}/tools/lib
+ln ${verbose} -sf lib ${LfsTop}/tools/lib64
 
-mount ${verbose} --bind ${LifoTop}/tools ${Boot}/consolidated/tools
+mount ${verbose} --bind ${LfsTop}/tools ${Boot}/consolidated/tools
+mount ${verbose} --bind ${LfsTop}/sources ${Boot}/consolidated/sources
 
 for dir in bin boot etc home lib lib64 media opt root sbin srv tmp usr var; do
     mkdir ${verbose} --parent ${Boot}/host/${dir}
     mount ${verbose} --bind /${dir} ${Boot}/host/${dir}
 done
-for dir in dev mnt run sys; do
+for dir in dev mnt run; do
     mkdir ${verbose} --parent ${Boot}/host/${dir}
     mount ${verbose} --rbind /${dir} ${Boot}/host/${dir}
 done
 
-mkdir ${verbose} --parent ${Boot}/host/proc
-mount ${verbose} --types proc proc ${Boot}/host/proc
+ln ${verbose} -sf bash ${Boot}/consolidated/bin/sh
 
 mount ${verbose} --types overlay overlay \
-    --options lowerdir=${Boot}/consolidated:${Boot}/host,upperdir=${Boot}/build/root,workdir=${Boot}/build/tmp ${Boot}/root
+    --options lowerdir=${Boot}/consolidated:${Boot}/host,upperdir=${Boot}/build,workdir=${Boot}/work ${Boot}/root
 
-chroot "$LFS" /tools/bin/env -i                     \
+mkdir ${verbose} --parent ${Boot}/root/proc
+mount ${verbose} --types proc proc ${Boot}/root/proc
+
+mkdir ${verbose} --parent ${Boot}/root/sys
+mount ${verbose} --types sysfs sysfs ${Boot}/root/sys
+
+chroot "${Boot}/root" /usr/bin/env -i               \
     HOME=${HOME}                                    \
-    TERM="$TERM"                                    \
-    PS1='(boot chroot) \u:\w\$ '                    \
-    PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin   \
-    /tools/bin/bash +h
+    TERM="${TERM}"                                  \
+    PSX='(boot chroot) \u:\w\$ '                    \
+    PATH=/tools/bin:/bin:/usr/bin:/sbin:/usr/sbin   \
+    /bin/bash -i +h
+
 echo "EXIT chroot"
 
 unmount-all root/lfs
-
-

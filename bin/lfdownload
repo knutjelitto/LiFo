@@ -1,0 +1,24 @@
+#!/bin/bash
+
+source $(dirname $0)/tools/init.sh
+
+if [ ! -f ${etclocation}/wget-list ]; then
+    pushd ${etclocation}
+    wget http://www.linuxfromscratch.org/lfs/view/stable/wget-list
+    popd
+fi
+
+if [ ! -f ${etclocation}/md5sums ]; then
+    pushd ${etclocation}
+    wget http://www.linuxfromscratch.org/lfs/view/stable/md5sums
+    popd
+fi
+
+wget --input-file=${etclocation}/wget-list --continue --directory-prefix=${LfsTop}/sources
+
+pushd ${LfsTop}/sources
+md5sum -c ${etclocation}/md5sums
+popd
+
+
+
