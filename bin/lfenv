@@ -1,11 +1,14 @@
 #!/bin/bash
 
-source $(dirname $0)/tools/functions.sh
+verbose='--verbose'
+verbose=''
+
+source $(dirname $0)/tools/init.sh
 
 # lfs
 #     +-- bootstrap
 #         +-- build             tmpfs 
-#             +-- work          overlay workdir
+#             +-- tmp           overlay workdir
 #             +-- root          overlay upperdir
 #                 +-- sources   bound to ~/lfs/sources
 #                 +-- tools     installation target
@@ -18,28 +21,41 @@ source $(dirname $0)/tools/functions.sh
 #     +-- final
 #     +-- sources
 
-LfsTop=~/lfs
-
 Boot=${LfsTop}/bootstrap
 
-mkdir --verbose --parents ${Boot}/{build,consolidated/tools,host,root}
+export LFS=${Boot}/root
 
-mount --verbose --types tmpfs tmpfs ${Boot}/build
+mkdir ${verbose} --parents ${Boot}/{build,consolidated/{bin,tools},host,root}
 
-mkdir --verbose --parents ${Boot}/build/{work,root/{sources,tools}}
+#mount ${verbose} --types tmpfs tmpfs ${Boot}/build
+
+mkdir ${verbose} --parents ${Boot}/build/{tmp,root/{sources,tools}}
+
+mount ${verbose} --bind ${LifoTop}/tools ${Boot}/consolidated/tools
 
 for dir in bin boot etc home lib lib64 media opt root sbin srv tmp usr var; do
-    mkdir --verbose --parent ${Boot}/host/${dir}
-    mount --verbose --bind /${dir} ${Boot}/host/${dir}
+    mkdir ${verbose} --parent ${Boot}/host/${dir}
+    mount ${verbose} --bind /${dir} ${Boot}/host/${dir}
 done
-for dir in dev mnt proc run sys; do
-    mkdir --verbose --parent ${Boot}/host/${dir}
-    mount --verbose --rbind /${dir} ${Boot}/host/${dir}
+for dir in dev mnt run sys; do
+    mkdir ${verbose} --parent ${Boot}/host/${dir}
+    mount ${verbose} --rbind /${dir} ${Boot}/host/${dir}
 done
 
-mount --verbose --types overlay overlay \
-    --options lowerdir=${Boot}/consolidated:${Boot}/host,upperdir=${Boot}/build/root,workdir=${Boot}/build/work ${Boot}/root
+mkdir ${verbose} --parent ${Boot}/host/proc
+mount ${verbose} --types proc proc ${Boot}/host/proc
 
-#unmount-all root/lfs
+mount ${verbose} --types overlay overlay \
+    --options lowerdir=${Boot}/consolidated:${Boot}/host,upperdir=${Boot}/build/root,workdir=${Boot}/build/tmp ${Boot}/root
+
+chroot "$LFS" /tools/bin/env -i                     \
+    HOME=${HOME}                                    \
+    TERM="$TERM"                                    \
+    PS1='(boot chroot) \u:\w\$ '                    \
+    PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin   \
+    /tools/bin/bash +h
+echo "EXIT chroot"
+
+unmount-all root/lfs
 
 

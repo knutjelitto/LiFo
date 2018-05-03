@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# Install missing Linux From Scratch Host System Requirements for WSL-Debian
+#
+
+LFS=/tmp/lfs
+
+if [ ! $(whoami) == "root" ]; then
+    echo "Please run as root!"
+    exit 1
+fi
+
+######
+# create lfs folder
+[ -d $LFS ] || mkdir $LFS
+[ -d $LFS/tools ] || mkdir $LFS/tools
+[ -d $LFS/sources ] || mkdir $LFS/sources
+
+######
+# symlink sh to bash
+
+echo $(readlink -f /bin/sh) | grep -q '/bin/bash' || ln -sv /bin/bash /bin/sh
+
+######
+# install missing packages
+
+dpkg --status build-essential   &>/dev/null || apt-get -q install build-essential   &>/dev/null
+dpkg --status bison             &>/dev/null || apt-get -q install bison             &>/dev/null
+dpkg --status gawk              &>/dev/null || apt-get -q install build-essential   &>/dev/null
+
+######
+# create lfs group & user
+grep -q 'lfs:x:' /etc/group || groupadd lfs
+grep -q 'lfs:x:' /etc/passwd || useradd -s /bin/bash -g lfs -m -k /dev/null lfs
+chown lfs $LFS/tools
+chown lfs $LFS/sources
+
+

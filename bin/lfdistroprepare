@@ -1,9 +1,14 @@
 #!/bin/bash
 
-source $(dirname $0)/tools/init.sh
+#source $(dirname $0)/tools/init.sh
 
 if [ ! "$(whoami)" == "root" ]; then
     echo "run as root!"
+    exit
+fi
+
+if [ ! "$(pwd)" == "/root" ]; then
+    echo "run in root\`s home!"
     exit
 fi
 
@@ -14,3 +19,30 @@ apt --yes install less
 apt --yes install build-essential
 apt --yes install gawk
 apt --yes install bison
+apt --yes install texinfo
+
+######
+# setup .bashrc
+if cat ~/.bashrc | grep --silent "lifo setup"; then
+    exit
+fi
+
+cat >> ~/.bashrc << "EOF"
+
+######
+# lifo setup
+if mountpoint --quiet /root/lifo; then
+    true
+else
+    [ -d /mnt/d/Knut/Tools/LiFo ] && mount --bind /mnt/d/Knut/Tools/LiFo /root/lifo
+    [ -d /mnt/d/Projects/LiFo ] && mount --bind /mnt/d/Projects/LiFo /root/lifo
+fi
+
+eval "$(dircolors --sh)"
+alias ls='ls --color=auto'
+alias l='ls -lA'
+alias ll='l | less'
+
+PATH=/root/lifo/bin:${PATH}
+EOF
+

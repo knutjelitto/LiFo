@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# Build $LFS/tools all bootstrapping tools
+#
+
+if [ ! $(whoami) == "lfs" ]; then
+    echo "Please run as lfs!"
+    exit 1
+fi
+
+lfs-boot 000
+lfs-boot 504
+lfs-boot 505
+lfs-boot 506
+lfs-boot 507
+lfs-boot 508
+lfs-boot 509
+lfs-boot 510
+lfs-boot 511
+lfs-boot 512
+lfs-boot 513
+lfs-boot 514
+lfs-boot 515
+lfs-boot 516
+lfs-boot 517
+lfs-boot 518
+lfs-boot 519
+lfs-boot 520
+lfs-boot 521
+lfs-boot 522
+lfs-boot 523
+lfs-boot 524
+lfs-boot 525
+lfs-boot 526
+lfs-boot 527
+lfs-boot 528
+lfs-boot 529
+lfs-boot 530
+lfs-boot 531
+lfs-boot 532
+lfs-boot 533
+lfs-boot 534
+lfs-boot 535
