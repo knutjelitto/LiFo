@@ -1,0 +1,103 @@
+#!/bin/bash
+
+source $(dirname $0)/lf-config
+
+RenameFunction()
+{
+    local prefix=$1
+    local function=$2
+    if [[ "$(type -t $function)" == "function" ]]; then
+        echo -n "$prefix"
+        declare -f $function
+    else
+        echo "$prefix$function ()"
+        echo "{"
+        echo "    true"
+        echo "}"
+    fi
+}
+
+RenameVariable()
+{
+    local prefix=$1
+    local variable=$2
+    if [[ -n ${!variable} ]]; then
+        echo -n "declare -- $prefix"
+        declare -p $variable | cut --characters=12-
+    else
+        echo "declare -- $prefix$variable=''"
+    fi
+}
+
+Rename()
+{
+    local prefix=$1
+    local temp=$(mktemp)
+
+    RenameVariable $prefix Name         >>$temp
+    RenameVariable $prefix Title        >>$temp
+    RenameVariable $prefix Version      >>$temp
+    RenameVariable $prefix Supplies     >>$temp
+    RenameFunction $prefix Configure    >>$temp
+    RenameFunction $prefix Build        >>$temp
+    RenameFunction $prefix Install      >>$temp
+    RenameFunction $prefix Trim         >>$temp
+
+    cat $temp
+
+    source $temp
+
+    rm $temp
+}
+
+Unset()
+{
+    unset Name
+    unset Title
+    unset Version
+    unset Supplies
+    unset Redirect
+    unset -f Configure
+    unset -f Build
+    unset -f Install
+    unset -f Trim
+}
+
+FindScript()
+{
+    local Argument=$1
+    local Script=$Argument
+
+    [[ -r $Script ]] || Script=$LifoLfsInterim/$Argument
+    [[ -r $Script ]] || Script=$(ls -1 ${Script}* 2>/dev/null | head --lines=1)
+    [[ -r $Script ]] || Script=$LifoBoxes/$Argument/box
+
+    if [[ ! -r $Script ]]; then
+        echo "no build script found for '$Argument'"
+        exit 255
+    fi
+
+    echo $Script
+}
+
+DoRedirect()
+{
+    local From=$1
+    local To=$2
+    if [[ -n $To ]]; then
+        echo "Redirecting $From -> $To"
+        Unset
+        source $(FindScript $To)
+    fi
+}
+
+Unset   # removes all known variables / functions
+
+source $(FindScript $1)
+
+DoRedirect $1 $Redirect
+
+Rename $Name
+
+Unset
+

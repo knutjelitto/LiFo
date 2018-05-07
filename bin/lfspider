@@ -1,9 +1,10 @@
 #!/bin/bash
 
-source $(dirname $0)/tools/init.sh
+source $(dirname $0)/lf-config
 
 mkdir --parent /root/crux
 
 cd /root/crux
 
-wget --execute robots=off --recursive --no-parent --continue --no-clobber https://crux.nu/ports/crux-3.3/core
+wget --execute robots=off --recursive --no-parent --continue --no-clobber \
+     --quiet --show-progress  https://crux.nu/ports/crux-3.3/core

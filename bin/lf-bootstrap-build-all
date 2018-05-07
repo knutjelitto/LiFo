@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source $(dirname $0)/lf-config
+
+for Script in {504..534}; do
+    lf-bootstrap-build $Script
+done

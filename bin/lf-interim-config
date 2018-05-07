@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [[ -z ${lfInterimConfigIncluded} ]]; then
+
+    mkdir --verbose --parents $LfsInterim/{build,addon,base,root,work}
+
+    InterimBase=$LfsInterim/base
+    InterimBuild=$LfsInterim/build
+    InterimAddon=$LfsInterim/addon
+    InterimChangeRoot=$LfsInterim/root
+
+    lfInterimConfigIncluded=true
+
+fi
+

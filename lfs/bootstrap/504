@@ -1,0 +1,25 @@
+#!/bin/bash
+
+name=binutils
+title='5.4. Binutils-2.30 - Pass 1'
+version=2.30
+source=(http://ftp.gnu.org/gnu/binutils/binutils-$version.tar.xz)
+deps=()
+builddir=build
+
+configure() {
+    ../configure --prefix=/tools       \
+            --with-sysroot=$LFS        \
+            --with-lib-path=/tools/lib \
+            --target=$LFS_TGT          \
+            --disable-nls              \
+            --disable-werror
+}
+
+build() {
+    make
+}
+
+install() {
+    make install
+}

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+title="5.27. Make-4.2.1"
+name=make
+version=4.2.1
+source=(http://ftp.gnu.org/gnu/make/make-$version.tar.bz2)
+
+configure() {
+    sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
+
+    ./configure --prefix=/tools --without-guile
+}
+
+build() {
+    make
+}
+
+install() {
+    make install
+}

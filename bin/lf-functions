@@ -1,0 +1,24 @@
+#!/bin/bash
+
+function get-lfs-script {
+    echo ${scriptlocation}/lfs/${1}.sh
+}
+
+function get-pkg-script {
+    echo ${scriptlocation}/pkg/${1}.sh
+}
+
+function unmount-all {
+    local match=$1
+    [[ -n $match ]] || match=/root/lfs
+    while mount | grep -q "${match}"; do
+        mount | grep "${match}" | cut -f3 -d" " | sort | while read mountpoint; do
+            if [[ -z $verbose ]]; then
+                mountpoint --quiet ${mountpoint} &>/dev/null && umount --recursive ${mountpoint} &>/dev/null
+            else
+                mountpoint --quiet ${mountpoint} &>/dev/null && umount --verbose --recursive ${mountpoint}
+            fi
+        done
+    done
+}
+

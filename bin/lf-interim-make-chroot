@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source $(dirname $0)/lf-config
+Include lf-interim-config
+
+unmount-all $LfsInterim
+
+lf-interim-make-fs
+
+lowerdir=lowerdir=$InterimAddon:$InterimBase
+upperdir=upperdir=$InterimBuild
+workdir=workdir=$LfsInterim/work
+
+mount $verbose --types overlay overlay --options $lowerdir,$upperdir,$workdir $InterimChangeRoot
+
+mount $verbose --types proc proc $InterimChangeRoot/proc

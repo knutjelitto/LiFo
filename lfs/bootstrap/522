@@ -1,0 +1,18 @@
+#!/bin/bash
+
+title="5.22. Findutils-4.6.0"
+name=findutils
+version=4.6.0
+source=(http://ftp.gnu.org/gnu/findutils/findutils-$version.tar.gz)
+
+configure() {
+    ./configure --prefix=/tools
+}
+
+build() {
+    make
+}
+
+install() {
+    make install
+}

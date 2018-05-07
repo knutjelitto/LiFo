@@ -1,8 +1,5 @@
 #!/bin/bash
 
-source $(dirname $0)/tools/init.sh
+source $(dirname $0)/lf-config
 
-unmount-all lfs
-
-
-
+unmount-all root/lfs

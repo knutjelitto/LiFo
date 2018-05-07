@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source $(dirname $0)/lf-config
+
+for Script in {504..534}; do
+    Script=$LifoTop/lib/bootstrap/$Script
+    if [[ -r $Script ]]; then
+        lfprovide $Script
+    fi
+done

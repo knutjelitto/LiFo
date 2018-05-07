@@ -13,22 +13,20 @@ source $(dirname $0)/lf-config
 
 # ~/lfs
 #     +-- bootstrap
-#     |   |
-#     |   +-- build             overlay upperdir
-#     |   +-- consolidated      overlay lowerdir 2
-#     |   |   +-- tools         bound to ~/lfs/tools
-#     |   |   +-- sources       bound to ~/lfs/sources
-#     |   |   +-- <artefacts>   other stuff from builds
-#     |   +-- host              overlay lowerdir 1 / shadow of host root
-#     |   +-- root              overlay merge / chroot root
-#     |   +-- work              overlay workdir
-#     |
+#         +-- build             overlay upperdir
+#         +-- consolidated      overlay lowerdir 2
+#             +-- tools         bound to ~/lfs/tools
+#             +-- sources       bound to ~/lfs/sources
+#             +-- <artefacts>   other stuff from builds
+#         +-- host              overlay lowerdir 1 / shadow of host root
+#         +-- root              overlay merge / chroot root
+#         +-- work              overlay workdir
 #     +-- iterim
 #     +-- final
 #     +-- tools
 #     +-- sources
 
-lf-buildup-bootstrap
+lf-bootstrap-setup
 
 chroot "$LfsBootstrap/root" /usr/bin/env -i \
     HOME=$HOME                              \

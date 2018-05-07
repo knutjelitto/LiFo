@@ -1,5 +1,6 @@
 #!/bin/bash
 
-source $(dirname $0)/tools/init.sh
+source $(dirname $0)/lf-config
 
-echo "pwd: $(pwd)"
+var tmp
+eval $(lf-read-box $1)

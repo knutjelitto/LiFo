@@ -1,0 +1,18 @@
+#!/bin/bash
+
+title="5.31. Tar-1.30"
+name=tar
+version=1.30
+source=(http://ftp.gnu.org/gnu/tar/tar-$version.tar.xz)
+
+configure() {
+    ./configure --prefix=/tools
+}
+
+build() {
+    make
+}
+
+install() {
+    make install
+}

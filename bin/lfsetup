@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname $0)/tools/init.sh
+source $(dirname $0)/lf-config
 
 cat > ${etclocation}/version-check.sh << "EOF"
 #!/bin/bash

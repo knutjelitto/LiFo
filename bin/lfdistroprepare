@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#source $(dirname $0)/tools/init.sh
+#source $(dirname $0)/lf-config
 
 if [[ "$(whoami)" != "root" ]]; then
     echo "run as root!"
@@ -14,12 +14,7 @@ fi
 
 apt --yes update
 apt --yes upgrade
-apt --yes install man-db
-apt --yes install less
-apt --yes install build-essential
-apt --yes install gawk
-apt --yes install bison
-apt --yes install texinfo
+apt --yes install man-db less build-essential gawk bison info texinfo file rsync tree
 
 ######
 # setup .bashrc

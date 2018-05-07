@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [[ -z $lfConfigIncluded ]]; then
+
+    LifoTop=/root/lifo
+    LifoLfs=$LifoTop/lfs
+    LifoLfsBootstrap=$LifoLfs/bootstrap
+    LifoLfsInterim=$LifoLfs/interim
+
+    LifoBoxes=$LifoTop/boxes
+
+    LfsTop=/root/lfs
+
+    LfsBootstrap=$LfsTop/bootstrap
+    LfsInterim=$LfsTop/interim
+
+    verbose=--verbose
+    verbose=''
+    scriptlocation=$(dirname $0)
+    etclocation=${scriptlocation}/../etc
+
+    source ${scriptlocation}/lf-functions
+
+    mkdir ${verbose} --parents ${LfsTop}/{bootstrap,interim,final,tools,sources}
+
+    function Include
+    {
+        local script=$scriptlocation/$1
+        if [[ ! -r $script ]]; then
+            echo "Script '$script' not found"
+            exit 255
+        fi
+        source $script
+    }
+
+    lfConfigIncluded=true    
+fi
+
