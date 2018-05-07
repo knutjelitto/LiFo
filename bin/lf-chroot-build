@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname $0)/lf-config
+source LifoConfig
 
 set +h
 export LC_ALL=POSIX

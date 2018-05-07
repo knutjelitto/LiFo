@@ -1,13 +1,5 @@
 #!/bin/bash
 
-function get-lfs-script {
-    echo ${scriptlocation}/lfs/${1}.sh
-}
-
-function get-pkg-script {
-    echo ${scriptlocation}/pkg/${1}.sh
-}
-
 function unmount-all {
     local match=$1
     [[ -n $match ]] || match=/root/lfs

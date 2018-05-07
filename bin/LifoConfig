@@ -3,11 +3,12 @@
 if [[ -z $lfConfigIncluded ]]; then
 
     LifoTop=/root/lifo
+    LifoBin=$LifoTop/bin
     LifoLfs=$LifoTop/lfs
     LifoLfsBootstrap=$LifoLfs/bootstrap
     LifoLfsInterim=$LifoLfs/interim
 
-    LifoBoxes=$LifoTop/boxes
+    LifoRecipes=$LifoTop/Recipes
 
     LfsTop=/root/lfs
 
@@ -21,7 +22,7 @@ if [[ -z $lfConfigIncluded ]]; then
 
     source ${scriptlocation}/lf-functions
 
-    mkdir ${verbose} --parents ${LfsTop}/{bootstrap,interim,final,tools,sources}
+    mkdir ${verbose} --parents ${LfsTop}/{bootstrap,interim,tools,sources}
 
     function Include
     {
@@ -33,6 +34,11 @@ if [[ -z $lfConfigIncluded ]]; then
         source $script
     }
 
+    function Fatal
+    {
+        echo "$0: $1" 1>&2
+        exit 255
+    }
+
     lfConfigIncluded=true    
 fi
-

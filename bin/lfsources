@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname $0)/lf-config
+source LifoConfig
 
 PackageScript=$1
 source $PackageScript

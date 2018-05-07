@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname $0)/lf-config
+source LifoConfig
 
 PackageScript=$1
 source $PackageScript
@@ -15,20 +15,6 @@ rm --verbose --recursive --force $PackageTmp
 [[ -d $Package ]] && exit
 
 Archive=$(basename ${source[0]})
-
-#echo -n $(basename $PackageScript)
-#echo -n " $Archive"
-#if [[ ! -r $Archive ]]; then
-#    echo " - ERROR"
-#else
-#    echo " - OK"
-#fi
-#
-#exit
-
-# Archive=$Package.tar.xz
-# [[ -f $Archive ]] || Archive=$Package.tar.gz
-# [[ -f $Archive ]] || Archive=$Package.tar.bz2
 
 mkdir --verbose --parents $PackageTmp
 

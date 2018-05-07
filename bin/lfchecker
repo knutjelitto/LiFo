@@ -1,6 +1,4 @@
 #!/bin/bash
 
-source $(dirname $0)/lf-config
+source LifoConfig
 
-var tmp
-eval $(lf-read-box $1)

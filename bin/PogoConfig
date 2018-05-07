@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [[ -z $_pogoConfigIncluded ]]; then
+
+    PogoTop=/Pogo
+    
+    PogoData=$PogoTop/Data
+    PogoCompile=$PogoData/Compile
+    PogoArchives=$PogoCompile/Archives
+    PogoSources=$PogoCompile/Sources
+    
+    PogoPrograms=$PogoTop/Programs
+
+    PogoSystem=$PogoTop/System
+    PogoIndex=$PogoSystem/Index
+
+    _pogoExec=$(dirname $0)/PogoExec
+
+    function Fatal
+    {
+        echo "$0: $1" 1>&2
+        exit 255
+    }
+
+    function PogoExec
+    {
+        script=$_pogoExec/$1
+        shift
+        $script "$@"
+    }
+
+    declare -a PogoVars
+    PogoVars=$(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//')
+
+    _pogoConfigIncluded=true    
+fi

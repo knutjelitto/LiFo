@@ -1,0 +1,16 @@
+#!/bin/bash -e
+# -e: exit on error
+
+source LifoConfig
+Include 'recipe/functions'
+
+SourceRecipe $1
+
+declare -p Title
+declare -p Name
+declare -p Version
+declare -p Supplies
+
+for supply in "${Supplies[@]}"; do
+    echo "supply: $supply"
+done

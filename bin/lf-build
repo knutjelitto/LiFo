@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname $0)/lf-config
+source LifoConfig
 
 set +h
 export LFS=$LfsTop
@@ -40,7 +40,7 @@ function ExecTrim {
 }
 
 Script=$1
-[[ -f $Script ]] || Script=$LifoTop/lib/bootstrap/$1
+[[ -f $Script ]] || Script=$LifoLfsBootstrap/$1
 
 source $Script
 

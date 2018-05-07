@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $(dirname $0)/lf-config
+source LifoConfig
 
 if [ ! -f ${etclocation}/wget-list ]; then
     pushd ${etclocation}
@@ -19,6 +19,3 @@ wget --input-file=${etclocation}/wget-list --continue --directory-prefix=${LfsTo
 pushd ${LfsTop}/sources
 md5sum -c ${etclocation}/md5sums
 popd
-
-
-
