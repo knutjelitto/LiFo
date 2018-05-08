@@ -20,13 +20,21 @@ if [[ -z $_pogoConfigIncluded ]]; then
 
     function Fatal
     {
-        echo "$0: $1" 1>&2
+        local prefix
+        case $0 in
+            */pogo) ;;
+            *) prefix="pogo " ;;
+        esac
+            
+        echo "${prefix}${0##*/}: $1" 1>&2
         exit 255
     }
 
     function PogoExec
     {
+        [[ -n $1 ]] || Fatal "no argument given"
         script=$_pogoExec/$1
+        [[ -e $script ]] || Fatal "unknown function '$1'"
         shift
         $script "$@"
     }

@@ -6,6 +6,8 @@ PogoReconcileFlat ()
 {
     local source=$1
 
+    echo "source: $source"
+
     local basename withoutExtension extension more stem version
     basename="${source##*/}"
     withoutExtension="${basename%.tar.*}"

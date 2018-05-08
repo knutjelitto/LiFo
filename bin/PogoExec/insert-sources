@@ -3,7 +3,7 @@
 source PogoConfig
 Import sources-functions
 
-Pogo create
+pogo create
 
 for source in ~/lfs/sources/*; do
     #echo $source
@@ -13,14 +13,5 @@ for source in ~/lfs/sources/*; do
 done
 
 PogoReconcileFlats
-
-source='1234567890/aaa-bbb.ccc555.12.13aa.tar.gz'
-basename=${source##*/}
-withoutExtension="${basename%.tar.*}"
-extension="${basename:${#withoutExtension}}"
-echo $withoutExtension
-sed 's/\([\.-]\?[[:digit:]]\+\)\+[[:alpha:]]*$//' <<< $withoutExtension
-
-PogoReconcileFlat '1234567890/aaa-bbb.ccc-51.tar.gz'
 
 
