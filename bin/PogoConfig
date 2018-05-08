@@ -7,6 +7,7 @@ if [[ -z $_pogoConfigIncluded ]]; then
     PogoData=$PogoTop/Data
     PogoCompile=$PogoData/Compile
     PogoArchives=$PogoCompile/Archives
+    PogoFlatArchives=$PogoArchives/Flat
     PogoSources=$PogoCompile/Sources
     
     PogoPrograms=$PogoTop/Programs
@@ -14,7 +15,8 @@ if [[ -z $_pogoConfigIncluded ]]; then
     PogoSystem=$PogoTop/System
     PogoIndex=$PogoSystem/Index
 
-    _pogoExec=$(dirname $0)/PogoExec
+
+    _pogoExec=~/lifo/bin/PogoExec
 
     function Fatal
     {
@@ -29,8 +31,15 @@ if [[ -z $_pogoConfigIncluded ]]; then
         $script "$@"
     }
 
+    function Import
+    {
+        source $_pogoExec/$1
+    }
+
     declare -a PogoVars
     PogoVars=$(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//')
+
+    verbose=''
 
     _pogoConfigIncluded=true    
 fi

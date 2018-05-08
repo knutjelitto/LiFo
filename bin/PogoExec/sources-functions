@@ -1,0 +1,113 @@
+#!/bin/bash
+
+source PogoConfig
+
+PogoReconcileFlat ()
+{
+    local source=$1
+
+    local basename withoutExtension extension more stem version
+    basename="${source##*/}"
+    withoutExtension="${basename%.tar.*}"
+    extension="${basename:${#withoutExtension}}"
+    if [[ "$withoutExtension" != "${withoutExtension%.src}" ]]; then
+        withoutExtension="${withoutExtension%.src}"
+    fi
+    if [[ "$withoutExtension" != "${withoutExtension%-src}" ]]; then
+        withoutExtension="${withoutExtension%-src}"
+    fi
+    if [[ "$withoutExtension" != "${withoutExtension%-docs-html}" ]]; then
+        # echo python-docs-html
+        more="-docs-html"        
+        withoutExtension="${withoutExtension%-docs-html}"
+    fi
+    local plus=1
+    case $withoutExtension in
+        bzip2-*) stem=bzip2 ;;
+        iproute2-*) stem=iproute2 ;;
+        m4-*) stem=m4 ;;
+        expect5*) stem=expect; plus=0 ;;
+        tcl8*) stem=tcl; plus=0 ;;
+        *)       stem=$(sed 's/\([\.-]\?[[:digit:]]\+\)\+[[:alpha:]]*$//' <<< $withoutExtension) ;;
+    esac
+    version="${withoutExtension:(( ${#stem} + $plus ))}"
+
+    #if [[ "$withoutExtension" == "${withoutExtension%-*}" ]]; then
+    #    # no version after "-"
+    #    case $withoutExtension in
+    #        expect[0-9]*)
+    #            stem="expect"; version="${withoutExtension:${#stem}}"
+    #        ;;
+    #        tzdata[0-9]*)
+    #            stem="tzdata"; version="${withoutExtension:${#stem}}"
+    #        ;;
+    #        #tcl[0-9]*)
+    #        #    stem="tcl"; version="${withoutExtension:${#stem}}"
+    #        #;;
+    #        ???[0-9]*) stem="${withoutExtension:0:3}"; version="${withoutExtension:${#stem}}" ;;
+    #        ????[0-9]*) stem="${withoutExtension:0:4}"; version="${withoutExtension:${#stem}}" ;;
+    #        ?????[0-9]*) stem="${withoutExtension:0:5}"; version="${withoutExtension:${#stem}}" ;;
+    #        ??????[0-9]*) stem="${withoutExtension:0:6}"; version="${withoutExtension:${#stem}}" ;;
+    #        ???????[0-9]*) stem="${withoutExtension:0:7}"; version="${withoutExtension:${#stem}}" ;;
+    #        ????????[0-9]*) stem="${withoutExtension:0:8}"; version="${withoutExtension:${#stem}}" ;;
+    #        ?????????[0-9]*) stem="${withoutExtension:0:9}"; version="${withoutExtension:${#stem}}" ;;
+    #        ??????????[0-9]*) stem="${withoutExtension:0:10}"; version="${withoutExtension:${#stem}}" ;;
+    #        ???????????[0-9]*) stem="${withoutExtension:0:11}"; version="${withoutExtension:${#stem}}" ;;
+    #        ????????????[0-9]*) stem="${withoutExtension:0:12}"; version="${withoutExtension:${#stem}}" ;;
+    #        *) Fatal "can't split '$basename' into stem/version/extension" ;;
+    #    esac
+    #else
+    #    stem="${withoutExtension%-*}"
+    #    version="${withoutExtension:(( ${#stem} + 1))}"
+    #fi
+
+    function Capitalize
+    {
+        local old_IFS=$IFS
+        local part
+        local captitalized1
+        local captitalized2
+        IFS='-'
+        for part in ${1,,}; do
+            captitalized1=$captitalized1${part^}
+        done
+        IFS='.'
+        for part in ${captitalized1}; do
+            captitalized2=$captitalized2${part^}
+        done
+        IFS=$old_IFS
+        echo $captitalized2
+    }
+
+    stem=$(Capitalize $stem$more)
+
+    
+    if echo $version | grep -q -e '^[0-9]\+[a-z]*$'; then
+        true
+    elif echo $version | grep -q -e '^[0-9]\+\.[0-9]\+[a-z]*$'; then
+        true
+    elif echo $version | grep -q -e '^[0-9]\+\.[0-9]\+\.[0-9]\+[a-z]*$'; then
+        true
+    elif echo $version | grep -q -e '^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+$'; then
+        true
+    else
+        case $stem in
+            *)  Fatal "can't decipher version in (stem/version/extension/basename): ($stem/$version/$extension/$basename)"
+                ;;
+        esac
+    fi
+
+    if [[ -z $stem || -z $version || -z $extension || -z $basename ]]; then
+        Fatal "can't decipher '$basename' in (stem/version/extension/basename): ($stem/$version/$extension/$basename)"
+    fi
+
+    echo "${source:(( ${#source} - ${#basename} ))} ==> $stem/$version"
+}
+
+PogoReconcileFlats ()
+{
+    local source
+    for source in $PogoFlatArchives/*.tar.*; do
+        PogoReconcileFlat $source
+    done
+}

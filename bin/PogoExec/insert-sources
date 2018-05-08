@@ -1,0 +1,26 @@
+#!/bin/bash -e
+
+source PogoConfig
+Import sources-functions
+
+Pogo create
+
+for source in ~/lfs/sources/*; do
+    #echo $source
+    case $source in
+        *.tar.gz|*.tar.xz|*.tar.bz2|*.patch) mv ${verbose} --force $source $Pogo $PogoFlatArchives ;;
+    esac
+done
+
+PogoReconcileFlats
+
+source='1234567890/aaa-bbb.ccc555.12.13aa.tar.gz'
+basename=${source##*/}
+withoutExtension="${basename%.tar.*}"
+extension="${basename:${#withoutExtension}}"
+echo $withoutExtension
+sed 's/\([\.-]\?[[:digit:]]\+\)\+[[:alpha:]]*$//' <<< $withoutExtension
+
+PogoReconcileFlat '1234567890/aaa-bbb.ccc-51.tar.gz'
+
+

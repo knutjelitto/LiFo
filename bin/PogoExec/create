@@ -36,6 +36,7 @@ mkdir ${verbose}  --parents $PogoTop
 mkdir ${verbose}  --parents $PogoTop/Data
 mkdir ${verbose}  --parents $PogoTop/Data/Compile
 mkdir ${verbose}  --parents $PogoTop/Data/Compile/Archives
+mkdir ${verbose}  --parents $PogoTop/Data/Compile/Archives/Flat
 mkdir ${verbose}  --parents $PogoTop/Data/Compile/Sources
 mkdir ${verbose}  --parents $PogoTop/Data/Variable
 mkdir ${verbose}  --parents $PogoTop/Data/Variable/Build
@@ -43,7 +44,7 @@ mkdir ${verbose}  --parents $PogoTop/Programs
 mkdir ${verbose}  --parents $PogoTop/System
 mkdir ${verbose}  --parents $PogoTop/System/Index
 
-tree --noreport -d -L 3 $PogoTop
+tree --noreport -d -L 4 $PogoTop
 
 #declare -p | grep -e 'declare -- Pogo' | cut --characters=12-
 for pogoDir in $(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//'); do
