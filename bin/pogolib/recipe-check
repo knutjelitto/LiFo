@@ -1,0 +1,23 @@
+#!/bin/bash -e
+
+Import PogoConfig
+Import RecipeFunctions
+
+echo "recipe-check: $1"
+
+SourceRecipe $1
+
+declare -p Recipe
+declare -p RecipeStore
+declare -p Title
+declare -p Name
+declare -p Version
+declare -p Supplies
+
+for supply in "${Supplies[@]}"; do
+    echo "supply: $supply"
+    already=$(basename $supply)
+    find $PogoArchives $PogoDownloads -maxdepth 1 -name "$already" | head --lines=1 | while read already; do
+        echo "already available: $already"
+    done
+done

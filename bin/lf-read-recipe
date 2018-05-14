@@ -1,8 +1,7 @@
 #!/bin/bash -e
-# -e: exit on error
 
 source LifoConfig
-Include 'recipe/functions'
+Include 'recipelib/functions'
 
 SourceRecipe $1
 

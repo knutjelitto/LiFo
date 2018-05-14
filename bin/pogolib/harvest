@@ -1,0 +1,40 @@
+#!/bin/bash -eu
+
+Import PogoConfig
+Import PogoFunctions
+Import RecipeFunctions
+Import BuildFunctions
+
+InChroot && Fatal "don't call in chroot"
+
+#verbose=''
+
+Token=$1
+
+SetupBuild $Token
+
+blacklist=$(mktemp)
+bom=$(mktemp)
+
+cat > $blacklist << "EOF"
+ $
+ tmp.*
+ Data.*
+ usr$
+ usr/include$
+EOF
+
+
+pushd $BuildChanges >/dev/null
+
+(
+    find . \( -type l -printf '%y %M %4m %3n %10s %P -> %l\n' -o -printf '%y %M %4m %3n %10s %P\n' \)
+) | grep -v -f $blacklist >$bom
+
+cat $bom | cut -c 34- | tar --create --verbose --auto-compress --file /tmp/xxx.tar.xz --verbatim-files-from --directory=$BuildChanges --files-from=-
+
+popd >/dev/null
+
+cat $bom | less
+
+rm $verbose --force $blacklist $bom

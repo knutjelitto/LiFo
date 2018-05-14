@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source $(dirname $0)/pogolib/PogoConfig
+
+what=recipe-"$1"; shift
+PogoExec "$what" "$@"

@@ -1,0 +1,114 @@
+#!/bin/bash
+
+#
+# creating a root fs for the [tools] box
+#
+
+rootfs=/tmp/rootfs
+
+MkDir ()
+{
+    local mode="--mode=$1"
+    shift 1
+    while (( $# > 0 )); do
+        local dir=$rootfs/$1
+        shift
+        mkdir $verbose --parents $mode $dir
+    done
+}
+
+SymLn ()
+{
+    local link=$rootfs/$1
+    local target=$2
+    
+    ln $verbose --symbolic $target $link
+}
+
+MkDir 0775 bin
+MkDir 0775 sbin
+MkDir 0775 etc
+MkDir 0775 lib
+MkDir 0775 lib64
+MkDir 1777 tmp
+MkDir 1777 dev
+MkDir 1777 proc
+MkDir 1777 sys
+MkDir 0775 run
+MkDir 0775 run/lock
+MkDir 0775 var
+MkDir 1777 var/tmp
+MkDir 0775 var/log
+MkDir 0775 var/cache
+MkDir 0775 var/lib
+MkDir 0775 usr/bin
+MkDir 0775 usr/sbin
+MkDir 0775 usr/include
+MkDir 0775 usr/lib
+MkDir 0775 usr/share
+MkDir 0775 usr/share/color
+MkDir 0775 usr/share/dict
+MkDir 0775 usr/share/doc
+MkDir 0775 usr/share/info
+MkDir 0775 usr/share/locale
+MkDir 0775 usr/share/man
+MkDir 0775 usr/share/misc
+MkDir 0775 usr/share/terminfo
+MkDir 0775 usr/share/zoneinfo
+MkDir 0775 usr/libexec
+MkDir 0775 usr/share/man/man{1..8}
+
+SymLn bin/bash    /tools/bin/bash
+SymLn bin/sh      bash
+SymLn bin/cat     /tools/bin/cat
+SymLn bin/dd      /tools/bin/dd
+SymLn bin/echo    /tools/bin/echo
+SymLn bin/ln      /tools/bin/ln
+SymLn bin/pwd     /tools/bin/pwd
+SymLn bin/rm      /tools/bin/rm
+SymLn bin/stty    /tools/bin/stty
+
+SymLn usr/bin/install /tools/bin/install
+SymLn usr/bin/perl    /tools/bin/perl
+SymLn usr/bin/env     /tools/bin/env
+
+SymLn usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
+SymLn usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
+
+SymLn usr/lib/libstdc++.a     /tools/lib/libstdc++.a
+SymLn usr/lib/libstdc++.so    /tools/lib/libstdc++.so
+SymLn usr/lib/libstdc++.so.6  /tools/lib/libstdc++.so.6
+
+cat > $rootfs/etc/passwd << "EOF"
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/dev/null:/bin/false
+nobody:x:99:99:Unprivileged User:/dev/null:/bin/false
+EOF
+
+cat > $rootfs/etc/group << "EOF"
+root:x:0:
+bin:x:1:daemon
+sys:x:2:
+kmem:x:3:
+tape:x:4:
+tty:x:5:
+daemon:x:6:
+floppy:x:7:
+disk:x:8:
+lp:x:9:
+dialout:x:10:
+audio:x:11:
+video:x:12:
+utmp:x:13:
+usb:x:14:
+cdrom:x:15:
+adm:x:16:
+input:x:24:
+mail:x:34:
+nogroup:x:99:
+users:x:999:
+EOF
+
+pushd $rootfs >/dev/null
+tar -c -v -a -f /LiFo/docker/tools/rootfs.tar.xz .
+popd >/dev/null

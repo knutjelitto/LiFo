@@ -1,0 +1,95 @@
+#!/bin/bash -eu
+
+[[ -z ${_pogoFunctionsIncluded:-} ]] || exit
+_pogoFunctionsIncluded=true
+
+Capitalize ()
+{
+    local old_IFS=$IFS
+    local part
+    local captitalized
+    IFS='-'
+    for part in ${1,,}; do
+        captitalized=$captitalized${part^}
+    done
+    IFS=$old_IFS
+    echo $captitalized
+}
+
+#
+# (Re-)Create then Pogo tree
+#
+EnsurePogoEnvironment ()
+{
+    if [[ -n ${POGO_CHROOT:-} ]]; then
+        [[ $PogoTop == "/." ]] || Fatal "PogoTop must be '/.'"
+    else
+        [[ $PogoTop == /Pogo ]] || Fatal "PogoTop must be '/Pogo'"
+    fi
+
+    mkdir ${verbose}  --parents $PogoTop
+    mkdir ${verbose}  --parents $PogoTop/Data/{,Compile/{,Archives,Sources,Build,Store},Variable/{,Downloads}}
+    mkdir ${verbose}  --parents $PogoTop/Programs
+    mkdir ${verbose}  --parents $PogoTop/System/{,Index}
+
+    local pogoDir
+    for pogoDir in $(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//'); do
+        if [[ ! -d ${!pogoDir} ]]; then
+            Fatal "no directory found for $pogoDir (${!pogoDir})"
+        fi
+    done
+}
+
+GetVenue ()
+{
+    local source=$1 # full patch to archive
+
+    local basename withoutExtension extension more stem version
+    basename="${source##*/}"
+    withoutExtension="${basename%.tar.*}"
+    extension="${basename:${#withoutExtension}}"
+    if [[ "$withoutExtension" != "${withoutExtension%.src}" ]]; then
+        withoutExtension="${withoutExtension%.src}"
+    fi
+    if [[ "$withoutExtension" != "${withoutExtension%-src}" ]]; then
+        withoutExtension="${withoutExtension%-src}"
+    fi
+    if [[ "$withoutExtension" != "${withoutExtension%-docs-html}" ]]; then
+        # echo python-docs-html
+        more="-docs-html"        
+        withoutExtension="${withoutExtension%-docs-html}"
+    fi
+    case $withoutExtension in
+        *-*)
+            stem=$(sed 's/\-[[:digit:]]\+\(\.[[:digit:]]\+[[:alpha:]]*\)*$//' <<< $withoutExtension)
+            version="${withoutExtension:(( ${#stem} + 1 ))}"
+            ;;
+        *)
+            stem=$(sed 's/[[:digit:]]\+[[:alpha:]]*\(\.[[:digit:]]\+[[:alpha:]]*\)*$//' <<< $withoutExtension)
+            version="${withoutExtension:${#stem}}"
+            ;;
+    esac
+
+    stem=$(Capitalize $stem$more)
+    
+    if echo $version | grep -q -e '^[0-9]\+[a-z]*$'; then
+        true
+    elif echo $version | grep -q -e '^[0-9]\+\.[0-9]\+[a-z]*$'; then
+        true
+    elif echo $version | grep -q -e '^[0-9]\+\.[0-9]\+\.[0-9]\+[a-z]*$'; then
+        true
+    elif echo $version | grep -q -e '^[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+$'; then
+        true
+    else
+        case $stem in
+            *)  Fatal "can't decipher version in (stem/version/extension/basename): ($stem/$version/$extension/$basename)"
+                ;;
+        esac
+    fi
+
+    if [[ -z $stem || -z $version || -z $extension || -z $basename ]]; then
+        Fatal "can't decipher '$basename' in (stem/version/extension/basename): ($stem/$version/$extension/$basename)"
+    fi
+
+    echo "$stem/$version"
+}

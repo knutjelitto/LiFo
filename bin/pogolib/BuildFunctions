@@ -1,0 +1,269 @@
+#!/bin/bash
+
+[[ -z ${_buildFunctionsIncluded:-} ]] || exit
+_buildFunctionsIncluded=true
+
+SetupBuild ()
+{
+    local token=$1
+
+    EnsurePogoEnvironment
+
+    SourceRecipe $token
+
+    BuildHead=$PogoBuild/$Name-$Version
+    BuildChroot=$BuildHead/Chroot
+    BuildChanges=$BuildHead/Chroot/Changes
+    BuildState=$BuildHead/State
+}
+
+
+EnsureToolsBuildHead ()
+{
+    rm $verbose --recursive --force $BuildHead
+
+    mkdir $verbose --parents $BuildHead/{,Chroot/{Root,Changes,Merged,Work},State}
+
+    MakeToolsRootfs $BuildChroot/Root
+}
+
+ProvideSupply ()
+{
+    local supply=$1
+    local basename=$(basename $supply)
+
+    [[ -f $PogoArchives/$basename ]] || Fatal "local archive '$basename' for supply '$supply' missing"
+
+    local stem
+
+    case $basename in
+        *.tar.??|*.tar.???)
+            stem=${basename%.tar.*}
+            ExtractSupply $basename $stem
+            ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $BuildHead/$stem
+            ;;
+        *)
+            Fatal "can't provide supply '$supply'"
+    esac
+}
+
+ProvideSupplies ()
+{
+    local supply
+    for supply in "${Supplies[@]}"; do
+        ProvideSupply $supply
+    done
+}
+
+BuildEnterMain ()
+{
+    if (( ${#Supplies[@]} == 0 )); then
+        Fatal "No supplies given"
+    else
+        local supply=${Supplies[0]}
+        local basename=$(basename $supply)
+        local stem=${basename%.tar.*}
+        cd $BuildHead/$stem
+        echo -n "PWD: "
+        pwd
+    fi
+}
+
+BuildEnterBuildIn ()
+{
+    BuildEnterMain
+    if [[ -v BuildIn ]]; then
+        mkdir $verbose --parents ./$BuildIn
+        cd $BuildIn
+    fi
+    echo -n "PWD: "
+    pwd
+}
+
+ExtractSupply ()
+{
+    local basename=$1
+    local stem=$2
+    local archive=$PogoArchives/$basename
+    local extract=$PogoSources/$stem
+
+    local tmpExtract=$extract.tmp
+
+    rm $verbose --recursive --force $tmpExtract
+
+    [[ -d $extract ]] && return
+
+    mkdir $verbose --parents $tmpExtract
+
+    pushd $tmpExtract >/dev/null
+    tar xvf $archive
+    popd >/dev/null
+
+    if [[ $(ls -1 $tmpExtract | wc -l) == 1 ]]; then
+        mv $verbose $tmpExtract/* $extract
+        rmdir $verbose $tmpExtract
+    else
+        mv $verbose $tmpExtract $extract
+    fi
+}
+
+MakeToolsRootfs ()
+{
+    local rootfs=$1
+
+    RootfsMkDir ()
+    {
+        local mode="--mode=$1"
+        shift 1
+        while (( $# > 0 )); do
+            local dir=$rootfs/$1
+            shift
+            mkdir $verbose --parents $mode $dir
+        done
+    }
+
+    RootfsSymLn ()
+    {
+        local link=$rootfs/$1
+        local target=$2
+        
+        ln $verbose --symbolic $target $link
+    }
+
+    RootfsMkDir 0775 LiFo
+    RootfsMkDir 0775 root
+    RootfsMkDir 0775 bin
+    RootfsMkDir 0775 sbin
+    RootfsMkDir 0775 etc
+    RootfsMkDir 0775 lib
+    RootfsMkDir 0775 lib64
+    RootfsMkDir 1777 tmp
+    RootfsMkDir 1777 dev
+    RootfsMkDir 1777 proc
+    RootfsMkDir 1777 sys
+    RootfsMkDir 0775 run
+    RootfsMkDir 0775 run/lock
+    RootfsMkDir 0775 var
+    RootfsMkDir 1777 var/tmp
+    RootfsMkDir 0775 var/log
+    RootfsMkDir 0775 var/cache
+    RootfsMkDir 0775 var/lib
+    RootfsMkDir 0775 usr/bin
+    RootfsMkDir 0775 usr/sbin
+    RootfsMkDir 0775 usr/include
+    RootfsMkDir 0775 usr/lib
+    RootfsMkDir 0775 usr/share
+    RootfsMkDir 0775 usr/share/color
+    RootfsMkDir 0775 usr/share/dict
+    RootfsMkDir 0775 usr/share/doc
+    RootfsMkDir 0775 usr/share/info
+    RootfsMkDir 0775 usr/share/locale
+    RootfsMkDir 0775 usr/share/man
+    RootfsMkDir 0775 usr/share/misc
+    RootfsMkDir 0775 usr/share/terminfo
+    RootfsMkDir 0775 usr/share/zoneinfo
+    RootfsMkDir 0775 usr/libexec
+    RootfsMkDir 0775 usr/share/man/man{1..8}
+
+    RootfsSymLn bin/bash    /tools/bin/bash
+    RootfsSymLn bin/sh      bash
+    RootfsSymLn bin/cat     /tools/bin/cat
+    RootfsSymLn bin/dd      /tools/bin/dd
+    RootfsSymLn bin/echo    /tools/bin/echo
+    RootfsSymLn bin/ln      /tools/bin/ln
+    RootfsSymLn bin/pwd     /tools/bin/pwd
+    RootfsSymLn bin/rm      /tools/bin/rm
+    RootfsSymLn bin/stty    /tools/bin/stty
+
+    RootfsSymLn usr/bin/install /tools/bin/install
+    RootfsSymLn usr/bin/perl    /tools/bin/perl
+    RootfsSymLn usr/bin/env     /tools/bin/env
+
+    RootfsSymLn usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
+    RootfsSymLn usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
+
+    RootfsSymLn usr/lib/libstdc++.a     /tools/lib/libstdc++.a
+    RootfsSymLn usr/lib/libstdc++.so    /tools/lib/libstdc++.so
+    RootfsSymLn usr/lib/libstdc++.so.6  /tools/lib/libstdc++.so.6
+
+    touch $rootfs/etc/hostname
+    touch $rootfs/etc/hosts
+    touch $rootfs/etc/resolv.conf
+
+    cat > $rootfs/etc/passwd << "EOF"
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/dev/null:/bin/false
+nobody:x:99:99:Unprivileged User:/dev/null:/bin/false
+EOF
+
+    cat > $rootfs/etc/group << "EOF"
+root:x:0:
+bin:x:1:daemon
+sys:x:2:
+kmem:x:3:
+tape:x:4:
+tty:x:5:
+daemon:x:6:
+floppy:x:7:
+disk:x:8:
+lp:x:9:
+dialout:x:10:
+audio:x:11:
+video:x:12:
+utmp:x:13:
+usb:x:14:
+cdrom:x:15:
+adm:x:16:
+input:x:24:
+mail:x:34:
+nogroup:x:99:
+users:x:999:
+EOF
+
+    unset RootfsMkDir
+    unset RootfsSymLn
+}
+
+ExecInToolsChroot ()
+(   # execute in subshell
+
+    local command="$1"
+
+    local lowerdir="lowerdir=$BuildChroot/Root:$PogoTop"
+    local upperdir="upperdir=$BuildChroot/Changes"
+    local workdir="workdir=$BuildChroot/Work"
+    local merged="$BuildChroot/Merged"
+
+    trap 'BuildUnmount || true' EXIT
+
+    mount $verbose --types overlay overlay --options $lowerdir,$upperdir,$workdir $merged
+    
+    mount $verbose --bind /LiFo $merged/LiFo
+    mount $verbose --bind /root $merged/root
+    mount $verbose --rbind /dev $merged/dev
+    mount $verbose --rbind /sys $merged/sys
+    mount $verbose --rbind /proc $merged/proc
+    mount $verbose --bind /etc/hostname $merged/etc/hostname
+    mount $verbose --bind /etc/hosts $merged/etc/hosts
+    mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
+
+    POGO_CHROOT=Tools \
+    LC_ALL=POSIX \
+    FORCE_UNSAFE_CONFIGURE=1 \
+    chroot $merged /bin/bash -l -c "$command"
+)
+
+BuildUnmount ()
+{
+    local match=$BuildChroot
+    local mountpoint
+    while mount | grep -q "${match}"; do
+        mount | grep "${match}" | cut -f3 -d" " | sort | while read mountpoint; do
+            if [[ -z $verbose ]]; then
+                mountpoint --quiet ${mountpoint} &>/dev/null && umount --recursive ${mountpoint} &>/dev/null
+            else
+                mountpoint --quiet ${mountpoint} &>/dev/null && umount --verbose --recursive ${mountpoint}
+            fi
+        done
+    done
+}

@@ -1,0 +1,62 @@
+#!/bin/bash
+
+[[ -z ${_pogoConfigIncluded:-} ]] || exit
+_pogoConfigIncluded=true
+
+if [[ -n ${POGO_CHROOT:-} ]]; then
+    PogoTop=/.
+    InChroot() { return 0; }
+else
+    PogoTop=/Pogo
+    InChroot() { return 1; }
+fi
+
+PogoData=$PogoTop/Data
+PogoCompile=$PogoData/Compile
+PogoArchives=$PogoCompile/Archives
+PogoSources=$PogoCompile/Sources
+PogoBuild=$PogoCompile/Build
+PogoStore=$PogoCompile/Store
+PogoVariable=$PogoData/Variable
+PogoDownloads=$PogoVariable/Downloads
+
+PogoPrograms=$PogoTop/Programs
+
+PogoSystem=$PogoTop/System
+PogoIndex=$PogoSystem/Index
+
+_pogoExec=/LiFo/bin/pogolib
+
+Fatal ()
+{
+    local prefix
+    case $0 in
+        */pogo) ;;
+        *) prefix="pogo " ;;
+    esac
+        
+    echo "${prefix}${0##*/}: $1" 1>&2
+    exit 127
+}
+
+PogoExec ()
+{
+    [[ -n $1 ]] || Fatal "no argument given"
+    script=$_pogoExec/$1
+    [[ -e $script ]] || Fatal "unknown function '$1'"
+    shift
+    $script "$@"
+}
+
+Import ()
+{
+    source /LiFo/bin/pogolib/$1
+}
+
+# export Import function for convenience
+declare -F -x Import
+
+declare -a PogoVars
+PogoVars=$(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//')
+
+verbose=--verbose

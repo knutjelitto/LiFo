@@ -1,0 +1,22 @@
+#!/bin/bash -eu
+
+Import PogoConfig
+Import PogoFunctions
+Import RecipeFunctions
+Import BuildFunctions
+
+InChroot && Fatal "don't call in chroot"
+
+#verbose=''
+
+Token=$1
+
+SetupBuild $Token
+
+EnsureToolsBuildHead
+
+ProvideSupplies
+
+ExecInToolsChroot "pogo compile $Token"
+
+echo DONE

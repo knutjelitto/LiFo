@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+Import PogoConfig
+
+for download in $PogoDownloads/*; do
+    case $download in
+        *.tar.gz|*.tar.xz|*.tar.bz2|*.patch) mv ${verbose} --force $download $PogoArchives ;;
+    esac
+done
+
+

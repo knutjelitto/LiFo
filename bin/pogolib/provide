@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+Import PogoConfig
+Import PogoFunctions
+
+EnsurePogoEnvironment
+
+find $PogoArchives -type f | sort | while read archive; do
+    case $archive in
+    *.tar.??)
+        basename="${archive##*/}"
+        venue=$(GetVenue $archive)
+        echo "$basename ==> $venue"
+        ;;
+    esac
+done

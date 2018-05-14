@@ -1,0 +1,31 @@
+#!/bin/bash -eu
+
+Import PogoConfig
+Import PogoFunctions
+Import RecipeFunctions
+Import BuildFunctions
+
+InChroot || Fatal "call in chroot only"
+
+#verbose=''
+
+Token=$1
+
+SetupBuild $Token
+
+BuildExec()
+{
+    local function=$1
+    if [[ "$(type -t $function)" == "function" ]]; then
+        $function
+    else
+        echo "NOP for $function"
+    fi
+}
+
+BuildEnterMain && BuildExec Prepare
+BuildEnterBuildIn && BuildExec Configure
+BuildEnterBuildIn && BuildExec Build
+BuildEnterBuildIn && BuildExec Install
+BuildEnterBuildIn && BuildExec Trim
+

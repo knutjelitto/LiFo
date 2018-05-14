@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source $(dirname $0)/pogolib/PogoConfig
+
+what=maint-"$1"; shift
+PogoExec "$what" "$@"
