@@ -1,0 +1,18 @@
+#!/bin/bash
+
+Title="5.26. Gzip-1.9"
+Name=gzip
+Version=1.9
+Supplies=(http://ftp.gnu.org/gnu/gzip/gzip-1.9.tar.xz)
+
+Configure() {
+    ./configure --prefix=/tools
+}
+
+Build() {
+    make
+}
+
+Install() {
+    make install
+}

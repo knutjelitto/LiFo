@@ -1,0 +1,21 @@
+#!/bin/bash
+
+Title="5.32. Texinfo-6.5"
+Name=texinfo
+Version=6.5
+Supplies=(http://ftp.gnu.org/gnu/texinfo/texinfo-6.5.tar.xz)
+
+Configure()
+{
+    ./configure --prefix=/tools
+}
+
+Build()
+{
+    make
+}
+
+Install()
+{
+    make install
+}

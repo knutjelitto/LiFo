@@ -9,15 +9,18 @@ InChroot && Fatal "don't call in chroot"
 
 #verbose=''
 
-Token=$1
+Token=${1:-}
+
+[[ -n $Token ]] || Fatal "no recipe token given"
 
 BuildSetup $Token
 
 BuildEnsureBuildHead
-MakeToolsRootfs $BuildChroot/Root
+MakeBootsRootfs $BuildChroot/Root
 
 ProvideSupplies
 
-ExecInToolsChroot "pogo compile $Token"
+#ExecInToolsChroot "pogo compile $Token"
+ExecInBootsChroot "bash"
 
 echo DONE

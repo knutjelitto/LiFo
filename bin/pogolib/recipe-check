@@ -7,12 +7,18 @@ echo "recipe-check: $1"
 
 SourceRecipe $1
 
+declare -p Token
 declare -p Recipe
 declare -p RecipeStore
 declare -p Title
 declare -p Name
 declare -p Version
 declare -p Supplies
+declare -pf Prepare
+declare -pf Configure
+declare -pf Build
+declare -pf Install
+declare -pf Trim
 
 for supply in "${Supplies[@]}"; do
     echo "supply: $supply"

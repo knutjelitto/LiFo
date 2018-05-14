@@ -1,1 +1,1 @@
-@docker run --privileged -v D:\Projects\LiFo\docker\develope\root:/root -v D:\Projects\LiFo:/LiFo -v Pogo:/Pogo -it develope bash
+@docker run --privileged -v %cd%\root:/root -v %cd%\..\..:/LiFo -v Pogo:/Pogo -it develope bash

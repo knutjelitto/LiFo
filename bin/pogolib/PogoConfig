@@ -12,11 +12,14 @@ else
 fi
 
 PogoData=$PogoTop/Data
+
 PogoCompile=$PogoData/Compile
 PogoArchives=$PogoCompile/Archives
 PogoSources=$PogoCompile/Sources
 PogoBuild=$PogoCompile/Build
 PogoStore=$PogoCompile/Store
+PogoTools=$PogoCompile/Tools
+
 PogoVariable=$PogoData/Variable
 PogoDownloads=$PogoVariable/Downloads
 
@@ -42,7 +45,7 @@ Fatal ()
 PogoExec ()
 {
     [[ -n $1 ]] || Fatal "no argument given"
-    script=$_pogoExec/$1
+    script=/LiFo/bin/pogolib/$1
     [[ -e $script ]] || Fatal "unknown function '$1'"
     shift
     $script "$@"

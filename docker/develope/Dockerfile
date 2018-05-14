@@ -19,8 +19,8 @@ ENV USER=root
 ENV TERM=xterm-256color
 ENV LC_ALL=C.UTF-8
 
-WORKDIR /LiFo
-WORKDIR /Pogo
+RUN mkdir --parents /LiFo /Pogo
+
 WORKDIR /root
 
 CMD [ "bash" ]

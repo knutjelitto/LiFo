@@ -1,0 +1,14 @@
+#!/bin/bash
+
+Title="5.18. Bzip2-1.0.6"
+Name=bzip2
+Version=1.0.6
+Supplies=(http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz)
+
+Build() {
+    make
+}
+
+Install() {
+    make PREFIX=/tools install
+}

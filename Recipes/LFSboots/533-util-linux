@@ -1,0 +1,27 @@
+#!/bin/bash
+
+Title="5.33. Util-linux-2.31.1"
+Name=util-linux
+Version=2.31.1
+Supplies=(https://www.kernel.org/pub/linux/utils/util-linux/v2.31/util-linux-2.31.1.tar.xz)
+
+Configure()
+{
+    ./configure \
+        --prefix=/tools                 \
+        --without-python                \
+        --disable-makeinstall-chown     \
+        --without-systemdsystemunitdir  \
+        --without-ncurses               \
+        PKG_CONFIG=""
+}
+
+Build()
+{
+    make
+}
+
+Install()
+{
+    make install
+}

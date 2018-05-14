@@ -28,7 +28,7 @@ EnsurePogoEnvironment ()
     fi
 
     mkdir ${verbose}  --parents $PogoTop
-    mkdir ${verbose}  --parents $PogoTop/Data/{,Compile/{,Archives,Sources,Build,Store},Variable/{,Downloads}}
+    mkdir ${verbose}  --parents $PogoTop/Data/{,Compile/{,Archives,Sources,Build,Store,Tools},Variable/{,Downloads}}
     mkdir ${verbose}  --parents $PogoTop/Programs
     mkdir ${verbose}  --parents $PogoTop/System/{,Index}
 

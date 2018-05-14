@@ -1,0 +1,21 @@
+#!/bin/bash
+
+Title="5.34. Xz-5.2.3"
+Name=xz
+Version=5.2.3
+Supplies=(http://tukaani.org/xz/xz-5.2.3.tar.xz)
+
+Configure() 
+{
+    ./configure --prefix=/tools
+}
+
+Build() 
+{
+    make
+}
+
+Install()
+{
+    make install
+}

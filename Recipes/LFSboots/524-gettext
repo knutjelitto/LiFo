@@ -1,0 +1,23 @@
+#!/bin/bash
+
+Title="5.24. Gettext-0.19.8.1"
+Name=gettext
+Version=0.19.8.1
+Supplies=(http://ftp.gnu.org/gnu/gettext/gettext-0.19.8.1.tar.xz)
+BuildIn=gettext-tools
+
+Configure() {
+    EMACS="no" ./configure --prefix=/tools --disable-shared
+}
+
+Build() {
+    make -C gnulib-lib
+    make -C intl pluralx.c
+    make -C src msgfmt
+    make -C src msgmerge
+    make -C src xgettext
+}
+
+Install() {
+    cp -v src/{msgfmt,msgmerge,xgettext} /tools/bin
+}

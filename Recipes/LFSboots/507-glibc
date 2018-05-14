@@ -1,0 +1,26 @@
+#!/bin/bash
+
+Title="5.7. Glibc-2.27"
+Name=GLibc
+Version=2.27
+Supplies=(http://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.xz)
+BuildIn="build"
+
+Configure() {
+    ../configure                            \
+        --prefix=/tools                     \
+        --host=$LFS_TGT                     \
+        --build=$(../scripts/config.guess)  \
+        --enable-kernel=3.2                 \
+        --with-headers=/tools/include       \
+        libc_cv_forced_unwind=yes           \
+        libc_cv_c_cleanup=yes
+}
+
+Build() {
+    make
+}
+
+Install() {
+    make install
+}

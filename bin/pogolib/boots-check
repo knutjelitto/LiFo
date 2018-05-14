@@ -1,0 +1,16 @@
+#!/bin/bash -eu
+
+Import PogoConfig
+Import PogoFunctions
+Import RecipeFunctions
+Import BuildFunctions
+
+pushd /LiFo/Recipes/LFSboots
+
+for recipe in [0-9][0-9][0-9]-*; do
+    echo ./$recipe
+    recipe check ./$recipe
+    SourceRecipe ./$recipe
+done
+
+popd

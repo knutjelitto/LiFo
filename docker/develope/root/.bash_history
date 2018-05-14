@@ -1,103 +1,3 @@
-env
-cd
-tree
-help set
-help set | less
-pogo build
-pogo build
-pogo build
-pogo build
-pogo build
-pogo build LinuxHeaders
-man bash
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-mount
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders^
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-mount
-pogo create
-cd /Pogo/Data/Compile/Build/LinuxHeaders-4.15.3/
-ll
-cd Chroot/
-ll
-cd Root/
-ll
-cd bin
-ll
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-cd Variable/
-ls -la
-ls -l /LiFo/docker/tools
-tar xvf /LiFo/docker/tools/tools2.tar.xz 
-tar xvf /LiFo/docker/tools/tools2.tar.xz 
-du -h
-ls -la
-mv tools Tools
-ll
-cd
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-env
-gcc
-env
-pogo build LinuxHeaders
-pogo build LinuxHeaders
-envv
-env
-env
-pogo build LinuxHeaders
-man bash
-ll
-ls -la
-ll
-env
-ll
-ls -la
-gcc
-pogo build LinuxHeaders
-env
-pogo build LinuxHeaders
-env
-cd /Pogo/Data/Compile/
-cd Sources/
-cd linux-4.15.3/
-ls -la
-touch xxx
-cd /Pogo/
 ls -la
 cd /Pogo/
 ll
@@ -498,3 +398,103 @@ less fstab
 less passwd
 zsh
 cd
+cd /LiFo/
+ll
+r
+cd /LiFo/
+ll
+r
+cd /Pogo/
+ll
+cd /Pogo/
+cd Data/
+cd Compile/
+ll
+find
+find -ls | less
+cd Data
+ls -l
+cd Compile/
+du
+gobolook 
+cd /tmp/gobo/
+cd root/
+cd usr/
+cd System/
+cd Environment/
+cd Tasks/
+less MountProc 
+cd etc
+less fstab 
+less passwd
+zsh
+cd
+cd /LiFo/
+r
+cd /LiFo/
+r
+cd /Pogo/
+pogo recipe  check
+recipe check
+recipe check LinuxHeaders
+help eval
+recipe check Core/LinuxHeaders
+type
+help type
+help declare
+pogo create
+lfboots 
+pwd
+while pwd
+which ped
+which pwd
+set
+help set
+help set | less
+pogo boots-check
+cd /LiFo/tools/
+tar tvf LFS-BOOK-8.2.tar.bz2 
+tar xvf LFS-BOOK-8.2.tar.bz2 
+cd 8.2/
+less md5sums 
+cd scripts/
+less eudev-rules.html 
+less apds01.html 
+rm -rv 8.2/
+xz
+man xz
+xz lfs-packages-8.2.tar 
+unxz lfs-packages-8.2.tar.xz 
+xz LFS-BOOK-8.2-NOCHUNKS.htm 
+xz LFS-BOOK-8.2.pdf 
+bzip2
+man bzip2
+bunzip2 LFS-BOOK-8.2.tar.bz2 
+xz LFS-BOOK-8.2.tar 
+tar tvf lfs-packages-8.2.tar 
+tar xvf lfs-packages-8.2.tar 
+cd lfs-packages-8.2
+less wget-list 
+less coreutils-8.29-i18n-1.patch 
+ll *patch*
+cd /Pogo/Data/Compile/Archives/
+cd ..
+cd Tools/
+ll
+pogo harvest
+pogo harvest LinuxHeaders
+pogo fest-8.2
+pogo fetch-8.2
+pogo maint-download-to-archives
+pogo maint-downloads-to-archives
+pogo bbuild
+pogo bbuild LinuxHeaders
+cd /bin
+ll sh
+pogo bbuild /LiFo/Recipes/LFSboots/504-binutils-1 
+cd /bin/
+ll
+ll sh
+cd /bin/
+ll
+ll sh

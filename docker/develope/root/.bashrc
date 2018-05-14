@@ -5,6 +5,10 @@ umask 022
 HISTCONTROL=ignorespace:ignoredups:erasedups
 
 case "${POGO_CHROOT}" in
+    Boots)
+        which="boots-chroot"
+        PATH=/tools/bin:/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin
+        ;;
     Tools)
         which="tools-chroot"
         PATH=/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin:/tools/bin

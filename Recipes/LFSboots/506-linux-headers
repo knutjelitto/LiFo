@@ -1,0 +1,17 @@
+#!/bin/bash
+
+Title="5.6. Linux-4.15.3 API Headers"
+Name=LinuxHeaders
+Version=4.15.3
+Supplies=(https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.15.3.tar.xz)
+
+Build() 
+{
+    make mrproper
+    make INSTALL_HDR_PATH=dest headers_install
+}
+
+Install()
+{
+    cp -rv dest/include/* /tools/include
+}

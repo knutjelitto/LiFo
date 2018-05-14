@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu (source-only)
 
 [[ -z ${_recipeFunctionsIncluded:-} ]] || exit
 _recipeFunctionsIncluded=true
@@ -15,6 +15,18 @@ FindRecipe()
     local token=$1
     local recipe=/LiFo/Recipes/$token/Recipe
 
+    case $token in
+        .*)
+            recipe=$(cd $(dirname $token); echo $(pwd)/$(basename $token))
+            ;;
+        /*)
+            recipe=$(cd $(dirname $token); echo $(pwd)/$(basename $token))
+            ;;
+        *)
+            recipe=/LiFo/Recipes/$token/Recipe
+            ;;
+    esac
+
     if [[ ! -r $recipe ]]; then
         Fatal "nothing found for recipe token '$token'"
     fi
@@ -28,33 +40,38 @@ SourceRecipe()
         Fatal "no recipe token given"
     fi
 
-    local token=$1
+    Token=$1
 
     RecipeUnset
 
-    Recipe=$(FindRecipe $token)
+    Recipe=$(FindRecipe $Token)
     RecipeStore=$(dirname $Recipe)
     
     source $Recipe
 
     while [[ -n ${Redirect:-} ]]; do
-        echo "Redirecting $token -> $Redirect"
-        token=$Redirect
+        echo "Redirecting $Token -> $Redirect"
+        Token=$Redirect
         Unset
-        Recipe=$(FindRecipe $token)
+        Recipe=$(FindRecipe $Token)
         source $Recipe
     done
 
     local variable
     for variable in "${RecipeRequiredVars[@]}"; do
         if [[ ! -v ${variable} ]]; then
-            Fatal "required variable '$variable' missing in receipe '$token' at '$Recipe'"
+            Fatal "required variable '$variable' missing in receipe '$Token' at '$Recipe'"
         fi
     done
     local function
     for function in "${RecipeRequiredFuncs[@]}"; do
         if [[ ! "$(type -t $function)" == "function" ]]; then
-            Fatal "required function '$function' missing in receipe '$token' at '$Recipe'"
+            Fatal "required function '$function' missing in receipe '$Token' at '$Recipe'"
+        fi
+    done
+    for function in "${RecipeOptionalFuncs[@]}"; do
+        if [[ ! "$(type -t $function)" == "function" ]]; then
+            eval "$function () { true; }"
         fi
     done
 }

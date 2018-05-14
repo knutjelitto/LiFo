@@ -1,0 +1,21 @@
+#!/bin/bash
+
+Title="5.21. File-5.32"
+Name=file
+Version=5.32
+Supplies=(ftp://ftp.astron.com/pub/file/file-5.32.tar.gz)
+
+Configure() 
+{
+    ./configure --prefix=/tools
+}
+
+Build() 
+{
+    make
+}
+
+Install()
+{
+    make install
+}

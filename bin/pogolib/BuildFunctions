@@ -3,7 +3,7 @@
 [[ -z ${_buildFunctionsIncluded:-} ]] || exit
 _buildFunctionsIncluded=true
 
-SetupBuild ()
+BuildSetup ()
 {
     local token=$1
 
@@ -18,13 +18,11 @@ SetupBuild ()
 }
 
 
-EnsureToolsBuildHead ()
+BuildEnsureBuildHead ()
 {
     rm $verbose --recursive --force $BuildHead
 
     mkdir $verbose --parents $BuildHead/{,Chroot/{Root,Changes,Merged,Work},State}
-
-    MakeToolsRootfs $BuildChroot/Root
 }
 
 ProvideSupply ()
@@ -248,6 +246,66 @@ ExecInToolsChroot ()
     mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
 
     POGO_CHROOT=Tools \
+    LC_ALL=POSIX \
+    FORCE_UNSAFE_CONFIGURE=1 \
+    chroot $merged /bin/bash -l -c "$command"
+)
+
+MakeBootsRootfs ()
+{
+    local rootfs=$1
+
+    RootfsMkDir ()
+    {
+        local mode="--mode=$1"
+        shift 1
+        while (( $# > 0 )); do
+            local dir=$rootfs/$1
+            shift
+            mkdir $verbose --parents $mode $dir
+        done
+    }
+
+    RootfsSymLn ()
+    {
+        local link=$rootfs/$1
+        local target=$2
+        
+        ln $verbose --symbolic $target $link
+    }
+
+    RootfsMkDir 0775 bin
+    RootfsSymLn bin/sh      bash
+    RootfsSymLn tools       $PogoTools
+
+    unset RootfsMkDir
+    unset RootfsSymLn
+}
+
+ExecInBootsChroot ()
+(   # execute in subshell
+
+    local command="$1"
+
+    local lowerdir="lowerdir=$BuildChroot/Root:$PogoTop:/"
+    local upperdir="upperdir=$BuildChroot/Changes"
+    local workdir="workdir=$BuildChroot/Work"
+    local merged="$BuildChroot/Merged"
+
+    trap 'BuildUnmount || true' EXIT
+
+    mount $verbose --types overlay overlay --options $lowerdir,$upperdir,$workdir $merged
+    
+    mount $verbose --bind /LiFo $merged/LiFo
+    mount $verbose --bind /root $merged/root
+    mount $verbose --rbind /dev $merged/dev
+    mount $verbose --rbind /sys $merged/sys
+    mount $verbose --rbind /proc $merged/proc
+    mount $verbose --bind /etc/hostname $merged/etc/hostname
+    mount $verbose --bind /etc/hosts $merged/etc/hosts
+    mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
+
+    POGO_CHROOT=Boots \
     LC_ALL=POSIX \
     FORCE_UNSAFE_CONFIGURE=1 \
     chroot $merged /bin/bash -l -c "$command"

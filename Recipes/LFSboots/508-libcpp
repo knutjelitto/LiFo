@@ -1,0 +1,26 @@
+#!/bin/bash
+
+Title="5.8. Libstdc++-7.3.0"
+Name=LibStdC++
+Version=7.3.0
+Supplies=(http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz)
+BuildIn=build
+
+Configure() {
+    ../libstdc++-v3/configure           \
+        --host=$LFS_TGT                 \
+        --prefix=/tools                 \
+        --disable-multilib              \
+        --disable-nls                   \
+        --disable-libstdcxx-threads     \
+        --disable-libstdcxx-pch         \
+        --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/7.3.0
+}
+
+Build() {
+    make
+}
+
+Install() {
+    make install
+}

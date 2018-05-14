@@ -11,7 +11,7 @@ InChroot || Fatal "call in chroot only"
 
 Token=$1
 
-SetupBuild $Token
+BuildSetup $Token
 
 BuildExec()
 {

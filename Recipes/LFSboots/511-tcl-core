@@ -1,0 +1,25 @@
+#!/bin/bash
+
+Title="5.11. Tcl-core-8.6.8"
+Name=tcl
+Version=8.6.8
+Supplies=(https://downloads.sourceforge.net/tcl/tcl8.6.8-src.tar.gz)
+BuildIn=unix
+
+Configure() {
+    ./configure --prefix=/tools
+}
+
+Build() {
+    make
+}
+
+Install() {
+    make install
+
+    chmod -v u+w /tools/lib/libtcl8.6.so
+
+    make install-private-headers
+
+    ln -sv tclsh8.6 /tools/bin/tclsh
+}

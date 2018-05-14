@@ -1,0 +1,24 @@
+#!/bin/bash
+
+Title="5.12. Expect-5.45.4"
+Name=expect
+Version=5.45.4
+Supplies=(http://prdownloads.sourceforge.net/expect/expect5.45.4.tar.gz)
+
+Configure() {
+    cp -v configure{,.orig}
+    sed 's:/usr/local/bin:/bin:' configure.orig > configure
+
+    ./configure \
+        --prefix=/tools         \
+        --with-tcl=/tools/lib   \
+        --with-tclinclude=/tools/include
+}
+
+Build() {
+    make
+}
+
+Install() {
+    make SCRIPTS="" install
+}
