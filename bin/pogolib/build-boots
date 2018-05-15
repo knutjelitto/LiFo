@@ -1,5 +1,9 @@
 #!/bin/bash -eu
 
-for recipe in {504..507}; do
+Import PogoConfig
+
+rm -rv $PogoCompile/*
+
+for recipe in {504..534}; do
     pogo bbuild $recipe
 done

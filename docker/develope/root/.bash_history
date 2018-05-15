@@ -1,102 +1,3 @@
-strings cc1 | lib64
-strings cc1 | grep lib64
-cd /m
-cd /tmp/
-cd crux/
-cd /tmp/crux/crux.nu/ports/crux-3.3/
-cd core
-ll | less
-cd glibc
-less glibc-2.24-10.patch 
-less nsswitch.conf 
-less resolv.conf 
-less ld.so.conf 
-less Pkgfile 
-cd
-lfspider 
-pogo create | less
-build
-pogo create
-help trap
-help trap
-env
-pogo build LinuxHeaders | less
-help test
-mount
-(cd /Pogo/Data/Compile/Build/LinuxHeaders-4.15.3/Chroot/Changes; find .)
-(cd /Pogo/Data/Compile/Build/LinuxHeaders-4.15.3/Chroot/Changes; find .) | less
-(cd /Pogo/Data/Compile/Build/LinuxHeaders-4.15.3/Chroot/Changes; find . -ls) | less
-pogo build LinuxHeaders
-cd /
-cd mnt
-ls -l
-mkdir gobo1
-mount -o loop /LiFo/GoboLinux-016.01-x86_64.iso /mnt/gobo1/
-cd gobo1/
-less README 
-cat gobo1/README 
-mkdir gobo2
-mount -o loop -t squashfs /mnt/gobo1/Packages-List-Base.squashfs /mnt/gobo2
-cd Linux
-cd 4.9.16/
-cd Resources/
-cd PackageSource 
-cat PackageSource 
-cd gobo1
-cd isolinux/
-umount /mnt/gobo2
-mount -o loop -t squashfs /mnt/gobo1/Packages-List-LFS.squashfs /mnt/gobo2
-cd gobo2
-cd Programs/
-cd ..
-ll
-ll gobo1
-mount -o loop -t squashfs /mnt/gobo1/GoboLinux-files.squashfs /mnt/gobo2
-ll gobo2/Data/
-ll gobo2/Data/Compile/
-ll gobo2/Data/Compile/Archives/
-ll gobo2/Data/Compile/S
-ll gobo2/Data/Compile/Sources/
-ll gobo2/Data/Compile/Store/
-ll gobo2/Data/Variable/
-umount gobo2
-mount -o loop -t squashfs /mnt/gobo1/GoboLinux-rest.squashfs /mnt/gobo2
-ll gobo2
-ll gobo2/System
-ll gobo2/System/Environment/Cache 
-ll gobo2/System/Environment
-ll gobo2/usr/
-ll gobo2/usr/libexec/
-ll gobo2/System/Settings/
-ll gobo2/bin
-ll gobo2/etc
-ll gobo2/System/Index/
-ll gobo2/System/Index/bin/
-ll gobo2/System/
-ll gobo2/System/Environment/
-cd Linux
-cd 4.9.16/
-cd Resources/
-cd PackageSource 
-cat PackageSource 
-cd gobo1
-umount /mnt/gobo2
-mount -o loop -t squashfs /mnt/gobo1/Packages-List-LFS.squashfs /mnt/gobo2
-cd gobo2
-cd Programs/
-ll gobo1
-mount -o loop -t squashfs /mnt/gobo1/GoboLinux-files.squashfs /mnt/gobo2
-ll gobo2/Data/
-ll gobo2/Data/Compile/
-ll gobo2/Data/Compile/Archives/
-ll gobo2/Data/Compile/S
-ll gobo2/Data/Compile/Sources/
-ll gobo2/Data/Compile/Store/
-ll gobo2/Data/Variable/
-umount gobo2
-mount -o loop -t squashfs /mnt/gobo1/GoboLinux-rest.squashfs /mnt/gobo2
-ll gobo2
-ll gobo2/System
 ll gobo2/System/Environment/Cache 
 ll gobo2/System/Environment
 ll gobo2/usr/
@@ -498,3 +399,102 @@ $LFS_TGT-gcc -v -Wl,--verbose dummy.c
 cd /tools/lib
 ll
 ll c*
+cd /tmp
+echo 'int main(){}' > dummy.c
+$LFS_TGT-gcc dummy.c
+readelf -l a.out | grep ': /tools'
+env
+cd /Pogo/
+ll
+env
+cd /Pogo/
+ll
+env
+cd tmp/
+echo 'int main(){}' > dummy.c
+$LFS_TGT-gcc dummy.c
+readelf -l a.out | grep ': /tools'
+cd /tmp/
+echo 'int main(){}' > dummy.c
+$LFS_TGT-gcc dummy.c
+readelf -l a.out | grep ': /tools'
+cd /tools/bin/
+$LFS_TGT-gcc
+echo 'int main(){}' > dummy.c
+readelf -l a.out | grep ': /tools'
+cd 
+find /tools
+cd /tools
+find
+find -name crt0
+find /Data/Compile/Tools
+$LFS_TGT-gcc dummy.c
+find /Data/Compile/Tools -name crt1.0
+cd /Data/Compile/Store/
+find . -name Bom
+cd LFSboots/GLibc/2.27/
+less Bom
+cat Bom | grep crt1
+cd /tools/lib
+ll | less
+find .
+find . | less
+find . -name crt1.o
+cd /tmp
+$LFS_TGT-gcc dummy.c 
+find .
+find . | less
+find . -name crt1.o
+cd /tmp
+$LFS_TGT-gcc dummy.c 
+cd  /tmp
+echo 'int main(){}' > dummy.c
+$LFS_TGT-gcc dummy.c
+$LFS_TGT-gcc -v dummy.c | less
+updatedb
+locate
+$LFS_TGT-gcc -B/tools/lib -v dummy.c
+readelf -l a.out | grep ': /tools'
+clear
+$LFS_TGT-gcc -v dummy.c
+$LFS_TGT-gcc -v -Wl,--verbose dummy.c
+cd /tools/lib
+ll c*
+cd /Pogo/
+l
+mv Archives ../Variable
+ls -la
+pogo create | less
+cd /
+cd Pogo/
+mv tools tools.~
+rm -rv tools.~/
+pogo create
+cd /Pogo/Data/Compile/Build/Binutils-2.30/Chroot/Changes/
+cd Data/
+cd Compile/
+cd Lfs/
+pogo bharvest 504
+cd /Pogo/Data/Compile/Lfs/tools
+cd ..
+pogo bbuild 507
+pogo bshell
+cd
+cd /Pogo/Data/Compile/
+ll
+rm -rv *
+pogo build-boots
+pogo bshell 507
+pogo build-boots
+cd /tmp
+echo 'int main(){}' > dummy.c
+$LFS_TGT-gcc dummy.c
+readelf -l a.out | grep ': /tools'
+rm -rv *
+pogo bshell 507
+pogo build-boots
+cd /Pogo/Data/Compile/Store/
+cd LFSboots/
+ll
+man ls
+ll -t

@@ -13,7 +13,7 @@ Token=${1:-}
 
 BuildSetupRecipe $Token
 
-echo -ne "\033]0;HARVEST $RecipeCollection / $Title\007"
+Header "HARVEST $RecipeCollection / $Title"
 
 Cleanup ()
 {
@@ -28,6 +28,14 @@ cat > $blackout << "EOF"
 /\ttmp.*/ { next }
 /\tData.*/ { next }
 /.*/ { print $0 }
+/\tbin$/ { next }
+/\tshare$/ { next }
+/\tshare\/man$/ { next }
+/\tshare\/man\/.*/ { next }
+/\tshare\/info$/ { next }
+/\tshare\/info\/.*/ { next }
+/\tshare\/doc$/ { next }
+/\tshare\/doc\/.*/ { next }
 EOF
 #/\tbin$/ { next }
 #/\tshare$/ { next }
@@ -38,7 +46,7 @@ EOF
 #/\tshare\/doc$/ { next }
 #/\tshare\/doc\/.*/ { next }
 
-topDir=$BuildChanges/Data/Compile/Tools
+topDir=$BuildChanges/Data/Compile/Lfs/tools
 
 StoreLocation=$PogoStore/$RecipeCollection/$Name/$Version
 
@@ -99,7 +107,7 @@ Transfer ()
 
 MakeBom
 Validate
-#Strip
+Strip
 
 ListKnown | Transfer
 

@@ -1,18 +1,21 @@
 #!/bin/bash
 
 Title="5.19. Coreutils-8.29"
-Name=coreutils
+Name=Coreutils
 Version=8.29
 Supplies=(http://ftp.gnu.org/gnu/coreutils/coreutils-8.29.tar.xz)
 
-Configure() {
+Configure() 
+{
     ./configure --prefix=/tools --enable-install-program=hostname
 }
 
-Build() {
-    make
+Build() 
+{
+    make -j8
 }
 
-Install() {
+Install() 
+{
     make install
 }

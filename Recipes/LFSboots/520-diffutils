@@ -1,18 +1,21 @@
 #!/bin/bash
 
 Title="5.20. Diffutils-3.6"
-Name=diffutils
+Name=Diffutils
 Version=3.6
 Supplies=(http://ftp.gnu.org/gnu/diffutils/diffutils-3.6.tar.xz)
 
-Configure() {
+Configure() 
+{
     ./configure --prefix=/tools
 }
 
-Build() {
-    make
+Build() 
+{
+    make -j8
 }
 
-Install() {
+Install() 
+{
     make install
 }

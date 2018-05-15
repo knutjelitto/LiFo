@@ -1,18 +1,21 @@
 #!/bin/bash
 
 Title="5.28. Patch-2.7.6"
-Name=patch
+Name=Patch
 Version=2.7.6
 Supplies=(http://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz)
 
-Configure() {
+Configure() 
+{
     ./configure --prefix=/tools
 }
 
-Build() {
-    make
+Build() 
+{
+    make -j8
 }
 
-Install() {
+Install() 
+{
     make install
 }

@@ -19,7 +19,7 @@ Configure()
 
 Build()
 {
-    make -j4
+    make -j8
     mkdir -v /tools/lib && ln -sv lib /tools/lib64     
 }
 

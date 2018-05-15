@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="5.31. Tar-1.30"
-Name=tar
+Name=Tar
 Version=1.30
 Supplies=(http://ftp.gnu.org/gnu/tar/tar-1.30.tar.xz)
 
@@ -12,7 +12,7 @@ Configure()
 
 Build() 
 {
-    make
+    make -j8
 }
 
 Install() 

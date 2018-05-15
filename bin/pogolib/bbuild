@@ -15,7 +15,7 @@ token=${1:-}
 
 BuildSetupRecipe $token
 
-echo -ne "\033]0;BUILD $RecipeCollection / $Title\007"
+Header "BUILD $RecipeCollection / $Title"
 
 BuildCreateBuildHead
 MakeBootsRootfs $BuildChroot/Root

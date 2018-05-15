@@ -26,6 +26,11 @@ Popd ()
     popd >/dev/null
 }
 
+Header ()
+{
+    echo -ne "\033]0;$1\007"
+}
+
 #
 # (Re-)Create then Pogo tree
 #
@@ -38,7 +43,7 @@ EnsurePogoEnvironment ()
     fi
 
     mkdir ${verbose}  --parents $PogoTop
-    mkdir ${verbose}  --parents $PogoTop/Data/{,Compile/{,Sources,Build,Store,Tools},Variable/{,Archives,Downloads}}
+    mkdir ${verbose}  --parents $PogoTop/Data/{,Compile/{,Sources,Build,Store,Lfs/{,tools}},Variable/{,Archives,Downloads}}
     mkdir ${verbose}  --parents $PogoTop/Programs
     mkdir ${verbose}  --parents $PogoTop/System/{,Index}
 

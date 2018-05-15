@@ -7,7 +7,7 @@ HISTCONTROL=ignorespace:ignoredups:erasedups
 case "${POGO_CHROOT}" in
     Boots)
         which="boots-chroot"
-        PATH=/tools/bin:/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin
+        PATH=/tools/bin:/bin:/usr/bin:/LiFo/bin
         ;;
     Tools)
         which="tools-chroot"

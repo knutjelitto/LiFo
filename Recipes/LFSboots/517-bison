@@ -1,18 +1,21 @@
 #!/bin/bash
 
 Title="5.17. Bison-3.0.4"
-Name=bison
+Name=Bison
 Version=3.0.4
 Supplies=(http://ftp.gnu.org/gnu/bison/bison-3.0.4.tar.xz)
 
-Configure() {
+Configure() 
+{
     ./configure --prefix=/tools
 }
 
-Build() {
-    make
+Build() 
+{
+    make -j8
 }
 
-Install() {
+Install() 
+{
     make install
 }

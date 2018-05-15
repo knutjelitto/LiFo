@@ -1,18 +1,21 @@
 #!/bin/bash
 
 Title="5.25. Grep-3.1"
-Name=grep
+Name=Grep
 Version=3.1
 Supplies=(http://ftp.gnu.org/gnu/grep/grep-3.1.tar.xz)
 
-Configure() {
+Configure()
+{
     ./configure --prefix=/tools
 }
 
-Build() {
-    make
+Build()
+{
+    make -j8
 }
 
-Install() {
+Install()
+{
     make install
 }

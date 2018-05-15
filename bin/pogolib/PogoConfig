@@ -19,12 +19,12 @@ PogoCompile=$PogoData/Compile
 PogoSources=$PogoCompile/Sources
 PogoBuild=$PogoCompile/Build
 PogoStore=$PogoCompile/Store
-PogoTools=$PogoCompile/Tools
+PogoLfs=$PogoCompile/Lfs
+PogoTools=$PogoLfs/tools
 
 PogoVariable=$PogoData/Variable
 PogoArchives=$PogoVariable/Archives
 PogoDownloads=$PogoVariable/Downloads
-
 
 PogoIndex=$PogoSystem/Index
 

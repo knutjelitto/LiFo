@@ -1,18 +1,21 @@
 #!/bin/bash
 
 Title="5.30. Sed-4.4"
-Name=sed
+Name=Sed
 Version=4.4
 Supplies=(http://ftp.gnu.org/gnu/sed/sed-4.4.tar.xz)
 
-Configure() {
+Configure() 
+{
     ./configure --prefix=/tools
 }
 
-Build() {
-    make
+Build() 
+{
+    make -j8
 }
 
-Install() {
+Install() 
+{
     make install
 }

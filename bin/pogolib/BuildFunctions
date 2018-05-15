@@ -287,7 +287,7 @@ MakeBootsRootfs ()
 
     RootfsMkDir 0775 bin
     RootfsSymLn bin/sh      bash
-    RootfsSymLn tools       /Data/Compile/Tools
+    RootfsSymLn tools       /Data/Compile/Lfs/tools
 
     unset RootfsMkDir
     unset RootfsSymLn
@@ -320,7 +320,7 @@ ExecInBootsChroot ()
 
     POGO_CHROOT=Boots \
     LC_ALL=POSIX \
-    LFS=/Data/Tools \
+    LFS=/Data/Compile/Lfs \
     LFS_TGT=x86_64-lfs-linux-gnu \
     FORCE_UNSAFE_CONFIGURE=1 \
     chroot $merged /bin/bash -l -c "$command"
