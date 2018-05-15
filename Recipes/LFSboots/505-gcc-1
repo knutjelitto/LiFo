@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Name=Gcc
+Name=Gcc1
 Title="5.5. GCC-7.3.0 - Pass 1"
 Version=7.3.0
 Supplies=(
@@ -16,12 +16,6 @@ Prepare()
     ln --verbose --symbolic ../mpfr-4.0.1 mpfr
     ln --verbose --symbolic ../gmp-6.1.2 gmp
     ln --verbose --symbolic ../mpc-1.1.0 mpc
-    #tar -xvf ../mpfr-4.0.1.tar.xz
-    #mv -v mpfr-4.0.1 mpfr
-    #tar -xvf ../gmp-6.1.2.tar.xz
-    #mv -v gmp-6.1.2 gmp
-    #tar -xvf ../mpc-1.1.0.tar.gz
-    #mv -v mpc-1.1.0 mpc
 
     for file in gcc/config/{linux,i386/linux{,64}}.h
     do
@@ -36,11 +30,7 @@ Prepare()
         touch $file.orig
     done
 
-    case $(uname -m) in
-        x86_64)
-            sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
-            ;;
-    esac
+    sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 }
 
 Configure()

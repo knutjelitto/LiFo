@@ -1,20 +1,22 @@
 #!/bin/bash
 
 Title="5.10. GCC-7.3.0 - Pass 2"
-Name=gcc
+Name=Gcc2
 Version=7.3.0
-Supplies=(http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz)
+Supplies=(
+    http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz
+    http://www.mpfr.org/mpfr-4.0.1/mpfr-4.0.1.tar.xz
+    http://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.xz
+    https://ftp.gnu.org/gnu/mpc/mpc-1.1.0.tar.gz
+)
 BuildIn=build
 
 Prepare() {
 
-    tar -xf ../mpfr-4.0.1.tar.xz
-    mv -v mpfr-4.0.1 mpfr
-    tar -xf ../gmp-6.1.2.tar.xz
-    mv -v gmp-6.1.2 gmp
-    tar -xf ../mpc-1.1.0.tar.gz
-    mv -v mpc-1.1.0 mpc
-
+    ln --verbose --symbolic ../mpfr-4.0.1 mpfr
+    ln --verbose --symbolic ../gmp-6.1.2 gmp
+    ln --verbose --symbolic ../mpc-1.1.0 mpc
+ 
     cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
         `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/include-fixed/limits.h
 
@@ -34,7 +36,8 @@ Prepare() {
     sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 }
 
-Configure() {
+Configure()
+{
     CC=$LFS_TGT-gcc                                     \
     CXX=$LFS_TGT-g++                                    \
     AR=$LFS_TGT-ar                                      \
@@ -50,11 +53,13 @@ Configure() {
         --disable-libgomp
 }
 
-Build() {
-    make
+Build()
+{
+    make -j4
 }
 
-Install() {
+Install()
+{
     make install
     ln -sv gcc /tools/bin/cc
 }

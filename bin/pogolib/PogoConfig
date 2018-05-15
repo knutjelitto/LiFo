@@ -16,13 +16,13 @@ PogoPrograms=$PogoTop/Programs
 PogoSystem=$PogoTop/System
 
 PogoCompile=$PogoData/Compile
-PogoArchives=$PogoCompile/Archives
 PogoSources=$PogoCompile/Sources
 PogoBuild=$PogoCompile/Build
 PogoStore=$PogoCompile/Store
 PogoTools=$PogoCompile/Tools
 
 PogoVariable=$PogoData/Variable
+PogoArchives=$PogoVariable/Archives
 PogoDownloads=$PogoVariable/Downloads
 
 

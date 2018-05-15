@@ -1,11 +1,12 @@
 #!/bin/bash
 
 Title="5.15. Ncurses-6.1"
-Name=ncurses
+Name=NCurses
 Version=6.1
 Supplies=(http://ftp.gnu.org/gnu/ncurses/ncurses-6.1.tar.gz)
 
-Configure() {
+Configure() 
+{
     sed -i s/mawk// configure
 
     ./configure \
@@ -17,10 +18,12 @@ Configure() {
         --enable-overwrite
 }
 
-Build() {
-    make
+Build() 
+{
+    make -j4
 }
 
-Install() {
+Install()
+{
     make install
 }

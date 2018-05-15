@@ -6,7 +6,10 @@ Version=2.27
 Supplies=(http://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.xz)
 BuildIn="build"
 
-Configure() {
+Configure()
+{
+    echo "LFS_TGT: $LFS_TGT"
+    exit 127
     ../configure                            \
         --prefix=/tools                     \
         --host=$LFS_TGT                     \
@@ -17,10 +20,12 @@ Configure() {
         libc_cv_c_cleanup=yes
 }
 
-Build() {
-    make
+Build()
+{
+    make -j1
 }
 
-Install() {
+Install()
+{
     make install
 }

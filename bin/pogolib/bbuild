@@ -9,36 +9,23 @@ InChroot && Fatal "don't call in chroot"
 
 #verbose=''
 
-Token=${1:-}
+token=${1:-}
 
-[[ -n $Token ]] || Fatal "no recipe token given"
+[[ -n $token ]] || Fatal "no recipe token given"
 
-BuildSetupRecipe $Token
+BuildSetupRecipe $token
 
-BuildEnsureBuildHead
+echo -ne "\033]0;BUILD $RecipeCollection / $Title\007"
+
+BuildCreateBuildHead
 MakeBootsRootfs $BuildChroot/Root
 
 ProvideSupplies
 
-progress=1
-Progress ()
-{
-    local line
-    local sign
-    while read line; do
-        case $progress in
-            1) sign='|' progress=2 ;;
-            2) sign='/' progress=3 ;;
-            3) sign='-' progress=4 ;;
-            4) sign='\\' progress=5 ;;
-            5) sign='|' progress=1 ;;
-        esac
-        echo -ne "\r$sign"
-    done
-}
+ExecInBootsChroot "pogo compile $token"
 
-ExecInBootsChroot "pogo compile $Token"
-#ExecInBootsChroot "bash"
+pogo bharvest $token
 
+BuildCleanBuildHead
 
 echo DONE

@@ -13,35 +13,94 @@ Token=${1:-}
 
 BuildSetupRecipe $Token
 
-blacklist=$(mktemp)
-bom=$(mktemp)
+echo -ne "\033]0;HARVEST $RecipeCollection / $Title\007"
 
-cat > $blacklist << "EOF"
- /$
- /tmp.*
- /Data.*
- /bin$
- /include$
+Cleanup ()
+{
+    rm $verbose --force $blackout
+}
+
+trap Cleanup EXIT
+
+blackout=$(mktemp)
+
+cat > $blackout << "EOF"
+/\ttmp.*/ { next }
+/\tData.*/ { next }
+/.*/ { print $0 }
 EOF
+#/\tbin$/ { next }
+#/\tshare$/ { next }
+#/\tshare\/man$/ { next }
+#/\tshare\/man\/.*/ { next }
+#/\tshare\/info$/ { next }
+#/\tshare\/info\/.*/ { next }
+#/\tshare\/doc$/ { next }
+#/\tshare\/doc\/.*/ { next }
 
 topDir=$BuildChanges/Data/Compile/Tools
 
+StoreLocation=$PogoStore/$RecipeCollection/$Name/$Version
+
+mkdir $verbose --parents $StoreLocation
+BomFile=$StoreLocation/Bom
+
 Pushd $topDir
 
-(
-    find . -mindepth 1 \( -type l -printf '%y %M %4m %3n %10s /%P -> %l\n' -o -printf '%y %M %4m %3n %10s /%P\n' \)
-) | grep -v -f $blacklist >$bom
+MakeBom ()
+{
+    (
+        cd $topDir
+        find . -mindepth 1 \( -type l -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\t%l\n' -o -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\n' \)
+    ) | gawk -f $blackout >$BomFile
+}
 
+ListFiles () { cat $BomFile | awk '/^f\t/ { print $6 }'; }
+ListKnown () { cat $BomFile | awk '/^[dfl]\t/ { print $6 }'; }
+ListUnknown () { cat $BomFile | awk '/^[dfl]\t/ { next } /.*/ { print $0 }'; }
 
-echo XXX
-cat $bom | less
-echo YYY
+Validate ()
+{
+    cat $BomFile | gawk '/^[dfl]\t/ { next } /.*/ { print $0; exit 1; }' || Fatal "unkown entry in bill of material"
+}
 
-cat $bom | cut -c 35- | \
-tar --create --file - \
-    --verbatim-files-from --files-from=- --directory=$topDir | \
-tar --extract --verbose --directory=$PogoTools
+Strip ()
+{
+    cd $topDir
+
+    StripUnneeded ()
+    {
+        [[ -z $verbose ]] || echo strip --strip-unneeded $1
+        strip --strip-unneeded $1
+    }
+
+    StripDebug ()
+    {
+        [[ -z $verbose ]] || echo strip --strip-debug $1
+        strip --strip-debug $1
+    }
+
+    ListFiles | file -i -f - | while read name type; do
+        name=${name%:}
+        case $type in
+            application/x-executable*)  StripUnneeded $name ;;
+            application/x-sharedlib*)   StripDebug $name ;;
+            application/x-object*)      StripDebug $name ;;
+            application/x-archive*)     StripDebug $name ;;
+        esac
+    done
+}
+
+Transfer ()
+{
+    tar $verbose --create --no-recursion --verbatim-files-from --files-from=- --directory=$topDir --auto-compress --file $StoreLocation/Files.tar.xz
+    tar $verbose --extract --directory=$PogoTools --file=$StoreLocation/Files.tar.xz
+}
+
+MakeBom
+Validate
+#Strip
+
+ListKnown | Transfer
 
 Popd
-
-rm $verbose --force $blacklist $bom

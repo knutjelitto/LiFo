@@ -8,8 +8,7 @@ echo "recipe-check: $1"
 RecipeSource $1
 
 declare -p Token
-declare -p Recipe
-declare -p RecipeStore
+declare -p RecipeFile
 declare -p Title
 declare -p Name
 declare -p Version

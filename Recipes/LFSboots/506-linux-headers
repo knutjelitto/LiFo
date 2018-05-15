@@ -13,5 +13,6 @@ Build()
 
 Install()
 {
+    mkdir --verbose --parents /tools/include
     cp -rv dest/include/* /tools/include
 }

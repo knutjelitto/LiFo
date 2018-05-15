@@ -1,12 +1,13 @@
 #!/bin/bash
 
-Name=Binutils
 Title='5.4. Binutils-2.30 - Pass 1'
+Name=Binutils
 Version=2.30
 Supplies=(http://ftp.gnu.org/gnu/binutils/binutils-2.30.tar.xz)
 BuildIn=build
 
-Configure() {
+Configure()
+{
     ../configure \
         --prefix=/tools             \
         --with-sysroot=$LFS         \
@@ -16,10 +17,13 @@ Configure() {
         --disable-werror
 }
 
-Build() {
+Build()
+{
     make -j4
+    mkdir -v /tools/lib && ln -sv lib /tools/lib64     
 }
 
-Install() {
+Install()
+{
     make install
 }

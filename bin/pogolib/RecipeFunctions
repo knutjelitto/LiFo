@@ -8,84 +8,67 @@ RecipeOptionalVars=(BuildIn Redirect)
 RecipeRequiredFuncs=()
 RecipeOptionalFuncs=(Prepare Configure Build Install Trim)
 RecipesSource=/LiFo/Recipes
-RecipesPath=Core:Optional:LFSboots
+RecipesPath=Core:Optional:LFSboots:LFSTools
+declare RecipeFile RecipeCollection
 
 RecipeUnset () { unset "${RecipeRequiredVars[@]}" "${RecipeRequiredFuncs[@]}" "${RecipeOptionalVars[@]}" "${RecipeOptionalFuncs[@]}"; }
 
 RecipeFind ()
 {
-    local token=$1
-    local recipe=/LiFo/Recipes/$token/Recipe
-
-    for part in ${RecipesPath//:/ }; do
-        Trace "looking in '/LiFo/Recipes/$part'"
-        recipe=/LiFo/Recipes/$part/$token
-        if [[ ! -f $recipe ]]; then
-            Trace "not found: $recipe"
-            for recipe in /LiFo/Recipes/$part/$token-*; do
-                Trace "try: $recipe"
-                if [[ -f $recipe ]]; then
-                    Trace "found: $recipe"
-                    echo $recipe
+    # sets global RecipeCollection / RecipeFile
+    for RecipeCollection in ${RecipesPath//:/ }; do
+        RecipeFile=/LiFo/Recipes/$RecipeCollection/$Token
+        if [[ ! -f $RecipeFile ]]; then
+            for RecipeFile in /LiFo/Recipes/$RecipeCollection/$Token-*; do
+                if [[ -f $RecipeFile ]]; then
                     return
                 fi
             done
-            Trace "not found: $recipe"
-            recipe=/LiFo/Recipes/$part/$token-*
         fi
-        if [[ ! -f $recipe ]]; then
-            Trace "not found: $recipe"
-            recipe=/LiFo/Recipes/$part/$token/Recipe
+        if [[ ! -f $RecipeFile ]]; then
+            RecipeFile=/LiFo/Recipes/$RecipeCollection/$Token/Recipe
         fi
-        if [[ ! -f $recipe ]]; then
-            Trace "not found: $recipe"
-        else
-            Trace "found: $recipe"
-            echo "$recipe"
+        if [[ -f $RecipeFile ]]; then
             return
         fi
     done
 
-    if [[ ! -r $recipe ]]; then
-        Fatal "nothing found for recipe token '$token'"
+    if [[ ! -f RecipeFile ]]; then
+        Fatal "nothing found for recipe token '$Token'"
     fi
-
-    echo $recipe
 }
 
 RecipeSource ()
 {
-    if [[ -z $1 ]]; then
+    Token=${1:-}
+
+    if [[ -z $Token ]]; then
         Fatal "no recipe token given"
     fi
 
-    Token=$1
-
     RecipeUnset
-
-    Recipe=$(RecipeFind $Token)
-    RecipeStore=$(dirname $Recipe)
+    RecipeFind
     
-    source $Recipe
+    source $RecipeFile
 
     while [[ -n ${Redirect:-} ]]; do
         echo "Redirecting $Token -> $Redirect"
         Token=$Redirect
-        Unset
-        Recipe=$(RecipeFind $Token)
-        source $Recipe
+        RecipeUnset
+        RecipeFind
+        source $RecipeFile
     done
 
     local variable
     for variable in "${RecipeRequiredVars[@]}"; do
         if [[ ! -v ${variable} ]]; then
-            Fatal "required variable '$variable' missing in receipe '$Token' at '$Recipe'"
+            Fatal "required variable '$variable' missing in receipe '$Token' at '$RecipeFile'"
         fi
     done
     local function
     for function in "${RecipeRequiredFuncs[@]}"; do
         if [[ ! "$(type -t $function)" == "function" ]]; then
-            Fatal "required function '$function' missing in receipe '$Token' at '$Recipe'"
+            Fatal "required function '$function' missing in receipe '$Token' at '$RecipeFile'"
         fi
     done
     for function in "${RecipeOptionalFuncs[@]}"; do

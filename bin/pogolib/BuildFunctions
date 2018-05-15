@@ -20,9 +20,18 @@ BuildSetupRecipe ()
 
 BuildEnsureBuildHead ()
 {
-    rm $verbose --recursive --force $BuildHead
-
     mkdir $verbose --parents $BuildHead/{,Chroot/{Root,Changes,Merged,Work},State}
+}
+
+BuildCleanBuildHead ()
+{
+    rm $verbose --recursive --force $BuildHead
+}
+
+BuildCreateBuildHead ()
+{
+    BuildCleanBuildHead
+    BuildEnsureBuildHead
 }
 
 ProvideSupply ()
@@ -308,8 +317,6 @@ ExecInBootsChroot ()
     mount $verbose --bind /etc/hostname $merged/etc/hostname
     mount $verbose --bind /etc/hosts $merged/etc/hosts
     mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
-
-    echo XXX
 
     POGO_CHROOT=Boots \
     LC_ALL=POSIX \

@@ -1,0 +1,5 @@
+#!/bin/bash -eu
+
+for recipe in {504..507}; do
+    pogo bbuild $recipe
+done

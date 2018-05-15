@@ -1,79 +1,3 @@
-cd ..
-du -h | less
-cd libexec/
-cd gcc/
-l
-cd x86_64-lfs-linux-gnu/
-cd 7.3.0/
-strings cc1
-strings cc1 | grep tools
-pogo build LinuxHeaders
-cd -
-string cc1 | lib64
-strings cc1 | lib64
-strings cc1 | grep lib64
-cd
-lfspider 
-cd /m
-cd /tmp/
-cd crux/
-ll
-cd -
-string cc1 | lib64
-strings cc1 | lib64
-strings cc1 | grep lib64
-cd /m
-cd /tmp/
-cd crux/
-cd /tmp/crux/crux.nu/ports/crux-3.3/
-cd core
-ll | less
-cd glibc
-ll
-less glibc-2.24-10.patch 
-less nsswitch.conf 
-less resolv.conf 
-less ld.so.conf 
-less Pkgfile 
-cd
-lfspider 
-mount
-pogo create | less
-build
-pogo create
-help trap
-pogo build LinuxHeaders
-help trap
-pogo build LinuxHeaders
-mount
-env
-pogo build LinuxHeaders
-cd lib
-ls ld*
-strings ld-2.27.so 
-strings ld-2.27.so | less
-cd gcc/x86_64-lfs-linux-gnu/7.3.0/
-du
-cd plugin/
-du -h | less
-cd libexec/
-cd gcc/
-l
-cd x86_64-lfs-linux-gnu/
-cd 7.3.0/
-strings cc1
-strings cc1 | grep tools
-cd -
-string cc1 | lib64
-strings cc1 | lib64
-strings cc1 | grep lib64
-cd
-lfspider 
-cd /m
-cd /tmp/
-cd crux/
-cd -
-string cc1 | lib64
 strings cc1 | lib64
 strings cc1 | grep lib64
 cd /m
@@ -498,3 +422,79 @@ pogo bbuild 506
 pogo bharvest 506
 pogo bbuild 507
 pogo bharvest 507
+pogo bharvest 506
+pogo bbuild 507
+pogo bharvest 507
+cd tools
+env
+cd
+cd /Data/Compile/
+cd Build/
+ll
+rm -rv binutils-2.30/
+cd /Pogo/Data/Compile/Build/Gcc-7.3.0/
+pogo bbuild 505
+pogo bharvest 505
+cd /Pogo/Data/Compile/Tools/libexec/gcc/x86_64-lfs-linux-gnu/7.3.0/
+man tar
+pogo bbuild 506
+pogo bharvest 506
+pogo bbuild 507
+pogo bharvest 507
+pogo bharvest 506
+pogo bbuild 507
+pogo bharvest 507
+cd tools
+cd /Data/Compile/
+cd Build/
+rm -rv binutils-2.30/
+$LFS_TGT
+env
+cd /tools/bin/
+$LFS_TGT-gcc
+echo 'int main(){}' > dummy.c
+readelf -l a.out | grep ': /tools'
+cd 
+find /tools
+cd /tools
+find
+find -name crt0
+cd
+find /Data/Compile/Tools
+$LFS_TGT-gcc dummy.c
+find /Data/Compile/Tools -name crt1.0
+cd /Data/Compile/Store/
+find . -name Bom
+cd LFSboots/GLibc/2.27/
+less Bom
+cat Bom | grep crt1
+cd /tools/lib
+ll | less
+cd ..
+find .
+find . | less
+find . -name crt1.o
+cd /tmp
+$LFS_TGT-gcc dummy.c 
+cd /
+ll
+find .
+find . | less
+find . -name crt1.o
+cd /tmp
+$LFS_TGT-gcc dummy.c 
+cd /
+cd  /tmp
+echo 'int main(){}' > dummy.c
+$LFS_TGT-gcc dummy.c
+$LFS_TGT-gcc -v dummy.c | less
+updatedb
+locate
+$LFS_TGT-gcc -B/tools/lib -v dummy.c
+readelf -l a.out | grep ': /tools'
+clear
+$LFS_TGT-gcc -v dummy.c
+$LFS_TGT-gcc -v -Wl,--verbose dummy.c
+cd /tools/lib
+ll
+ll c*
