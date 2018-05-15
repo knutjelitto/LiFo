@@ -1,104 +1,3 @@
-ls -la
-cd /Pogo/
-ll
-touch xxx
-ls -la
-cd /Pogo/
-cd ..
-cd Data/
-ll
-cd /Data/Compile/Sources/
-ll
-ls -la
-touch xxx
-ls -la
-cd /Data/Compile/Build/LinuxHeaders-4.15.3/
-ll
-cd linux-4.15.3
-ls -la
-make mrproper
-make mrproper
-cd tools
-ls -la
-touch xxx
-pogo build LinuxHeaders
-cd /etc
-ls -la
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-rm tmp.*
-set
-set BASH_VERSINFO
-env
-env
-tree
-help set
-help set | less
-pogo build
-pogo build
-pogo build
-pogo build
-pogo build
-man bash
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders | less
-pogo build LinuxHeaders^
-pogo create
-cd Root/
-cd bin
-cd Variable/
-ls -l /LiFo/docker/tools
-tar xvf /LiFo/docker/tools/tools2.tar.xz 
-tar xvf /LiFo/docker/tools/tools2.tar.xz 
-du -h
-mv tools Tools
-env
-gcc
-env
-envv
-env
-env
-man bash
-cd /Pogo/Data/Compile/Build/LinuxHeaders-4.15.3/
-cd Chroot/
-cd Changes/
-cd /Pogo/Data/Compile/Sources/linux-4.15.3/
-rm xxx
-man filesystems
-cd Data/Compile/Build/LinuxHeaders-4.15.3/
-find
-
-mount | grep LiFo
-mount | grep Pogo
-(cd /Pogo/Data/Compile/Build/LinuxHeaders-4.15.3/Chroot/Changes; find)
-cd /Pogo/Data/Variable/
-mv Tools /Pogo
-cd /Pogo/
-rm -rv build/
-mv Tools tools
-(cd /Pogo/Data/Compile/Build/LinuxHeaders-4.15.3/Chroot/Changes; find -ls)
-find /Pogo/Data/Compile/Sources/
-find /Pogo/Data/Compile/Sources/ | less
-find /Pogo/Data/Compile/Build/ | less
-cd /
-strings
-man strings
-cd /Pogo/tools/
-ls -la
-cd bin/
-cd lib
-ls ld*
-strings ld-2.27.so 
-strings ld-2.27.so | less
-cd gcc/x86_64-lfs-linux-gnu/7.3.0/
-du
-cd plugin/
 cd ..
 du -h | less
 cd libexec/
@@ -498,3 +397,104 @@ ll sh
 cd /bin/
 ll
 ll sh
+pogo bbuild
+pogo bbuild LinuxHeaders
+pogo boots-check
+pogo bbuild
+ls /LiFo/Recipes/Core/LinuxHeaders/Recipe 
+man test
+pogo bbuild LinuxHeaders
+pogo bbuild 504
+pogo boots-check
+pogo compile 504
+pogo bbuild 504
+pogo boots-check
+pogo compile 504
+cd tools
+cd Data/
+cd Compile/
+cd Tools/
+ll
+pogo compile 504
+ll sh
+pogo bbuild /LiFo/Recipes/LFSboots/504-binutils-1 
+cd /bin/
+ll sh
+cd /bin/
+ll sh
+pogo bbuild
+pogo bbuild LinuxHeaders
+pogo boots-check
+pogo bbuild
+ls /LiFo/Recipes/Core/LinuxHeaders/Recipe 
+man test
+pogo bbuild LinuxHeaders
+pogo boots-check
+help set
+pogo build 504
+recipe check 504
+recipe chec 504
+recipe bbuild 504
+uname -m
+pogo bbuild 504
+pogo bbuild 504 | less
+pogo bbuild 504 
+cd /Pogo/Data/Compile/Build/Binutils-2.30/
+find
+find | less
+build
+pogo create
+time pogo bbuild 504 
+cd /Pogo/Data/
+cd Compile/Build/Binutils-2.30/
+ll
+du
+du -h
+cd
+find /opt
+find /Pogo/Data/Compile/
+find /Pogo/Data/Compile/Tools/
+find /Pogo/Data/Compile/Build/Binutils-2.30/
+find /Pogo/Data/Compile/Build/Binutils-2.30/Chroot/Changes/Data/Compile/Tools/
+find /Pogo/Data/Compile/Build/Binutils-2.30/Chroot/Changes/Data/Compile/Tools/ | less
+pogo harvest 504 | less
+pogo harvest 504
+find /Pogo/Data/Compile/Tools/
+find /Pogo/Data/Compile/Build/Binutils-2.30/
+find /Pogo/Data/Compile/Build/Binutils-2.30/Chroot/Changes/Data/Compile/Tools/
+find /Pogo/Data/Compile/Build/Binutils-2.30/Chroot/Changes/Data/Compile/Tools/ | less
+pogo harvest 504 | less
+echo$?
+echo $?
+man find
+pogo harvest 504
+time pogo bbuild 504 
+find /Pogo/Data/Compile/Tools/
+find /Pogo/Data/Compile/Build/Binutils-2.30/
+find /Pogo/Data/Compile/Build/Binutils-2.30/Chroot/Changes/Data/Compile/Tools/
+find /Pogo/Data/Compile/Build/Binutils-2.30/Chroot/Changes/Data/Compile/Tools/ | less
+pogo harvest 504 | less
+echo$?
+echo $?
+man find
+pogo harvest 504
+pogo bharvest
+time pogo bbuild 504 
+ll /tmp/
+man cp
+cd /Pogo/Data/Compile/Tools/
+du -s
+du -h
+pogo bharvest 504
+man ln
+cd /Pogo/Data/Compile/Build/Gcc-7.3.0/
+pogo bbuild 505
+pogo bharvest 505
+cd /Pogo/Data/Compile/Tools/libexec/gcc/x86_64-lfs-linux-gnu/7.3.0/
+ll
+cd
+man tar
+pogo bbuild 506
+pogo bharvest 506
+pogo bbuild 507
+pogo bharvest 507

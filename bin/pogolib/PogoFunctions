@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -eu (source-only)
 
 [[ -z ${_pogoFunctionsIncluded:-} ]] || exit
 _pogoFunctionsIncluded=true
@@ -14,6 +14,16 @@ Capitalize ()
     done
     IFS=$old_IFS
     echo $captitalized
+}
+
+Pushd ()
+{
+    pushd $1 >/dev/null
+}
+
+Popd ()
+{
+    popd >/dev/null
 }
 
 #

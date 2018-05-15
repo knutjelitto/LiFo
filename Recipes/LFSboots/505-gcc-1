@@ -3,17 +3,25 @@
 Name=Gcc
 Title="5.5. GCC-7.3.0 - Pass 1"
 Version=7.3.0
-Supplies=(http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz)
+Supplies=(
+    http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz
+    http://www.mpfr.org/mpfr-4.0.1/mpfr-4.0.1.tar.xz
+    http://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.xz
+    https://ftp.gnu.org/gnu/mpc/mpc-1.1.0.tar.gz
+)
 BuildIn=build
 
 Prepare()
 {
-    tar -xvf ../mpfr-4.0.1.tar.xz
-    mv -v mpfr-4.0.1 mpfr
-    tar -xvf ../gmp-6.1.2.tar.xz
-    mv -v gmp-6.1.2 gmp
-    tar -xvf ../mpc-1.1.0.tar.gz
-    mv -v mpc-1.1.0 mpc
+    ln --verbose --symbolic ../mpfr-4.0.1 mpfr
+    ln --verbose --symbolic ../gmp-6.1.2 gmp
+    ln --verbose --symbolic ../mpc-1.1.0 mpc
+    #tar -xvf ../mpfr-4.0.1.tar.xz
+    #mv -v mpfr-4.0.1 mpfr
+    #tar -xvf ../gmp-6.1.2.tar.xz
+    #mv -v gmp-6.1.2 gmp
+    #tar -xvf ../mpc-1.1.0.tar.gz
+    #mv -v mpc-1.1.0 mpc
 
     for file in gcc/config/{linux,i386/linux{,64}}.h
     do
@@ -63,7 +71,7 @@ Configure()
 
 Build()
 {
-    make
+    make -j4
 }
 
 Install()

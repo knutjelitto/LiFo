@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -eu (source-only)
 
 [[ -z ${_pogoConfigIncluded:-} ]] || exit
 _pogoConfigIncluded=true
@@ -12,6 +12,8 @@ else
 fi
 
 PogoData=$PogoTop/Data
+PogoPrograms=$PogoTop/Programs
+PogoSystem=$PogoTop/System
 
 PogoCompile=$PogoData/Compile
 PogoArchives=$PogoCompile/Archives
@@ -23,9 +25,7 @@ PogoTools=$PogoCompile/Tools
 PogoVariable=$PogoData/Variable
 PogoDownloads=$PogoVariable/Downloads
 
-PogoPrograms=$PogoTop/Programs
 
-PogoSystem=$PogoTop/System
 PogoIndex=$PogoSystem/Index
 
 _pogoExec=/LiFo/bin/pogolib
@@ -40,6 +40,11 @@ Fatal ()
         
     echo "${prefix}${0##*/}: $1" 1>&2
     exit 127
+}
+
+Trace ()
+{
+    echo "$1" >/dev/console
 }
 
 PogoExec ()

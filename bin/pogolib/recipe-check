@@ -5,7 +5,7 @@ Import RecipeFunctions
 
 echo "recipe-check: $1"
 
-SourceRecipe $1
+RecipeSource $1
 
 declare -p Token
 declare -p Recipe

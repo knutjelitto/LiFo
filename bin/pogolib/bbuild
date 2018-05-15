@@ -13,14 +13,32 @@ Token=${1:-}
 
 [[ -n $Token ]] || Fatal "no recipe token given"
 
-BuildSetup $Token
+BuildSetupRecipe $Token
 
 BuildEnsureBuildHead
 MakeBootsRootfs $BuildChroot/Root
 
 ProvideSupplies
 
-#ExecInToolsChroot "pogo compile $Token"
-ExecInBootsChroot "bash"
+progress=1
+Progress ()
+{
+    local line
+    local sign
+    while read line; do
+        case $progress in
+            1) sign='|' progress=2 ;;
+            2) sign='/' progress=3 ;;
+            3) sign='-' progress=4 ;;
+            4) sign='\\' progress=5 ;;
+            5) sign='|' progress=1 ;;
+        esac
+        echo -ne "\r$sign"
+    done
+}
+
+ExecInBootsChroot "pogo compile $Token"
+#ExecInBootsChroot "bash"
+
 
 echo DONE

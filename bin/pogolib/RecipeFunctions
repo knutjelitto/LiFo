@@ -7,25 +7,44 @@ RecipeRequiredVars=(Title Name Version Supplies)
 RecipeOptionalVars=(BuildIn Redirect)
 RecipeRequiredFuncs=()
 RecipeOptionalFuncs=(Prepare Configure Build Install Trim)
+RecipesSource=/LiFo/Recipes
+RecipesPath=Core:Optional:LFSboots
 
-RecipeUnset() { unset "${RecipeRequiredVars[@]}" "${RecipeRequiredFuncs[@]}" "${RecipeOptionalVars[@]}" "${RecipeOptionalFuncs[@]}"; }
+RecipeUnset () { unset "${RecipeRequiredVars[@]}" "${RecipeRequiredFuncs[@]}" "${RecipeOptionalVars[@]}" "${RecipeOptionalFuncs[@]}"; }
 
-FindRecipe()
+RecipeFind ()
 {
     local token=$1
     local recipe=/LiFo/Recipes/$token/Recipe
 
-    case $token in
-        .*)
-            recipe=$(cd $(dirname $token); echo $(pwd)/$(basename $token))
-            ;;
-        /*)
-            recipe=$(cd $(dirname $token); echo $(pwd)/$(basename $token))
-            ;;
-        *)
-            recipe=/LiFo/Recipes/$token/Recipe
-            ;;
-    esac
+    for part in ${RecipesPath//:/ }; do
+        Trace "looking in '/LiFo/Recipes/$part'"
+        recipe=/LiFo/Recipes/$part/$token
+        if [[ ! -f $recipe ]]; then
+            Trace "not found: $recipe"
+            for recipe in /LiFo/Recipes/$part/$token-*; do
+                Trace "try: $recipe"
+                if [[ -f $recipe ]]; then
+                    Trace "found: $recipe"
+                    echo $recipe
+                    return
+                fi
+            done
+            Trace "not found: $recipe"
+            recipe=/LiFo/Recipes/$part/$token-*
+        fi
+        if [[ ! -f $recipe ]]; then
+            Trace "not found: $recipe"
+            recipe=/LiFo/Recipes/$part/$token/Recipe
+        fi
+        if [[ ! -f $recipe ]]; then
+            Trace "not found: $recipe"
+        else
+            Trace "found: $recipe"
+            echo "$recipe"
+            return
+        fi
+    done
 
     if [[ ! -r $recipe ]]; then
         Fatal "nothing found for recipe token '$token'"
@@ -34,7 +53,7 @@ FindRecipe()
     echo $recipe
 }
 
-SourceRecipe()
+RecipeSource ()
 {
     if [[ -z $1 ]]; then
         Fatal "no recipe token given"
@@ -44,7 +63,7 @@ SourceRecipe()
 
     RecipeUnset
 
-    Recipe=$(FindRecipe $Token)
+    Recipe=$(RecipeFind $Token)
     RecipeStore=$(dirname $Recipe)
     
     source $Recipe
@@ -53,7 +72,7 @@ SourceRecipe()
         echo "Redirecting $Token -> $Redirect"
         Token=$Redirect
         Unset
-        Recipe=$(FindRecipe $Token)
+        Recipe=$(RecipeFind $Token)
         source $Recipe
     done
 

@@ -1,15 +1,15 @@
-#!/bin/bash
+#!/bin/bash -eu (source-only)
 
 [[ -z ${_buildFunctionsIncluded:-} ]] || exit
 _buildFunctionsIncluded=true
 
-BuildSetup ()
+BuildSetupRecipe ()
 {
     local token=$1
 
     EnsurePogoEnvironment
 
-    SourceRecipe $token
+    RecipeSource $token
 
     BuildHead=$PogoBuild/$Name-$Version
     BuildChroot=$BuildHead/Chroot
@@ -227,14 +227,16 @@ ExecInToolsChroot ()
 
     local command="$1"
 
-    local lowerdir="lowerdir=$BuildChroot/Root:$PogoTop"
-    local upperdir="upperdir=$BuildChroot/Changes"
-    local workdir="workdir=$BuildChroot/Work"
+    local lowerdir="$BuildChroot/Root:$PogoTop"
+    local upperdir="$BuildChroot/Changes"
+    local workdir="$BuildChroot/Work"
     local merged="$BuildChroot/Merged"
+
+    local options=lowerdir=$lowerdir,upperdir=$upperdir,workdir=$workdir
 
     trap 'BuildUnmount || true' EXIT
 
-    mount $verbose --types overlay overlay --options $lowerdir,$upperdir,$workdir $merged
+    mount $verbose --types overlay overlay --options $options $merged
     
     mount $verbose --bind /LiFo $merged/LiFo
     mount $verbose --bind /root $merged/root
@@ -276,7 +278,7 @@ MakeBootsRootfs ()
 
     RootfsMkDir 0775 bin
     RootfsSymLn bin/sh      bash
-    RootfsSymLn tools       $PogoTools
+    RootfsSymLn tools       /Data/Compile/Tools
 
     unset RootfsMkDir
     unset RootfsSymLn
@@ -287,14 +289,16 @@ ExecInBootsChroot ()
 
     local command="$1"
 
-    local lowerdir="lowerdir=$BuildChroot/Root:$PogoTop:/"
-    local upperdir="upperdir=$BuildChroot/Changes"
-    local workdir="workdir=$BuildChroot/Work"
+    local lowerdir="$BuildChroot/Root:$PogoTop:/"
+    local upperdir="$BuildChroot/Changes"
+    local workdir="$BuildChroot/Work"
     local merged="$BuildChroot/Merged"
+
+    local options=lowerdir=$lowerdir,upperdir=$upperdir,workdir=$workdir
 
     trap 'BuildUnmount || true' EXIT
 
-    mount $verbose --types overlay overlay --options $lowerdir,$upperdir,$workdir $merged
+    mount $verbose --types overlay overlay --options $options $merged
     
     mount $verbose --bind /LiFo $merged/LiFo
     mount $verbose --bind /root $merged/root
@@ -305,8 +309,12 @@ ExecInBootsChroot ()
     mount $verbose --bind /etc/hosts $merged/etc/hosts
     mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
 
+    echo XXX
+
     POGO_CHROOT=Boots \
     LC_ALL=POSIX \
+    LFS=/Data/Tools \
+    LFS_TGT=x86_64-lfs-linux-gnu \
     FORCE_UNSAFE_CONFIGURE=1 \
     chroot $merged /bin/bash -l -c "$command"
 )

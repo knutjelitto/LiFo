@@ -17,7 +17,7 @@ Configure() {
 }
 
 Build() {
-    make
+    make -j4
 }
 
 Install() {

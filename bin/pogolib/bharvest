@@ -9,7 +9,7 @@ InChroot && Fatal "please don't call in chroot (toplevel only)"
 
 #verbose=''
 
-Token=$1
+Token=${1:-}
 
 BuildSetupRecipe $Token
 
@@ -20,11 +20,11 @@ cat > $blacklist << "EOF"
  /$
  /tmp.*
  /Data.*
- /usr$
- /usr/include$
+ /bin$
+ /include$
 EOF
 
-topDir=$BuildChanges
+topDir=$BuildChanges/Data/Compile/Tools
 
 Pushd $topDir
 
@@ -33,9 +33,14 @@ Pushd $topDir
 ) | grep -v -f $blacklist >$bom
 
 
+echo XXX
 cat $bom | less
+echo YYY
 
-cat $bom | cut -c 35- | tar --create --verbose --auto-compress --file /tmp/xxx.tar.xz --verbatim-files-from --directory=$topDir --files-from=-
+cat $bom | cut -c 35- | \
+tar --create --file - \
+    --verbatim-files-from --files-from=- --directory=$topDir | \
+tar --extract --verbose --directory=$PogoTools
 
 Popd
 

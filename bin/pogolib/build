@@ -11,7 +11,7 @@ InChroot && Fatal "don't call in chroot"
 
 Token=$1
 
-BuildSetup $Token
+BuildSetupRecipe $Token
 
 BuildEnsureBuildHead
 MakeToolsRootfs $BuildChroot/Root

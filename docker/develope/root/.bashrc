@@ -1,4 +1,4 @@
-#echo "sourcing ~/.bashrc"
+echo "sourcing ~/.bashrc"
 
 shopt -s checkwinsize
 umask 022

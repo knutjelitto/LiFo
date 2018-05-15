@@ -5,13 +5,15 @@ Import PogoFunctions
 Import RecipeFunctions
 Import BuildFunctions
 
+env
+
 InChroot || Fatal "call in chroot only"
 
 #verbose=''
 
 Token=$1
 
-BuildSetup $Token
+BuildSetupRecipe $Token
 
 BuildExec()
 {
@@ -23,9 +25,9 @@ BuildExec()
     fi
 }
 
-BuildEnterMain && BuildExec Prepare
-BuildEnterBuildIn && BuildExec Configure
-BuildEnterBuildIn && BuildExec Build
-BuildEnterBuildIn && BuildExec Install
-BuildEnterBuildIn && BuildExec Trim
+BuildEnterMain && Prepare
+BuildEnterBuildIn && Configure
+BuildEnterBuildIn && Build
+BuildEnterBuildIn && Install
+BuildEnterBuildIn && Trim
 

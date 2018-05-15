@@ -3,7 +3,7 @@
 source LifoConfig
 Include 'recipelib/functions'
 
-SourceRecipe $1
+RecipeSource $1
 
 declare -p Title
 declare -p Name
