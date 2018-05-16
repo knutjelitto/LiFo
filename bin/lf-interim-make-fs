@@ -20,7 +20,7 @@ Include lf-interim-config
 #      +-- tools
 #      +-- sources
 
-MkDir()
+InterimMkDir()
 {
     local base=$1
     local mode=''
@@ -33,7 +33,7 @@ MkDir()
     done
 }
 
-SymLn()
+InterimSymLn()
 {
     local base=$1
     local link=$base/$2
@@ -42,7 +42,7 @@ SymLn()
     ln $verbose --symbolic $target $link
 }
 
-MkNod()
+InterimMkNod()
 {
     local base=$1
     local mode="--mode $2"
@@ -59,72 +59,72 @@ MkNod()
 rm $verbose --recursive $InterimBase
 mkdir $verbose --parents $InterimBase
 
-MkDir $InterimBase 0775 tools
-MkDir $InterimBase 0775 sources
-MkDir $InterimBase 0775 dev
-MkDir $InterimBase 0775 proc
-MkDir $InterimBase 0775 sys
-MkDir $InterimBase 0775 run
-MkDir $InterimBase 0775 bin
-MkDir $InterimBase 0775 boot
-MkDir $InterimBase 0775 etc
-MkDir $InterimBase 0775 etc/opt
-MkDir $InterimBase 0775 etc/sysconfig
-MkDir $InterimBase 0775 home
-MkDir $InterimBase 0775 lib
-MkDir $InterimBase 0775 lib/firmware
-MkDir $InterimBase 0775 lib64
-MkDir $InterimBase 0775 mnt
-MkDir $InterimBase 0775 opt
-MkDir $InterimBase 0775 media
-MkDir $InterimBase 0775 media/floppy
-MkDir $InterimBase 0775 media/cdrom
-MkDir $InterimBase 0775 sbin
-MkDir $InterimBase 0775 srv
-MkDir $InterimBase 0750 root
-MkDir $InterimBase 0750 root/lifo
-MkDir $InterimBase 1777 tmp
-MkDir $InterimBase 0775 var
-MkDir $InterimBase 1777 var/tmp
-MkDir $InterimBase 0775 var/log
-MkDir $InterimBase 0775 var/mail
-MkDir $InterimBase 0775 var/spool
-MkDir $InterimBase 0775 var/opt
-MkDir $InterimBase 0775 var/cache
-MkDir $InterimBase 0775 var/lib
-MkDir $InterimBase 0775 var/lib/color
-MkDir $InterimBase 0775 var/lib/misc
-MkDir $InterimBase 0775 var/lib/locate
-MkDir $InterimBase 0775 usr/bin
-MkDir $InterimBase 0775 usr/include
-MkDir $InterimBase 0775 usr/lib
-MkDir $InterimBase 0775 usr/sbin
-MkDir $InterimBase 0775 usr/src
-MkDir $InterimBase 0775 usr/share
-MkDir $InterimBase 0775 usr/share/color
-MkDir $InterimBase 0775 usr/share/dict
-MkDir $InterimBase 0775 usr/share/doc
-MkDir $InterimBase 0775 usr/share/info
-MkDir $InterimBase 0775 usr/share/locale
-MkDir $InterimBase 0775 usr/share/man
-MkDir $InterimBase 0775 usr/share/misc
-MkDir $InterimBase 0775 usr/share/terminfo
-MkDir $InterimBase 0775 usr/share/zoneinfo
-MkDir $InterimBase 0775 usr/libexec
-MkDir $InterimBase 0775 usr/share/man/man1
-MkDir $InterimBase 0775 usr/share/man/man2
-MkDir $InterimBase 0775 usr/share/man/man3
-MkDir $InterimBase 0775 usr/share/man/man4
-MkDir $InterimBase 0775 usr/share/man/man5
-MkDir $InterimBase 0775 usr/share/man/man6
-MkDir $InterimBase 0775 usr/share/man/man7
-MkDir $InterimBase 0775 usr/share/man/man8
+InterimMkDir $InterimBase 0775 tools
+InterimMkDir $InterimBase 0775 sources
+InterimMkDir $InterimBase 0775 dev
+InterimMkDir $InterimBase 0775 proc
+InterimMkDir $InterimBase 0775 sys
+InterimMkDir $InterimBase 0775 run
+InterimMkDir $InterimBase 0775 bin
+InterimMkDir $InterimBase 0775 boot
+InterimMkDir $InterimBase 0775 etc
+InterimMkDir $InterimBase 0775 etc/opt
+InterimMkDir $InterimBase 0775 etc/sysconfig
+InterimMkDir $InterimBase 0775 home
+InterimMkDir $InterimBase 0775 lib
+InterimMkDir $InterimBase 0775 lib/firmware
+InterimMkDir $InterimBase 0775 lib64
+InterimMkDir $InterimBase 0775 mnt
+InterimMkDir $InterimBase 0775 opt
+InterimMkDir $InterimBase 0775 media
+InterimMkDir $InterimBase 0775 media/floppy
+InterimMkDir $InterimBase 0775 media/cdrom
+InterimMkDir $InterimBase 0775 sbin
+InterimMkDir $InterimBase 0775 srv
+InterimMkDir $InterimBase 0750 root
+InterimMkDir $InterimBase 0750 root/lifo
+InterimMkDir $InterimBase 1777 tmp
+InterimMkDir $InterimBase 0775 var
+InterimMkDir $InterimBase 1777 var/tmp
+InterimMkDir $InterimBase 0775 var/log
+InterimMkDir $InterimBase 0775 var/mail
+InterimMkDir $InterimBase 0775 var/spool
+InterimMkDir $InterimBase 0775 var/opt
+InterimMkDir $InterimBase 0775 var/cache
+InterimMkDir $InterimBase 0775 var/lib
+InterimMkDir $InterimBase 0775 var/lib/color
+InterimMkDir $InterimBase 0775 var/lib/misc
+InterimMkDir $InterimBase 0775 var/lib/locate
+InterimMkDir $InterimBase 0775 usr/bin
+InterimMkDir $InterimBase 0775 usr/include
+InterimMkDir $InterimBase 0775 usr/lib
+InterimMkDir $InterimBase 0775 usr/sbin
+InterimMkDir $InterimBase 0775 usr/src
+InterimMkDir $InterimBase 0775 usr/share
+InterimMkDir $InterimBase 0775 usr/share/color
+InterimMkDir $InterimBase 0775 usr/share/dict
+InterimMkDir $InterimBase 0775 usr/share/doc
+InterimMkDir $InterimBase 0775 usr/share/info
+InterimMkDir $InterimBase 0775 usr/share/locale
+InterimMkDir $InterimBase 0775 usr/share/man
+InterimMkDir $InterimBase 0775 usr/share/misc
+InterimMkDir $InterimBase 0775 usr/share/terminfo
+InterimMkDir $InterimBase 0775 usr/share/zoneinfo
+InterimMkDir $InterimBase 0775 usr/libexec
+InterimMkDir $InterimBase 0775 usr/share/man/man1
+InterimMkDir $InterimBase 0775 usr/share/man/man2
+InterimMkDir $InterimBase 0775 usr/share/man/man3
+InterimMkDir $InterimBase 0775 usr/share/man/man4
+InterimMkDir $InterimBase 0775 usr/share/man/man5
+InterimMkDir $InterimBase 0775 usr/share/man/man6
+InterimMkDir $InterimBase 0775 usr/share/man/man7
+InterimMkDir $InterimBase 0775 usr/share/man/man8
 
-MkNod $InterimBase 0600 dev/console c 5 1
-MkNod $InterimBase 0666 dev/null    c 1 3
+InterimMkNod $InterimBase 0600 dev/console c 5 1
+InterimMkNod $InterimBase 0666 dev/null    c 1 3
 
-SymLn $InterimBase var/run  /run
-SymLn $InterimBase var/lock /run/lock
+InterimSymLn $InterimBase var/run  /run
+InterimSymLn $InterimBase var/lock /run/lock
 
 mount $verbose --bind /dev $InterimBase/dev
 mount $verbose --types devpts devpts $InterimBase/dev/pts --options gid=5,mode=620
@@ -132,32 +132,32 @@ mount $verbose --types proc proc $InterimBase/proc
 mount $verbose --types sysfs sysfs $InterimBase/sys
 mount $verbose --types tmpfs tmpfs $InterimBase/run
 
-MkDir $InterimBase 1777 run/lock
-MkDir $InterimBase 1777 run/shm
-MkDir $InterimBase 0775 run/mount
+InterimMkDir $InterimBase 1777 run/lock
+InterimMkDir $InterimBase 1777 run/shm
+InterimMkDir $InterimBase 0775 run/mount
 
-SymLn $InterimBase bin/bash    /tools/bin/bash
-SymLn $InterimBase bin/sh      bash
-SymLn $InterimBase bin/cat     /tools/bin/cat
-SymLn $InterimBase bin/dd      /tools/bin/dd
-SymLn $InterimBase bin/echo    /tools/bin/echo
-SymLn $InterimBase bin/ln      /tools/bin/ln
-SymLn $InterimBase bin/pwd     /tools/bin/pwd
-SymLn $InterimBase bin/rm      /tools/bin/rm
-SymLn $InterimBase bin/stty    /tools/bin/stty
+InterimSymLn $InterimBase bin/bash    /tools/bin/bash
+InterimSymLn $InterimBase bin/sh      bash
+InterimSymLn $InterimBase bin/cat     /tools/bin/cat
+InterimSymLn $InterimBase bin/dd      /tools/bin/dd
+InterimSymLn $InterimBase bin/echo    /tools/bin/echo
+InterimSymLn $InterimBase bin/ln      /tools/bin/ln
+InterimSymLn $InterimBase bin/pwd     /tools/bin/pwd
+InterimSymLn $InterimBase bin/rm      /tools/bin/rm
+InterimSymLn $InterimBase bin/stty    /tools/bin/stty
 
-SymLn $InterimBase usr/bin/install /tools/bin/install
-SymLn $InterimBase usr/bin/perl    /tools/bin/perl
-SymLn $InterimBase usr/bin/env     /tools/bin/env
+InterimSymLn $InterimBase usr/bin/install /tools/bin/install
+InterimSymLn $InterimBase usr/bin/perl    /tools/bin/perl
+InterimSymLn $InterimBase usr/bin/env     /tools/bin/env
 
-SymLn $InterimBase usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
-SymLn $InterimBase usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
+InterimSymLn $InterimBase usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
+InterimSymLn $InterimBase usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
 
-SymLn $InterimBase usr/lib/libstdc++.a     /tools/lib/libstdc++.a
-SymLn $InterimBase usr/lib/libstdc++.so    /tools/lib/libstdc++.so
-SymLn $InterimBase usr/lib/libstdc++.so.6  /tools/lib/libstdc++.so.6
+InterimSymLn $InterimBase usr/lib/libstdc++.a     /tools/lib/libstdc++.a
+InterimSymLn $InterimBase usr/lib/libstdc++.so    /tools/lib/libstdc++.so
+InterimSymLn $InterimBase usr/lib/libstdc++.so.6  /tools/lib/libstdc++.so.6
 
-SymLn $InterimBase etc/mtab                /proc/self/mounts 
+InterimSymLn $InterimBase etc/mtab                /proc/self/mounts 
 
 touch $InterimBase/var/log/{btmp,lastlog,faillog,wtmp}
 chgrp $verbose +13 $InterimBase/var/log/lastlog

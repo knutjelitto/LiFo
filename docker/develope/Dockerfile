@@ -19,7 +19,10 @@ ENV USER=root
 ENV TERM=xterm-256color
 ENV LC_ALL=C.UTF-8
 
-RUN mkdir --parents /LiFo /Pogo
+RUN mkdir --parents /LiFo /Pogo && \
+    ln -s Pogo/Data /Data && \
+    ln -s Pogo/Programs /Programs && \
+    ln -s Pogo/System /System
 
 WORKDIR /root
 

@@ -1,0 +1,15 @@
+#!/bin/bash -eu
+
+Import PogoConfig
+
+InChroot && Fatal "don't call in chroot"
+
+verbose=''
+
+trap 'BuildCleanBuildHead' EXIT
+
+BuildSetupShell
+BuildCreateBuildHead
+MakeBootsRootfs $BuildChroot/Root
+
+ExecInBootsChroot "bash --norc"

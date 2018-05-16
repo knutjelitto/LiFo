@@ -2,25 +2,25 @@ echo "sourcing ~/.bashrc"
 
 shopt -s checkwinsize
 umask 022
-HISTCONTROL=ignorespace:ignoredups:erasedups
+export HISTCONTROL=ignorespace:ignoredups:erasedups
 
 case "${POGO_CHROOT}" in
     Boots)
-        which="boots-chroot"
-        PATH=/tools/bin:/bin:/usr/bin:/LiFo/bin
+        export POGO_ENV="boots-chroot"
+        export PATH=/tools/bin:/bin:/usr/bin:/LiFo/bin
         ;;
     Tools)
-        which="tools-chroot"
-        PATH=/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin:/tools/bin
+        export POGO_ENV="tools-chroot"
+        export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin:/tools/bin
         ;;
     *)  
-        which="develope"
-        PATH=/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin
+        export POGO_ENV="develope"
+        export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin
         ;;
 esac
 
-PS1="($which) [\u]: \w\\$ "
-PROMPT_COMMAND='echo -ne "\033]0;($which) [${USER}]: ${PWD}\007"'
+export PS1="($POGO_ENV) [\u]: \w\\$ "
+export PROMPT_COMMAND='echo -ne "\033]0;($POGO_ENV) [${USER}]: ${PWD}\007"'
 
 alias l='ls -lA'
 alias ll='ls -lA'

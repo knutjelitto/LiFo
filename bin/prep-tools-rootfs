@@ -6,7 +6,7 @@
 
 rootfs=/tmp/rootfs
 
-MkDir ()
+RootFsMkDir ()
 {
     local mode="--mode=$1"
     shift 1
@@ -17,7 +17,7 @@ MkDir ()
     done
 }
 
-SymLn ()
+RootFsSymLn ()
 {
     local link=$rootfs/$1
     local target=$2
@@ -25,59 +25,59 @@ SymLn ()
     ln $verbose --symbolic $target $link
 }
 
-MkDir 0775 bin
-MkDir 0775 sbin
-MkDir 0775 etc
-MkDir 0775 lib
-MkDir 0775 lib64
-MkDir 1777 tmp
-MkDir 1777 dev
-MkDir 1777 proc
-MkDir 1777 sys
-MkDir 0775 run
-MkDir 0775 run/lock
-MkDir 0775 var
-MkDir 1777 var/tmp
-MkDir 0775 var/log
-MkDir 0775 var/cache
-MkDir 0775 var/lib
-MkDir 0775 usr/bin
-MkDir 0775 usr/sbin
-MkDir 0775 usr/include
-MkDir 0775 usr/lib
-MkDir 0775 usr/share
-MkDir 0775 usr/share/color
-MkDir 0775 usr/share/dict
-MkDir 0775 usr/share/doc
-MkDir 0775 usr/share/info
-MkDir 0775 usr/share/locale
-MkDir 0775 usr/share/man
-MkDir 0775 usr/share/misc
-MkDir 0775 usr/share/terminfo
-MkDir 0775 usr/share/zoneinfo
-MkDir 0775 usr/libexec
-MkDir 0775 usr/share/man/man{1..8}
+RootFsMkDir 0775 bin
+RootFsMkDir 0775 sbin
+RootFsMkDir 0775 etc
+RootFsMkDir 0775 lib
+RootFsMkDir 0775 lib64
+RootFsMkDir 1777 tmp
+RootFsMkDir 1777 dev
+RootFsMkDir 1777 proc
+RootFsMkDir 1777 sys
+RootFsMkDir 0775 run
+RootFsMkDir 0775 run/lock
+RootFsMkDir 0775 var
+RootFsMkDir 1777 var/tmp
+RootFsMkDir 0775 var/log
+RootFsMkDir 0775 var/cache
+RootFsMkDir 0775 var/lib
+RootFsMkDir 0775 usr/bin
+RootFsMkDir 0775 usr/sbin
+RootFsMkDir 0775 usr/include
+RootFsMkDir 0775 usr/lib
+RootFsMkDir 0775 usr/share
+RootFsMkDir 0775 usr/share/color
+RootFsMkDir 0775 usr/share/dict
+RootFsMkDir 0775 usr/share/doc
+RootFsMkDir 0775 usr/share/info
+RootFsMkDir 0775 usr/share/locale
+RootFsMkDir 0775 usr/share/man
+RootFsMkDir 0775 usr/share/misc
+RootFsMkDir 0775 usr/share/terminfo
+RootFsMkDir 0775 usr/share/zoneinfo
+RootFsMkDir 0775 usr/libexec
+RootFsMkDir 0775 usr/share/man/man{1..8}
 
-SymLn bin/bash    /tools/bin/bash
-SymLn bin/sh      bash
-SymLn bin/cat     /tools/bin/cat
-SymLn bin/dd      /tools/bin/dd
-SymLn bin/echo    /tools/bin/echo
-SymLn bin/ln      /tools/bin/ln
-SymLn bin/pwd     /tools/bin/pwd
-SymLn bin/rm      /tools/bin/rm
-SymLn bin/stty    /tools/bin/stty
+RootFsSymLn bin/bash    /tools/bin/bash
+RootFsSymLn bin/sh      bash
+RootFsSymLn bin/cat     /tools/bin/cat
+RootFsSymLn bin/dd      /tools/bin/dd
+RootFsSymLn bin/echo    /tools/bin/echo
+RootFsSymLn bin/ln      /tools/bin/ln
+RootFsSymLn bin/pwd     /tools/bin/pwd
+RootFsSymLn bin/rm      /tools/bin/rm
+RootFsSymLn bin/stty    /tools/bin/stty
 
-SymLn usr/bin/install /tools/bin/install
-SymLn usr/bin/perl    /tools/bin/perl
-SymLn usr/bin/env     /tools/bin/env
+RootFsSymLn usr/bin/install /tools/bin/install
+RootFsSymLn usr/bin/perl    /tools/bin/perl
+RootFsSymLn usr/bin/env     /tools/bin/env
 
-SymLn usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
-SymLn usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
+RootFsSymLn usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
+RootFsSymLn usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
 
-SymLn usr/lib/libstdc++.a     /tools/lib/libstdc++.a
-SymLn usr/lib/libstdc++.so    /tools/lib/libstdc++.so
-SymLn usr/lib/libstdc++.so.6  /tools/lib/libstdc++.so.6
+RootFsSymLn usr/lib/libstdc++.a     /tools/lib/libstdc++.a
+RootFsSymLn usr/lib/libstdc++.so    /tools/lib/libstdc++.so
+RootFsSymLn usr/lib/libstdc++.so.6  /tools/lib/libstdc++.so.6
 
 cat > $rootfs/etc/passwd << "EOF"
 root:x:0:0:root:/root:/bin/bash

@@ -3,72 +3,140 @@
 [[ -z ${_recipeFunctionsIncluded:-} ]] || exit
 _recipeFunctionsIncluded=true
 
-RecipeRequiredVars=(Title Name Version Supplies)
-RecipeOptionalVars=(BuildIn Redirect)
-RecipeRequiredFuncs=()
-RecipeOptionalFuncs=(Prepare Configure Build Install Trim)
-RecipesSource=/LiFo/Recipes
-RecipesPath=Core:Optional:LFSboots:LFSTools
-declare RecipeFile RecipeCollection
-
-RecipeUnset () { unset "${RecipeRequiredVars[@]}" "${RecipeRequiredFuncs[@]}" "${RecipeOptionalVars[@]}" "${RecipeOptionalFuncs[@]}"; }
-
 RecipeFind ()
 {
-    # sets global RecipeCollection / RecipeFile
-    for RecipeCollection in ${RecipesPath//:/ }; do
-        RecipeFile=/LiFo/Recipes/$RecipeCollection/$Token
-        if [[ ! -f $RecipeFile ]]; then
-            for RecipeFile in /LiFo/Recipes/$RecipeCollection/$Token-*; do
-                if [[ -f $RecipeFile ]]; then
+    # sets global Recipe_Coll / Recipe_File
+
+    for Recipe_Coll in ${RecipesPath//:/ }; do
+        Recipe_File=/LiFo/Recipes/$Recipe_Coll/$Recipe_Token
+        if [[ ! -f $Recipe_File ]]; then
+            for Recipe_File in /LiFo/Recipes/$Recipe_Coll/$Recipe_Token-*; do
+                if [[ -f $Recipe_File ]]; then
                     return
                 fi
             done
         fi
-        if [[ ! -f $RecipeFile ]]; then
-            RecipeFile=/LiFo/Recipes/$RecipeCollection/$Token/Recipe
+        if [[ ! -f $Recipe_File ]]; then
+            Recipe_File=/LiFo/Recipes/$Recipe_Coll/$Recipe_Token/Recipe
         fi
-        if [[ -f $RecipeFile ]]; then
+        if [[ -f $Recipe_File ]]; then
             return
         fi
     done
 
-    if [[ ! -f RecipeFile ]]; then
-        Fatal "nothing found for recipe token '$Token'"
+    if [[ ! -f Recipe_File ]]; then
+        Fatal "nothing found for recipe token '$Recipe_Token'"
     fi
 }
 
-RecipeSource ()
-{
-    Token=${1:-}
+RecipeUnset () 
+{ 
+    unset "${RecipeRequiredVars[@]}" "${RecipeRequiredFuncs[@]}" "${RecipeOptionalVars[@]}" "${RecipeOptionalFuncs[@]}"; 
+}
 
-    if [[ -z $Token ]]; then
+RecipeSourceXX ()
+{
+    cat <(RecipeSourceX ${1:-}) >/tmp/xxx
+    source <(RecipeSourceX ${1:-})
+    cat /tmp/xxx
+}
+
+RecipeSourceX ()
+{ # exec in subshell
+
+    Recipe_Token=${1:-}
+
+    if [[ -z $Recipe_Token ]]; then
         Fatal "no recipe token given"
     fi
+
+    RecipeRequiredVars=(Title Name Version Supplies)
+    RecipeOptionalVars=(BuildIn Redirect)
+    RecipeRequiredFuncs=()
+    RecipeOptionalFuncs=(Prepare Configure Build Install Trim)
+
+    RecipesSource=/LiFo/Recipes
+    RecipesPath=Core:Optional:LFSboots:LFSTools
+
+    declare Recipe_File Recipe_Coll
 
     RecipeUnset
     RecipeFind
     
-    source $RecipeFile
+    source $Recipe_File
 
     while [[ -n ${Redirect:-} ]]; do
-        echo "Redirecting $Token -> $Redirect"
-        Token=$Redirect
+        Recipe_Token=$Redirect
         RecipeUnset
         RecipeFind
-        source $RecipeFile
+        source $Recipe_File
     done
 
     local variable
     for variable in "${RecipeRequiredVars[@]}"; do
         if [[ ! -v ${variable} ]]; then
-            Fatal "required variable '$variable' missing in receipe '$Token' at '$RecipeFile'"
+            Fatal "required variable '$variable' missing in receipe '$Recipe_Token' at '$Recipe_File'"
         fi
     done
     local function
     for function in "${RecipeRequiredFuncs[@]}"; do
         if [[ ! "$(type -t $function)" == "function" ]]; then
-            Fatal "required function '$function' missing in receipe '$Token' at '$RecipeFile'"
+            Fatal "required function '$function' missing in receipe '$Recipe_Token' at '$Recipe_File'"
+        fi
+    done
+    for function in "${RecipeOptionalFuncs[@]}"; do
+        if [[ ! "$(type -t $function)" == "function" ]]; then
+            eval "$function () { true; }"
+        fi
+    done
+
+    declare -p Recipe_Token | sed 's/ -- / -g /'
+    declare -p Recipe_Coll | sed 's/ -- / -g /'
+    declare -p Recipe_File | sed 's/ -- / -g /'
+    declare -p Title | sed 's/-- Title=/-g Recipe_Title=/'
+    declare -p Name | sed 's/-- Name=/-g Recipe_Name=/'
+    declare -p Version | sed 's/-- Version=/-g Recipe_Version=/'
+    declare -p Supplies | sed 's/-a Supplies=/-ga Recipe_Supplies=/'
+    echo -n 'Recipe_' ; declare -pf Prepare
+    echo -n 'Recipe_' ; declare -pf Configure
+    echo -n 'Recipe_' ; declare -pf Build
+    echo -n 'Recipe_' ; declare -pf Install
+    echo -n 'Recipe_' ; declare -pf Trim
+}
+
+RecipeSource ()
+{
+    Recipe_Token=${1:-}
+
+    if [[ -z $Recipe_Token ]]; then
+        Fatal "no recipe token given"
+    fi
+
+    local -F XXX || Fatal "can't declare local function"
+
+    RecipeUnset
+    RecipeFind
+    
+    source $Recipe_File
+
+    while [[ -n ${Redirect:-} ]]; do
+        echo "Redirecting $Recipe_Token -> $Redirect"
+        Recipe_Token=$Redirect
+        RecipeUnset
+        RecipeFind
+        source $Recipe_File
+    done
+
+    local variable
+    for variable in "${RecipeRequiredVars[@]}"; do
+        if [[ ! -v ${variable} ]]; then
+            Fatal "required variable '$variable' missing in receipe '$Recipe_Token' at '$Recipe_File'"
+        fi
+    done
+    local function
+    for function in "${RecipeRequiredFuncs[@]}"; do
+        if [[ ! "$(type -t $function)" == "function" ]]; then
+            Fatal "required function '$function' missing in receipe '$Recipe_Token' at '$Recipe_File'"
         fi
     done
     for function in "${RecipeOptionalFuncs[@]}"; do

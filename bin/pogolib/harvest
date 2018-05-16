@@ -1,17 +1,12 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-Import PogoFunctions
-Import RecipeFunctions
-Import BuildFunctions
 
 InChroot && Fatal "please don't call in chroot (toplevel only)"
 
 #verbose=''
 
-Token=$1
-
-BuildSetupRecipe $Token
+BuildSetupRecipe "${1:-}"
 
 blacklist=$(mktemp)
 bom=$(mktemp)

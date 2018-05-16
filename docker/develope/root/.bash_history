@@ -1,65 +1,3 @@
-cd iso/
-less gobo.lss 
-less isolinux.cfg 
-cd bios/
-less boot.cat 
-find
-less md5sums 
-cd isolinux/
-strings isolinux.bin 
-strings isolinux.bin  | less
-less advanced.cfg 
-cat README 
-gobolook 
-mount
-cd sq1
-cd sq2
-cd ..
-cd sq3
-ll
-gobolook 
-cd isolinux/
-strings isolinux.bin 
-strings isolinux.bin  | less
-less advanced.cfg 
-cat README 
-mount
-cd sq1
-cd sq2
-cd sq3
-gobolook 
-dmesg | tail
-cd /tmp/gobo/root/
-cd Data/
-cd Compile/
-cdA
-cd Archives/
-cd Sources/
-cd Store/
-cd ..
-cd gobo/iso/
-ll
-gobolook 
-dmesg
-strings isolinux.bin  | less
-less advanced.cfg 
-cat README 
-mount
-cd sq1
-cd sq2
-cd sq3
-dmesg | tail
-cdA
-cd Archives/
-cd Sources/
-cd gobo/iso/
-dmesg
-gobolook 
-cd /tmp/gobo/root/
-cd System/
-cd Data/
-cd Store/
-find
 find -ls | less
 cd Data
 ls -l
@@ -498,3 +436,65 @@ ll
 less basename 
 printenv
 cd
+cd lib64
+cd /
+rm -rv /Pogo/System
+cd System
+cd Index/
+ll
+cd ..
+cd
+pogo create
+help test
+man tput
+man asci
+man ascii
+echo -n $'ABC\b'
+echo -n $'ABC\b\n'
+echo -n $'ABC\b\n' $(tput el}
+echo -n $'ABC\b\n' $(tput el)
+echo -n $'ABC\b' $(tput el)
+echo -n $'ABC\b'$(tput el)
+echo -n $'ABCXYZ\b'$(tput el)
+echo -n $'ABCXYZ\b\b\b'$(tput el)
+echo -n $'ABCXYZ\b\b\b'$(tput el2)
+echo -n $'ABCXYZ\b\b\b\033[2K'
+echo -n $'ABCXYZ\b\b\b\033[K'
+echo -n $'ABCXYZ\b\b\b\e[K'
+echo -n $'ABCXYZ\b\b\b\e[2K'
+help declare
+man sleep
+cat /tmp/xxx 
+cat /tmp/xxx | less
+find /usr
+find /
+find /Pogo
+[A
+lfchecker 
+clear
+which clear
+ls -l /usr/bin/clear
+ls -l /usr/bin/tput 
+file /usr/bin/tput 
+file /usr/bin/tput 
+pwd
+cd tools
+ll
+env
+pogo shell boots
+env
+set
+pwd
+cd tools
+ll
+env
+pogo shell boots
+env
+set
+recipe check
+recipe check Gcc
+recipe check LinuxHeader
+recipe check LinuxHeaders
+help declare
+recipe check 504
+recipe check 5044

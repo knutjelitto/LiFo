@@ -1,4 +1,7 @@
-#!/bin/bash -eu
+#!/bin/bash -eu (source-only)
+
+[[ -z ${_progressFunctionsIncluded:-} ]] || exit
+_progressFunctionsIncluded=true
 
 Progress_Device='/dev/tty'
 Progress_Home=$'\r\e[K'

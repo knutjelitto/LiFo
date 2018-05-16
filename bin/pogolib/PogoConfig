@@ -4,16 +4,16 @@
 _pogoConfigIncluded=true
 
 if [[ -n ${POGO_CHROOT:-} ]]; then
-    PogoTop=/.
     InChroot() { return 0; }
 else
-    PogoTop=/Pogo
     InChroot() { return 1; }
 fi
 
-PogoData=$PogoTop/Data
-PogoPrograms=$PogoTop/Programs
-PogoSystem=$PogoTop/System
+PogoVolume=/Pogo
+
+PogoData=/Data
+PogoPrograms=/Programs
+PogoSystem=/System
 
 PogoCompile=$PogoData/Compile
 PogoSources=$PogoCompile/Sources
@@ -27,8 +27,6 @@ PogoArchives=$PogoVariable/Archives
 PogoDownloads=$PogoVariable/Downloads
 
 PogoIndex=$PogoSystem/Index
-
-_pogoExec=/LiFo/bin/pogolib
 
 Fatal ()
 {
@@ -49,9 +47,9 @@ Trace ()
 
 PogoExec ()
 {
-    [[ -n $1 ]] || Fatal "no argument given"
+    [[ -n "$1" ]] || Fatal "no argument given"
     script=/LiFo/bin/pogolib/$1
-    [[ -e $script ]] || Fatal "unknown function '$1'"
+    [[ -e "$script" ]] || Fatal "unknown function '$1'"
     shift
     $script "$@"
 }
@@ -68,3 +66,7 @@ declare -a PogoVars
 PogoVars=$(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//')
 
 verbose=--verbose
+
+Import PogoFunctions
+Import RecipeFunctions
+Import BuildFunctions

@@ -1,19 +1,14 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-Import PogoFunctions
-Import RecipeFunctions
-Import BuildFunctions
 
 InChroot && Fatal "please don't call in chroot (toplevel only)"
 
 #verbose=''
 
-Token=${1:-}
+BuildSetupRecipe ${1:-}
 
-BuildSetupRecipe $Token
-
-Header "HARVEST $RecipeCollection / $Title"
+Header "HARVEST $Recipe_Coll / $Title"
 
 Cleanup ()
 {
@@ -24,10 +19,9 @@ trap Cleanup EXIT
 
 blackout=$(mktemp)
 
-cat > $blackout << "EOF"
+cat > $blackout << 'EOF'
 /\ttmp.*/ { next }
 /\tData.*/ { next }
-/.*/ { print $0 }
 /\tbin$/ { next }
 /\tshare$/ { next }
 /\tshare\/man$/ { next }
@@ -36,19 +30,12 @@ cat > $blackout << "EOF"
 /\tshare\/info\/.*/ { next }
 /\tshare\/doc$/ { next }
 /\tshare\/doc\/.*/ { next }
+/.*/ { print $0 }
 EOF
-#/\tbin$/ { next }
-#/\tshare$/ { next }
-#/\tshare\/man$/ { next }
-#/\tshare\/man\/.*/ { next }
-#/\tshare\/info$/ { next }
-#/\tshare\/info\/.*/ { next }
-#/\tshare\/doc$/ { next }
-#/\tshare\/doc\/.*/ { next }
 
 topDir=$BuildChanges/Data/Compile/Lfs/tools
 
-StoreLocation=$PogoStore/$RecipeCollection/$Name/$Version
+StoreLocation=$PogoStore/$Recipe_Coll/$Name/$Version
 
 mkdir $verbose --parents $StoreLocation
 BomFile=$StoreLocation/Bom

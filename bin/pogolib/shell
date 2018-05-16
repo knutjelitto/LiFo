@@ -1,0 +1,7 @@
+#!/bin/bash -ue
+
+Import PogoConfig
+
+sub="$1"
+shift
+PogoExec "shell-$sub" "$@"

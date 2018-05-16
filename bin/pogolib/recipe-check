@@ -1,28 +1,28 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 
 Import PogoConfig
-Import RecipeFunctions
 
-echo "recipe-check: $1"
+RecipeSourceXX "${1:-}"
 
-RecipeSource $1
+#exit
 
-declare -p Token
-declare -p RecipeFile
-declare -p Title
-declare -p Name
-declare -p Version
-declare -p Supplies
-declare -pf Prepare
-declare -pf Configure
-declare -pf Build
-declare -pf Install
-declare -pf Trim
+declare -p Recipe_Token
+declare -p Recipe_Coll
+declare -p Recipe_File
+declare -p Recipe_Title
+declare -p Recipe_Name
+declare -p Recipe_Version
+declare -p Recipe_Supplies
+declare -pf Recipe_Prepare
+declare -pf Recipe_Configure
+declare -pf Recipe_Build
+declare -pf Recipe_Install
+declare -pf Recipe_Trim
 
-for supply in "${Supplies[@]}"; do
-    echo "supply: $supply"
-    already=$(basename $supply)
-    find $PogoArchives $PogoDownloads -maxdepth 1 -name "$already" | head --lines=1 | while read already; do
-        echo "already available: $already"
-    done
-done
+#for supply in "${Supplies[@]}"; do
+#    echo "supply: $supply"
+#    already=$(basename $supply)
+#    find $PogoArchives $PogoDownloads -maxdepth 1 -name "$already" | head --lines=1 | while read already; do
+#        echo "already available: $already"
+#    done
+#done

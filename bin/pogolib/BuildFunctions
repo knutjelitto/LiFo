@@ -5,13 +5,23 @@ _buildFunctionsIncluded=true
 
 BuildSetupRecipe ()
 {
-    local token=$1
+    RecipeSource "$1"
+
+    _buildSetupWith "$Name-$Version"
+}
+
+BuildSetupShell ()
+{
+    _buildSetupWith $(basename $(mktemp --dry-run --directory))
+}
+
+_buildSetupWith ()
+{
+    local with="$1"
 
     EnsurePogoEnvironment
 
-    RecipeSource $token
-
-    BuildHead=$PogoBuild/$Name-$Version
+    BuildHead="$PogoBuild/$with"
     BuildChroot=$BuildHead/Chroot
     BuildChanges=$BuildHead/Chroot/Changes
     BuildState=$BuildHead/State
@@ -20,7 +30,14 @@ BuildSetupRecipe ()
 
 BuildEnsureBuildHead ()
 {
-    mkdir $verbose --parents $BuildHead/{,Chroot/{Root,Changes,Merged,Work},State}
+    local directories=(
+        $BuildHead/Chroot/Root
+        $BuildHead/Chroot/Changes
+        $BuildHead/Chroot/Merged
+        $BuildHead/Chroot/Work
+        $BuildHead/State
+    )
+    MakeDir "${directories[@]}"
 }
 
 BuildCleanBuildHead ()
@@ -34,19 +51,27 @@ BuildCreateBuildHead ()
     BuildEnsureBuildHead
 }
 
-ProvideSupply ()
+BuildProvideSupplies ()
 {
-    local supply=$1
-    local basename=$(basename $supply)
+    local supply
+    for supply in "${Supplies[@]}"; do
+        _buildProvideSupply $supply
+    done
+}
+
+_buildProvideSupply ()
+{
+    local supply="$1"
+    local basename=$(basename "$supply")
 
     [[ -f $PogoArchives/$basename ]] || Fatal "local archive '$basename' for supply '$supply' missing"
 
     local stem
 
     case $basename in
-        *.tar.??|*.tar.???)
+        *.tar.?? | *.tar.???)
             stem=${basename%.tar.*}
-            ExtractSupply $basename $stem
+            _buildExtractSupply $basename $stem
             ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $BuildHead/$stem
             ;;
         *)
@@ -54,12 +79,31 @@ ProvideSupply ()
     esac
 }
 
-ProvideSupplies ()
+_buildExtractSupply ()
 {
-    local supply
-    for supply in "${Supplies[@]}"; do
-        ProvideSupply $supply
-    done
+    local basename=$1
+    local stem=$2
+    local archive=$PogoArchives/$basename
+    local extract=$PogoSources/$stem
+
+    local tmpExtract=$extract.tmp
+
+    rm $verbose --recursive --force $tmpExtract
+
+    [[ -d $extract ]] && return
+
+    mkdir $verbose --parents $tmpExtract
+
+    pushd $tmpExtract >/dev/null
+    tar xvf $archive
+    popd >/dev/null
+
+    if [[ $(ls -1 $tmpExtract | wc -l) == 1 ]]; then
+        mv $verbose $tmpExtract/* $extract
+        rmdir $verbose $tmpExtract
+    else
+        mv $verbose $tmpExtract $extract
+    fi
 }
 
 BuildEnterMain ()
@@ -85,33 +129,6 @@ BuildEnterBuildIn ()
     fi
     echo -n "PWD: "
     pwd
-}
-
-ExtractSupply ()
-{
-    local basename=$1
-    local stem=$2
-    local archive=$PogoArchives/$basename
-    local extract=$PogoSources/$stem
-
-    local tmpExtract=$extract.tmp
-
-    rm $verbose --recursive --force $tmpExtract
-
-    [[ -d $extract ]] && return
-
-    mkdir $verbose --parents $tmpExtract
-
-    pushd $tmpExtract >/dev/null
-    tar xvf $archive
-    popd >/dev/null
-
-    if [[ $(ls -1 $tmpExtract | wc -l) == 1 ]]; then
-        mv $verbose $tmpExtract/* $extract
-        rmdir $verbose $tmpExtract
-    else
-        mv $verbose $tmpExtract $extract
-    fi
 }
 
 MakeToolsRootfs ()
@@ -236,7 +253,7 @@ ExecInToolsChroot ()
 
     local command="$1"
 
-    local lowerdir="$BuildChroot/Root:$PogoTop"
+    local lowerdir="$BuildChroot/Root:$PogoVolume"
     local upperdir="$BuildChroot/Changes"
     local workdir="$BuildChroot/Work"
     local merged="$BuildChroot/Merged"
@@ -298,7 +315,7 @@ ExecInBootsChroot ()
 
     local command="$1"
 
-    local lowerdir="$BuildChroot/Root:$PogoTop:/"
+    local lowerdir="$BuildChroot/Root:$PogoVolume:/"
     local upperdir="$BuildChroot/Changes"
     local workdir="$BuildChroot/Work"
     local merged="$BuildChroot/Merged"

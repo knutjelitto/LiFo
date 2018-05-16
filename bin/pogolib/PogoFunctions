@@ -26,6 +26,11 @@ Popd ()
     popd >/dev/null
 }
 
+MakeDir ()
+{
+    mkdir ${verbose} --parents "$@"
+}
+
 Header ()
 {
     echo -ne "\033]0;$1\007"
@@ -36,16 +41,22 @@ Header ()
 #
 EnsurePogoEnvironment ()
 {
-    if [[ -n ${POGO_CHROOT:-} ]]; then
-        [[ $PogoTop == "/." ]] || Fatal "PogoTop must be '/.'"
-    else
-        [[ $PogoTop == /Pogo ]] || Fatal "PogoTop must be '/Pogo'"
-    fi
+    local directories=(
+        $PogoVolume/Data
+        $PogoVolume/Programs
+        $PogoVolume/System
+        /Data/Compile
+        /Data/Compile/Sources
+        /Data/Compile/Build
+        /Data/Compile/Store
+        /Data/Compile/Lfs
+        /Data/Compile/Lfs/tools
+        /Data/Variable/Archives
+        /Data/Variable/Downloads
+        /System/Index
+    )
 
-    mkdir ${verbose}  --parents $PogoTop
-    mkdir ${verbose}  --parents $PogoTop/Data/{,Compile/{,Sources,Build,Store,Lfs/{,tools}},Variable/{,Archives,Downloads}}
-    mkdir ${verbose}  --parents $PogoTop/Programs
-    mkdir ${verbose}  --parents $PogoTop/System/{,Index}
+    MakeDir "${directories[@]}"
 
     local pogoDir
     for pogoDir in $(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//'); do

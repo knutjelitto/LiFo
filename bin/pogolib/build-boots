@@ -4,6 +4,8 @@ Import PogoConfig
 
 rm -rv $PogoCompile/*
 
-for recipe in {504..534}; do
+#for recipe in {504..534}; do
+for recipe in {504..504}; do
     pogo bbuild $recipe
+    pogo bharvest $recipe
 done

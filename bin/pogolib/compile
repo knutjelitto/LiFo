@@ -1,23 +1,14 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-Import PogoFunctions
-Import RecipeFunctions
-Import BuildFunctions
-
-env
 
 InChroot || Fatal "call in chroot only"
 
-#verbose=''
-
-Token=$1
-
-BuildSetupRecipe $Token
+BuildSetupRecipe "${1:-}"
 
 BuildExec()
 {
-    local function=$1
+    local function="$1"
     if [[ "$(type -t $function)" == "function" ]]; then
         $function
     else

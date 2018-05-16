@@ -1,9 +1,6 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-Import PogoFunctions
-Import RecipeFunctions
-Import BuildFunctions
 
 InChroot && Fatal "don't call in chroot"
 
@@ -14,17 +11,15 @@ token=${1:-}
 [[ -n $token ]] || Fatal "no recipe token given"
 
 BuildSetupRecipe $token
-
-Header "BUILD $RecipeCollection / $Title"
-
 BuildCreateBuildHead
+
+Header "BUILD $Recipe_Coll / $Title"
+
 MakeBootsRootfs $BuildChroot/Root
 
-ProvideSupplies
+BuildProvideSupplies
 
 ExecInBootsChroot "pogo compile $token"
-
-pogo bharvest $token
 
 BuildCleanBuildHead
 
