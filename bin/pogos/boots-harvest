@@ -1,21 +1,29 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-
-InChroot && Fatal "please don't call in chroot (toplevel only)"
-
-#verbose=''
+NeverInChroot
 
 BuildSetupRecipe ${1:-}
 
-Header "HARVEST $Recipe_Coll / $Title"
+Header "HARVEST $Recipe_Token: $Recipe_Coll / $Recipe_Title"
 
-Cleanup ()
+OnCleanup ()
 {
-    rm $verbose --force $blackout
+    rm $verbose --force ${blackout:-undefined}
 }
 
-trap Cleanup EXIT
+trap OnCleanup EXIT
+
+topDir=$BuildChanges/Data/Compile/Lfs/tools
+
+[[ -d "$topDir" ]] || InfoExit "nothing to harvest"
+
+StoreLocation=$PogoStore/$Recipe_Coll/$Recipe_Name/$Recipe_Version
+
+Pushd $topDir
+
+MakeDir $StoreLocation
+BomFile=$StoreLocation/Bom
 
 blackout=$(mktemp)
 
@@ -32,15 +40,6 @@ cat > $blackout << 'EOF'
 /\tshare\/doc\/.*/ { next }
 /.*/ { print $0 }
 EOF
-
-topDir=$BuildChanges/Data/Compile/Lfs/tools
-
-StoreLocation=$PogoStore/$Recipe_Coll/$Name/$Version
-
-mkdir $verbose --parents $StoreLocation
-BomFile=$StoreLocation/Bom
-
-Pushd $topDir
 
 MakeBom ()
 {

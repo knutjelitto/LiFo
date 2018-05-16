@@ -1,0 +1,5 @@
+#!/bin/bash -eu
+
+Import PogoConfig && NeverInChroot
+
+rm $verbose --force --recursive $PogoLfs

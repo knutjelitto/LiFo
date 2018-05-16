@@ -7,17 +7,17 @@ RecipeFind ()
 {
     # sets global Recipe_Coll / Recipe_File
 
-    for Recipe_Coll in ${RecipesPath//:/ }; do
-        Recipe_File=/LiFo/Recipes/$Recipe_Coll/$Recipe_Token
+    for Recipe_Coll in "${RecipeCollections[@]}"; do
+        Recipe_File="$RecipesHome/$Recipe_Coll/$Recipe_Token"
         if [[ ! -f $Recipe_File ]]; then
-            for Recipe_File in /LiFo/Recipes/$Recipe_Coll/$Recipe_Token-*; do
+            for Recipe_File in "$RecipesHome/$Recipe_Coll/$Recipe_Token"-*; do
                 if [[ -f $Recipe_File ]]; then
                     return
                 fi
             done
         fi
         if [[ ! -f $Recipe_File ]]; then
-            Recipe_File=/LiFo/Recipes/$Recipe_Coll/$Recipe_Token/Recipe
+            Recipe_File="$RecipesHome/$Recipe_Coll/$Recipe_Token/Recipe"
         fi
         if [[ -f $Recipe_File ]]; then
             return
@@ -25,7 +25,7 @@ RecipeFind ()
     done
 
     if [[ ! -f Recipe_File ]]; then
-        Fatal "nothing found for recipe token '$Recipe_Token'"
+        Fatal "can't resolve recipe token '$Recipe_Token'"
     fi
 }
 
@@ -34,16 +34,15 @@ RecipeUnset ()
     unset "${RecipeRequiredVars[@]}" "${RecipeRequiredFuncs[@]}" "${RecipeOptionalVars[@]}" "${RecipeOptionalFuncs[@]}"; 
 }
 
-RecipeSourceXX ()
+RecipeSource ()
 {
-    cat <(RecipeSourceX ${1:-}) >/tmp/xxx
-    source <(RecipeSourceX ${1:-})
-    cat /tmp/xxx
+    local content
+    content=$(_recipeSource ${1:-})
+    eval "$content"
 }
 
-RecipeSourceX ()
-{ # exec in subshell
-
+_recipeSource ()
+{
     Recipe_Token=${1:-}
 
     if [[ -z $Recipe_Token ]]; then
@@ -51,12 +50,9 @@ RecipeSourceX ()
     fi
 
     RecipeRequiredVars=(Title Name Version Supplies)
-    RecipeOptionalVars=(BuildIn Redirect)
+    RecipeOptionalVars=(BuildIn)
     RecipeRequiredFuncs=()
     RecipeOptionalFuncs=(Prepare Configure Build Install Trim)
-
-    RecipesSource=/LiFo/Recipes
-    RecipesPath=Core:Optional:LFSboots:LFSTools
 
     declare Recipe_File Recipe_Coll
 
@@ -78,6 +74,11 @@ RecipeSourceX ()
             Fatal "required variable '$variable' missing in receipe '$Recipe_Token' at '$Recipe_File'"
         fi
     done
+    for variable in "${RecipeOptionalVars[@]}"; do
+        if [[ ! -v ${variable} ]]; then
+            eval "declare $variable=''"
+        fi
+    done
     local function
     for function in "${RecipeRequiredFuncs[@]}"; do
         if [[ ! "$(type -t $function)" == "function" ]]; then
@@ -97,51 +98,10 @@ RecipeSourceX ()
     declare -p Name | sed 's/-- Name=/-g Recipe_Name=/'
     declare -p Version | sed 's/-- Version=/-g Recipe_Version=/'
     declare -p Supplies | sed 's/-a Supplies=/-ga Recipe_Supplies=/'
+    declare -p BuildIn | sed 's/-- BuildIn=/-g Recipe_BuildIn=/'
     echo -n 'Recipe_' ; declare -pf Prepare
     echo -n 'Recipe_' ; declare -pf Configure
     echo -n 'Recipe_' ; declare -pf Build
     echo -n 'Recipe_' ; declare -pf Install
     echo -n 'Recipe_' ; declare -pf Trim
-}
-
-RecipeSource ()
-{
-    Recipe_Token=${1:-}
-
-    if [[ -z $Recipe_Token ]]; then
-        Fatal "no recipe token given"
-    fi
-
-    local -F XXX || Fatal "can't declare local function"
-
-    RecipeUnset
-    RecipeFind
-    
-    source $Recipe_File
-
-    while [[ -n ${Redirect:-} ]]; do
-        echo "Redirecting $Recipe_Token -> $Redirect"
-        Recipe_Token=$Redirect
-        RecipeUnset
-        RecipeFind
-        source $Recipe_File
-    done
-
-    local variable
-    for variable in "${RecipeRequiredVars[@]}"; do
-        if [[ ! -v ${variable} ]]; then
-            Fatal "required variable '$variable' missing in receipe '$Recipe_Token' at '$Recipe_File'"
-        fi
-    done
-    local function
-    for function in "${RecipeRequiredFuncs[@]}"; do
-        if [[ ! "$(type -t $function)" == "function" ]]; then
-            Fatal "required function '$function' missing in receipe '$Recipe_Token' at '$Recipe_File'"
-        fi
-    done
-    for function in "${RecipeOptionalFuncs[@]}"; do
-        if [[ ! "$(type -t $function)" == "function" ]]; then
-            eval "$function () { true; }"
-        fi
-    done
 }

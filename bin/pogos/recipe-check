@@ -1,8 +1,12 @@
 #!/bin/bash -eu
 
+set -o errexit
+set -o nounset
+set -o pipefail
+
 Import PogoConfig
 
-RecipeSourceXX "${1:-}"
+RecipeSource "${1:-}"
 
 #exit
 
@@ -19,7 +23,7 @@ declare -pf Recipe_Build
 declare -pf Recipe_Install
 declare -pf Recipe_Trim
 
-#for supply in "${Supplies[@]}"; do
+#for supply in "${Recipe_Supplies[@]}"; do
 #    echo "supply: $supply"
 #    already=$(basename $supply)
 #    find $PogoArchives $PogoDownloads -maxdepth 1 -name "$already" | head --lines=1 | while read already; do

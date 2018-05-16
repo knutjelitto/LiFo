@@ -1,12 +1,12 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-InChroot && Fatal "don't call in chroot"
+NeverInChroot
 
 BuildSetupRecipe ${1:-}
 BuildCreateBuildHead
 
-Header "BUILD $Recipe_Coll / $Title"
+Header "BUILD $Recipe_Coll / $Recipe_Title"
 
 MakeToolsRootfs $BuildChroot/Root
 

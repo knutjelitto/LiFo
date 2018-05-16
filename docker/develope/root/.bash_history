@@ -1,4 +1,3 @@
-find -ls | less
 cd Data
 ls -l
 cd Compile/
@@ -498,3 +497,4 @@ recipe check LinuxHeaders
 help declare
 recipe check 504
 recipe check 5044
+pogo boots reset

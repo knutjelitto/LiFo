@@ -5,9 +5,9 @@ _buildFunctionsIncluded=true
 
 BuildSetupRecipe ()
 {
-    RecipeSource "$1"
+    RecipeSource "${1:-}"
 
-    _buildSetupWith "$Name-$Version"
+    _buildSetupWith "$Recipe_Name-$Recipe_Version"
 }
 
 BuildSetupShell ()
@@ -54,7 +54,7 @@ BuildCreateBuildHead ()
 BuildProvideSupplies ()
 {
     local supply
-    for supply in "${Supplies[@]}"; do
+    for supply in "${Recipe_Supplies[@]}"; do
         _buildProvideSupply $supply
     done
 }
@@ -108,10 +108,10 @@ _buildExtractSupply ()
 
 BuildEnterMain ()
 {
-    if (( ${#Supplies[@]} == 0 )); then
+    if (( ${#Recipe_Supplies[@]} == 0 )); then
         Fatal "No supplies given"
     else
-        local supply=${Supplies[0]}
+        local supply=${Recipe_Supplies[0]}
         local basename=$(basename $supply)
         local stem=${basename%.tar.*}
         cd $BuildHead/$stem
@@ -123,12 +123,10 @@ BuildEnterMain ()
 BuildEnterBuildIn ()
 {
     BuildEnterMain
-    if [[ -v BuildIn ]]; then
-        mkdir $verbose --parents ./$BuildIn
-        cd $BuildIn
+    if [[ -v Recipe_BuildIn ]]; then
+        mkdir $verbose --parents ./$Recipe_BuildIn
+        cd $Recipe_BuildIn
     fi
-    echo -n "PWD: "
-    pwd
 }
 
 MakeToolsRootfs ()

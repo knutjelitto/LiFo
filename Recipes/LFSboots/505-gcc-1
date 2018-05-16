@@ -1,7 +1,7 @@
 #!/bin/bash
 
-Name=Gcc1
 Title="5.5. GCC-7.3.0 - Pass 1"
+Name=Gcc1
 Version=7.3.0
 Supplies=(
     http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz

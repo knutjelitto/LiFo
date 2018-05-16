@@ -1,8 +1,7 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-
-InChroot && Fatal "please don't call in chroot (toplevel only)"
+NeverInChroot
 
 #verbose=''
 

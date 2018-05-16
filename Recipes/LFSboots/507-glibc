@@ -4,7 +4,7 @@ Title="5.7. Glibc-2.27"
 Name=GLibc
 Version=2.27
 Supplies=(http://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.xz)
-BuildIn="build"
+BuildIn=build
 
 Configure()
 {
