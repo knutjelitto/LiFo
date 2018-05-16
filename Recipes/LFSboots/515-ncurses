@@ -20,7 +20,7 @@ Configure()
 
 Build() 
 {
-    make -j8
+    make
 }
 
 Install()

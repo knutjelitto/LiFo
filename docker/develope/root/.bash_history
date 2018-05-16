@@ -1,35 +1,3 @@
-ll gobo2/System/Environment/Cache 
-ll gobo2/System/Environment
-ll gobo2/usr/
-ll gobo2/usr/libexec/
-ll gobo2/System/Settings/
-ll gobo2/bin
-ll gobo2/etc
-ll gobo2/System/Index/
-ll gobo2/System/Index/bin/
-ll gobo2/System/
-ll gobo2/System/Environment/
-man tee
-man rm
-man squashfs
-pogo harvest LinuxHeaders | less
-cat /Pogo/Data/Compile/Build/LinuxHeaders-4.15.3/Chroot/Changes/usr/include/asm-generic/hugetlb_encode.h 
-ls -l /Pogo/Data/Compile/Build/LinuxHeaders-4.15.3/Chroot/Changes/usr/include/asm-generic/hugetlb_encode.h 
-tar tvf /tmp/xxx.tar.xz  | less
-tar tvf /tmp/xxx.tar.xz 
-pogo harvest LinuxHeaders
-tar tvf /tmp/xxx.tar.xz | less
-popg create
-popo create
-pogo create
-pogo create | less
-cd /
-cd mnt
-cd /LiFo/
-cd /tmp/
-rm tmp.*
-ls -la
-cd gobo/
 cd iso/
 less gobo.lss 
 less isolinux.cfg 
@@ -498,3 +466,35 @@ cd LFSboots/
 ll
 man ls
 ll -t
+cd /tmp
+echo 'int main(){}' > dummy.c
+$LFS_TGT-gcc dummy.c
+readelf -l a.out | grep ': /tools'
+rm -rv *
+pogo bshell 507
+pogo build-boots
+cd /Pogo/Data/Compile/Store/
+man ls
+ll -t
+cd /Pogo/Data/Compile/
+cd Store/
+cd LFSboots/
+cd B
+cd Bison/3.0.4/
+cd ..
+cd Gawk/4.2.0/
+less Bom 
+time pogo build-boots
+cd /Pogo/
+cd Data/Compile/
+cd Lfs/
+cddu
+#du
+du
+du -h
+du -h  |  less
+cd tools/lib/bash/
+ll
+less basename 
+printenv
+cd

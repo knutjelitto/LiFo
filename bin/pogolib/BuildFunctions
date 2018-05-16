@@ -318,11 +318,12 @@ ExecInBootsChroot ()
     mount $verbose --bind /etc/hosts $merged/etc/hosts
     mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
 
-    POGO_CHROOT=Boots \
-    LC_ALL=POSIX \
-    LFS=/Data/Compile/Lfs \
-    LFS_TGT=x86_64-lfs-linux-gnu \
-    FORCE_UNSAFE_CONFIGURE=1 \
+    POGO_CHROOT=Boots               \
+    LC_ALL=POSIX                    \
+    LFS=/Data/Compile/Lfs           \
+    LFS_TGT=x86_64-lfs-linux-gnu    \
+    FORCE_UNSAFE_CONFIGURE=1        \
+    MAKEFLAGS="-j8"                 \
     chroot $merged /bin/bash -l -c "$command"
 )
 
