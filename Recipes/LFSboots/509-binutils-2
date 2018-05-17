@@ -6,7 +6,8 @@ Version=2.30
 Supplies=(http://ftp.gnu.org/gnu/binutils/binutils-2.30.tar.xz)
 BuildIn=build
 
-Configure() {
+Build() 
+{
     CC=$LFS_TGT-gcc                 \
     AR=$LFS_TGT-ar                  \
     RANLIB=$LFS_TGT-ranlib          \
@@ -16,13 +17,9 @@ Configure() {
         --disable-werror            \
         --with-lib-path=/tools/lib  \
         --with-sysroot
-}
 
-Build() {
     make
-}
 
-Install() {
     make install
     make -C ld clean
     make -C ld LIB_PATH=/usr/lib:/lib

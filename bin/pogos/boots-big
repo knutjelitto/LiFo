@@ -1,0 +1,9 @@
+#!/bin/bash -eu
+
+Import PogoConfig
+
+pogo boots reset
+for recipe in {504..534}; do
+    pogo boots build $recipe
+    pogo boots harvest $recipe
+done

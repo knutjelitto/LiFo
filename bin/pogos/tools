@@ -1,0 +1,7 @@
+#!/bin/bash -ue
+
+Import PogoConfig
+
+action="${1:-undefined}"
+shift || true
+PogoExec "tools-$action" "$@"

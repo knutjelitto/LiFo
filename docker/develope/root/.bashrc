@@ -11,7 +11,7 @@ case "${POGO_CHROOT}" in
         ;;
     Tools)
         export POGO_ENV="tools-chroot"
-        export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin:/tools/bin
+        export PATH=/bin:/usr/bin:/LiFo/bin:/tools/bin
         ;;
     *)  
         export POGO_ENV="develope"

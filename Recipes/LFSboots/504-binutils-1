@@ -6,7 +6,7 @@ Version=2.30
 Supplies=(http://ftp.gnu.org/gnu/binutils/binutils-2.30.tar.xz)
 BuildIn=build
 
-Configure()
+Build()
 {
     ../configure \
         --prefix=/tools             \
@@ -15,15 +15,9 @@ Configure()
         --target=$LFS_TGT           \
         --disable-nls               \
         --disable-werror
-}
 
-Build()
-{
     make
     mkdir -v /tools/lib && ln -sv lib /tools/lib64     
-}
 
-Install()
-{
     make install
 }

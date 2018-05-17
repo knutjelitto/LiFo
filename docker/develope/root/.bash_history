@@ -1,98 +1,3 @@
-cd Data
-ls -l
-cd Compile/
-ll
-cd ..
-du
-cd Data/
-cd Store/
-find
-find -ls | less
-cd Data
-ls -l
-cd Compile/
-du
-gobolook 
-cd /tmp/gobo/
-cd root/
-cd usr/
-cd System/
-cd Environment/
-cd Tasks/
-less MountProc 
-cd ..
-cd etc
-ll
-less fstab 
-less passwd
-zsh
-cd
-cd /LiFo/
-ll
-r
-cd /LiFo/
-ll
-r
-cd /Pogo/
-ll
-cd /Pogo/
-cd Data/
-cd Compile/
-ll
-find
-find -ls | less
-cd Data
-ls -l
-cd Compile/
-du
-gobolook 
-cd /tmp/gobo/
-cd root/
-cd usr/
-cd System/
-cd Environment/
-cd Tasks/
-less MountProc 
-cd etc
-less fstab 
-less passwd
-zsh
-cd
-cd /LiFo/
-r
-cd /LiFo/
-r
-cd /Pogo/
-pogo recipe  check
-recipe check
-recipe check LinuxHeaders
-help eval
-recipe check Core/LinuxHeaders
-type
-help type
-help declare
-pogo create
-lfboots 
-pwd
-while pwd
-which ped
-which pwd
-set
-help set
-help set | less
-pogo boots-check
-cd /LiFo/tools/
-tar tvf LFS-BOOK-8.2.tar.bz2 
-tar xvf LFS-BOOK-8.2.tar.bz2 
-cd 8.2/
-less md5sums 
-cd scripts/
-less eudev-rules.html 
-less apds01.html 
-rm -rv 8.2/
-xz
-man xz
-xz lfs-packages-8.2.tar 
 unxz lfs-packages-8.2.tar.xz 
 xz LFS-BOOK-8.2-NOCHUNKS.htm 
 xz LFS-BOOK-8.2.pdf 
@@ -498,3 +403,98 @@ help declare
 recipe check 504
 recipe check 5044
 pogo boots reset
+cd System
+cd Index/
+help test
+man tput
+man asci
+man ascii
+echo -n $'ABC\b'
+echo -n $'ABC\b\n'
+echo -n $'ABC\b\n' $(tput el}
+echo -n $'ABC\b\n' $(tput el)
+echo -n $'ABC\b' $(tput el)
+echo -n $'ABC\b'$(tput el)
+echo -n $'ABCXYZ\b'$(tput el)
+echo -n $'ABCXYZ\b\b\b'$(tput el)
+echo -n $'ABCXYZ\b\b\b'$(tput el2)
+echo -n $'ABCXYZ\b\b\b\033[2K'
+echo -n $'ABCXYZ\b\b\b\033[K'
+echo -n $'ABCXYZ\b\b\b\e[K'
+echo -n $'ABCXYZ\b\b\b\e[2K'
+help declare
+man sleep
+cat /tmp/xxx 
+cat /tmp/xxx | less
+find /usr
+find /
+find /Pogo
+[A
+lfchecker 
+clear
+which clear
+ls -l /usr/bin/clear
+ls -l /usr/bin/tput 
+file /usr/bin/tput 
+file /usr/bin/tput 
+pwd
+cd tools
+env
+pogo shell boots
+env
+set
+pwd
+cd tools
+env
+pogo shell boots
+env
+set
+recipe check Gcc
+recipe check LinuxHeader
+recipe check LinuxHeaders
+help declare
+recipe check 5044
+uname -a
+help set
+recipe check
+recipe check 504x
+recipe check 505
+recipe check 506
+recipe check 507
+recipe check 508
+recipe check 503
+recipe check 504
+pogo boots
+pogo boots 503
+pogo boots build 111
+pogo boots build
+pogo boots build 503
+cd Data/
+cd Compile/
+cd Sources/
+cd binutils-2.30/
+cd build/
+echo $?
+pogo boots harvest 503
+pogo create
+pogo boots shell
+cd /Data/Compile/Store/LFSboots/Binutils1/2.30/
+less Bom 
+cd ..
+cd Lfs/
+cd tools/
+cd bin/
+ll
+cd x86_64-lfs-linux-gnu/
+cd /Data/Compile/Build/Binutils1-2.30/Chroot/Changes/
+find
+find | less
+cd
+pogo boots build 505
+pogo boots harvest 505
+pogo boots build 504
+pogo boots harvest 504
+pogo boots reset
+ll
+ls -la
+ll

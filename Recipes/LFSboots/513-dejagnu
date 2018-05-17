@@ -5,13 +5,10 @@ Name=DejaGNU
 Version=1.6.1
 Supplies=(http://ftp.gnu.org/gnu/dejagnu/dejagnu-1.6.1.tar.gz)
 
-Configure()
+Build()
 {
     ./configure --prefix=/tools
-}
 
-Install()
-{
     make install
     make check
 }

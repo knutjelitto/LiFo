@@ -33,7 +33,7 @@ Prepare()
     sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 }
 
-Configure()
+Build()
 {
     ../configure                                       \
         --target=$LFS_TGT                              \
@@ -57,14 +57,8 @@ Configure()
         --disable-libvtv                               \
         --disable-libstdcxx                            \
         --enable-languages=c,c++
-}
 
-Build()
-{
     make
-}
 
-Install()
-{
     make install
 }

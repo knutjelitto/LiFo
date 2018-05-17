@@ -6,7 +6,8 @@ Version=7.3.0
 Supplies=(http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz)
 BuildIn=build
 
-Configure() {
+Build() 
+{
     ../libstdc++-v3/configure           \
         --host=$LFS_TGT                 \
         --prefix=/tools                 \
@@ -15,12 +16,8 @@ Configure() {
         --disable-libstdcxx-threads     \
         --disable-libstdcxx-pch         \
         --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/7.3.0
-}
 
-Build() {
     make
-}
 
-Install() {
     make install
 }

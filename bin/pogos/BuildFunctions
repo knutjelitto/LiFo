@@ -115,17 +115,19 @@ BuildEnterMain ()
         local basename=$(basename $supply)
         local stem=${basename%.tar.*}
         cd $BuildHead/$stem
-        echo -n "PWD: "
-        pwd
+        #echo "PWD: $(pwd)"
     fi
 }
 
 BuildEnterBuildIn ()
 {
     BuildEnterMain
-    if [[ -v Recipe_BuildIn ]]; then
+    #echo "PWD: $(pwd)"
+    if [[ -n "$Recipe_BuildIn" ]]; then
+        #echo "Recipe_BuildIn: $Recipe_BuildIn"
         mkdir $verbose --parents ./$Recipe_BuildIn
         cd $Recipe_BuildIn
+        #echo "PWD: $(pwd)"
     fi
 }
 
@@ -174,6 +176,7 @@ MakeToolsRootfs ()
     RootfsMkDir 0775 usr/sbin
     RootfsMkDir 0775 usr/include
     RootfsMkDir 0775 usr/lib
+    RootfsMkDir 0775 usr/libexec
     RootfsMkDir 0775 usr/share
     RootfsMkDir 0775 usr/share/color
     RootfsMkDir 0775 usr/share/dict
@@ -184,22 +187,23 @@ MakeToolsRootfs ()
     RootfsMkDir 0775 usr/share/misc
     RootfsMkDir 0775 usr/share/terminfo
     RootfsMkDir 0775 usr/share/zoneinfo
-    RootfsMkDir 0775 usr/libexec
     RootfsMkDir 0775 usr/share/man/man{1..8}
 
-    RootfsSymLn bin/bash    /tools/bin/bash
-    RootfsSymLn bin/sh      bash
-    RootfsSymLn bin/cat     /tools/bin/cat
-    RootfsSymLn bin/dd      /tools/bin/dd
-    RootfsSymLn bin/echo    /tools/bin/echo
-    RootfsSymLn bin/ln      /tools/bin/ln
-    RootfsSymLn bin/pwd     /tools/bin/pwd
-    RootfsSymLn bin/rm      /tools/bin/rm
-    RootfsSymLn bin/stty    /tools/bin/stty
+    RootfsSymLn tools                   /Data/Compile/Lfs/tools
 
-    RootfsSymLn usr/bin/install /tools/bin/install
-    RootfsSymLn usr/bin/perl    /tools/bin/perl
-    RootfsSymLn usr/bin/env     /tools/bin/env
+    RootfsSymLn bin/bash                /tools/bin/bash
+    RootfsSymLn bin/sh                  bash
+    RootfsSymLn bin/cat                 /tools/bin/cat
+    RootfsSymLn bin/dd                  /tools/bin/dd
+    RootfsSymLn bin/echo                /tools/bin/echo
+    RootfsSymLn bin/ln                  /tools/bin/ln
+    RootfsSymLn bin/pwd                 /tools/bin/pwd
+    RootfsSymLn bin/rm                  /tools/bin/rm
+    RootfsSymLn bin/stty                /tools/bin/stty
+
+    RootfsSymLn usr/bin/install         /tools/bin/install
+    RootfsSymLn usr/bin/perl            /tools/bin/perl
+    RootfsSymLn usr/bin/env             /tools/bin/env
 
     RootfsSymLn usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
     RootfsSymLn usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
@@ -271,9 +275,10 @@ ExecInToolsChroot ()
     mount $verbose --bind /etc/hosts $merged/etc/hosts
     mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
 
-    POGO_CHROOT=Tools \
-    LC_ALL=POSIX \
-    FORCE_UNSAFE_CONFIGURE=1 \
+    POGO_CHROOT=Tools           \
+    LC_ALL=POSIX                \
+    FORCE_UNSAFE_CONFIGURE=1    \
+    MAKEFLAGS="-j8"             \
     chroot $merged /bin/bash -l -c "$command"
 )
 

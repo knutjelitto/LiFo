@@ -5,7 +5,7 @@ Name=Expect
 Version=5.45.4
 Supplies=(http://prdownloads.sourceforge.net/expect/expect5.45.4.tar.gz)
 
-Configure()
+Build() 
 {
     cp -v configure{,.orig}
     sed 's:/usr/local/bin:/bin:' configure.orig > configure
@@ -14,14 +14,8 @@ Configure()
         --prefix=/tools         \
         --with-tcl=/tools/lib   \
         --with-tclinclude=/tools/include
-}
 
-Build() 
-{
     make
-}
 
-Install() 
-{
     make SCRIPTS="" install
 }

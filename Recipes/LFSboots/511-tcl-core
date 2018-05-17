@@ -6,15 +6,12 @@ Version=8.6.8
 Supplies=(https://downloads.sourceforge.net/tcl/tcl8.6.8-src.tar.gz)
 BuildIn=unix
 
-Configure() {
+Build() 
+{
     ./configure --prefix=/tools
-}
 
-Build() {
     make
-}
 
-Install() {
     make install
 
     chmod -v u+w /tools/lib/libtcl8.6.so

@@ -36,7 +36,7 @@ Prepare() {
     sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 }
 
-Configure()
+Build()
 {
     CC=$LFS_TGT-gcc                                     \
     CXX=$LFS_TGT-g++                                    \
@@ -51,15 +51,9 @@ Configure()
         --disable-multilib                              \
         --disable-bootstrap                             \
         --disable-libgomp
-}
 
-Build()
-{
     make
-}
 
-Install()
-{
     make install
     ln -sv gcc /tools/bin/cc
 }
