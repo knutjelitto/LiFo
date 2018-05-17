@@ -40,17 +40,27 @@ PogoDownloads=$PogoVariable/Downloads
 
 PogoIndex=$PogoSystem/Index
 
-RecipesHome=/LiFo/Recipes
-RecipeCollectionCore=Core
-RecipeCollectionOptional=Optional
-RecipeCollectionBoots=LFSboots
-RecipeCollectionTools=LFSboots
-RecipeCollections=(
-    $RecipeCollectionCore
-    $RecipeCollectionOptional
-    $RecipeCollectionBoots
-    $RecipeCollectionTools
+Recipes_Home=/LiFo/Recipes
+
+Boots_Collection=LFSboots
+Boots_Store="$PogoStore/$Boots_Collection"
+Boots_Build="$PogoBuild/$Boots_Collection"
+
+Tools_Collection=LFStools
+Tools_Store="$PogoStore/$Tools_Collection"
+Tools_Build="$PogoBuild/$Tools_Collection"
+
+Core_Collection=Core
+Optional_Collection=Optional
+
+Recipes_Core=Core
+Recipes_Collections=(
+    "$Boots_Collection"
+    "$Tools_Collection"
+    "$Core_Collection"
+    "$Optional_Collection"
 )
+
 
 Fatal ()
 {

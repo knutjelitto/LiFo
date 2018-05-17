@@ -2,7 +2,7 @@
 
 Import PogoConfig
 
-pogo boots reset
+pogo boots empty
 for recipe in {504..534}; do
     pogo boots build $recipe
     pogo boots harvest $recipe

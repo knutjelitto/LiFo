@@ -15,17 +15,17 @@ RecipeFind ()
 {
     # sets global Recipe_Coll / Recipe_File
 
-    for Recipe_Coll in "${RecipeCollections[@]}"; do
-        Recipe_File="$RecipesHome/$Recipe_Coll/$Recipe_Token"
+    for Recipe_Coll in "${Recipes_Collections[@]}"; do
+        Recipe_File="$Recipes_Home/$Recipe_Coll/$Recipe_Token"
         if [[ ! -f $Recipe_File ]]; then
-            for Recipe_File in "$RecipesHome/$Recipe_Coll/$Recipe_Token"-*; do
+            for Recipe_File in "$Recipes_Home/$Recipe_Coll/$Recipe_Token"-*; do
                 if [[ -f $Recipe_File ]]; then
                     return
                 fi
             done
         fi
         if [[ ! -f $Recipe_File ]]; then
-            Recipe_File="$RecipesHome/$Recipe_Coll/$Recipe_Token/Recipe"
+            Recipe_File="$Recipes_Home/$Recipe_Coll/$Recipe_Token/Recipe"
         fi
         if [[ -f $Recipe_File ]]; then
             return
@@ -39,7 +39,7 @@ RecipeFind ()
 
 RecipeUnset () 
 { 
-    unset "${RecipeRequiredVars[@]}" "${RecipeRequiredFuncs[@]}" "${RecipeOptionalVars[@]}" "${RecipeOptionalFuncs[@]}"; 
+    unset "${RecipeRequiredVars[@]}" "${RecipeRequiredFuncs[@]}" "${RecipeOptionalVars[@]}" "${RecipeOptionalFuncs[@]}"
 }
 
 RecipeSource ()
@@ -62,12 +62,15 @@ _recipeSource ()
     
     source $Recipe_File
 
-    while [[ -n ${Redirect:-} ]]; do
-        Recipe_Token=$Redirect
+    local savedRecipe_Coll="$Recipe_Coll"
+    while [[ -n "${Redirect:-}" ]]; do
+        Recipe_Token="$Redirect"
+        unset Redirect
         RecipeUnset
         RecipeFind
         source $Recipe_File
     done
+    Recipe_Coll="$savedRecipe_Coll"
 
     local variable
     for variable in "${RecipeRequiredVars[@]}"; do
@@ -88,7 +91,7 @@ _recipeSource ()
     done
     for function in "${RecipeOptionalFuncs[@]}"; do
         if [[ ! "$(type -t $function)" == "function" ]]; then
-            eval "$function () { true; }"
+            eval "$function () { :; }"
         fi
     done
 

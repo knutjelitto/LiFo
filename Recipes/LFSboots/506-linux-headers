@@ -10,10 +10,6 @@ Build()
     ls -la
     make mrproper
     make INSTALL_HDR_PATH=dest headers_install
-}
-
-Install()
-{
     mkdir --verbose --parents /tools/include
     cp -rv dest/include/* /tools/include
 }
