@@ -1,36 +1,3 @@
-unxz lfs-packages-8.2.tar.xz 
-xz LFS-BOOK-8.2-NOCHUNKS.htm 
-xz LFS-BOOK-8.2.pdf 
-bzip2
-man bzip2
-bunzip2 LFS-BOOK-8.2.tar.bz2 
-xz LFS-BOOK-8.2.tar 
-tar tvf lfs-packages-8.2.tar 
-tar xvf lfs-packages-8.2.tar 
-cd lfs-packages-8.2
-less wget-list 
-less coreutils-8.29-i18n-1.patch 
-ll *patch*
-cd /Pogo/Data/Compile/Archives/
-cd ..
-cd Tools/
-ll
-pogo harvest
-pogo harvest LinuxHeaders
-pogo fest-8.2
-pogo fetch-8.2
-pogo maint-download-to-archives
-pogo maint-downloads-to-archives
-pogo bbuild
-pogo bbuild LinuxHeaders
-cd /bin
-ll sh
-pogo bbuild /LiFo/Recipes/LFSboots/504-binutils-1 
-cd /bin/
-ll
-ll sh
-cd /bin/
-ll
 ll sh
 pogo bbuild
 pogo bbuild LinuxHeaders
@@ -498,3 +465,36 @@ pogo boots reset
 ll
 ls -la
 ll
+cd Lfs/
+cd tools/
+cd bin/
+cd x86_64-lfs-linux-gnu/
+cd /Data/Compile/Build/Binutils1-2.30/Chroot/Changes/
+find
+find | less
+cd
+pogo boots build 505
+pogo boots harvest 505
+pogo boots harvest 504
+pogo boots reset
+pogo boots build 504
+clear
+pogo boots build 506
+time pogo boots big
+cd /Data/Compile/
+du -h Store
+cd Store/LFSboots/XZ/
+cd 5.2.3/
+less Bom 
+tar tvf Files.tar.xz 
+pogo greate
+pogo create
+cd /Data/Compile/Build/
+cd Bash-4.4.18/
+cd /Pogo/
+cd gobo/
+ll
+du
+cd ..
+rm -rv gobo
+pogo tools shell
