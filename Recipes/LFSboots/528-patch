@@ -5,17 +5,8 @@ Name=Patch
 Version=2.7.6
 Supplies=(http://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz)
 
-Configure() 
-{
-    ./configure --prefix=/tools
-}
-
 Build() 
 {
+    ./configure --prefix=/tools
     make
-}
-
-Install() 
-{
-    make install
 }

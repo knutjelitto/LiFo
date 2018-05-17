@@ -6,8 +6,6 @@ OnlyInChroot
 BuildSetupRecipe "${1:-}"
 
 BuildEnterMain    && Recipe_Prepare
-BuildEnterBuildIn && Recipe_Configure
 BuildEnterBuildIn && Recipe_Build
-BuildEnterBuildIn && Recipe_Install
 BuildEnterBuildIn && Recipe_Trim
 

@@ -5,17 +5,9 @@ Name=Sed
 Version=4.4
 Supplies=(http://ftp.gnu.org/gnu/sed/sed-4.4.tar.xz)
 
-Configure() 
-{
-    ./configure --prefix=/tools
-}
-
 Build() 
 {
+    ./configure --prefix=/tools
     make
-}
-
-Install() 
-{
     make install
 }

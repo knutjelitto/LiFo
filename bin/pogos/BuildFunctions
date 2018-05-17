@@ -7,7 +7,7 @@ BuildSetupRecipe ()
 {
     RecipeSource "${1:-}"
 
-    _buildSetupWith "$Recipe_Name-$Recipe_Version"
+    _buildSetupWith "$Recipe_Coll/$Recipe_Name-$Recipe_Version"
 }
 
 BuildSetupShell ()

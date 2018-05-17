@@ -5,17 +5,9 @@ Name=Diffutils
 Version=3.6
 Supplies=(http://ftp.gnu.org/gnu/diffutils/diffutils-3.6.tar.xz)
 
-Configure() 
-{
-    ./configure --prefix=/tools
-}
-
 Build() 
 {
+    ./configure --prefix=/tools
     make
-}
-
-Install() 
-{
     make install
 }

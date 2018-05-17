@@ -5,17 +5,9 @@ Name=Texinfo
 Version=6.5
 Supplies=(http://ftp.gnu.org/gnu/texinfo/texinfo-6.5.tar.xz)
 
-Configure()
-{
-    ./configure --prefix=/tools
-}
-
 Build()
 {
+    ./configure --prefix=/tools
     make
-}
-
-Install()
-{
     make install
 }

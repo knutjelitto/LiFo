@@ -5,17 +5,9 @@ Name=Coreutils
 Version=8.29
 Supplies=(http://ftp.gnu.org/gnu/coreutils/coreutils-8.29.tar.xz)
 
-Configure() 
-{
-    ./configure --prefix=/tools --enable-install-program=hostname
-}
-
 Build() 
 {
+    ./configure --prefix=/tools --enable-install-program=hostname
     make
-}
-
-Install() 
-{
     make install
 }

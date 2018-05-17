@@ -5,17 +5,9 @@ Name=Gzip
 Version=1.9
 Supplies=(http://ftp.gnu.org/gnu/gzip/gzip-1.9.tar.xz)
 
-Configure() 
-{
-    ./configure --prefix=/tools
-}
-
 Build() 
 {
+    ./configure --prefix=/tools
     make
-}
-
-Install() 
-{
     make install
 }

@@ -3,6 +3,14 @@
 [[ -z ${_recipeFunctionsIncluded:-} ]] || exit
 _recipeFunctionsIncluded=true
 
+RecipeRequiredVars=(Title Name Version Supplies)
+RecipeOptionalVars=(BuildIn)
+RecipeRequiredFuncs=()
+RecipeOptionalFuncs=(Prepare Build Trim)
+
+declare Recipe_File Recipe_Coll
+declare Recipe_BuildHome Recipe_StoreHome
+
 RecipeFind ()
 {
     # sets global Recipe_Coll / Recipe_File
@@ -49,13 +57,6 @@ _recipeSource ()
         Fatal "no recipe token given"
     fi
 
-    RecipeRequiredVars=(Title Name Version Supplies)
-    RecipeOptionalVars=(BuildIn)
-    RecipeRequiredFuncs=()
-    RecipeOptionalFuncs=(Prepare Configure Build Install Trim)
-
-    declare Recipe_File Recipe_Coll
-
     RecipeUnset
     RecipeFind
     
@@ -100,8 +101,6 @@ _recipeSource ()
     declare -p Supplies | sed 's/-a Supplies=/-ga Recipe_Supplies=/'
     declare -p BuildIn | sed 's/-- BuildIn=/-g Recipe_BuildIn=/'
     echo -n 'Recipe_' ; declare -pf Prepare
-    echo -n 'Recipe_' ; declare -pf Configure
     echo -n 'Recipe_' ; declare -pf Build
-    echo -n 'Recipe_' ; declare -pf Install
     echo -n 'Recipe_' ; declare -pf Trim
 }

@@ -1,12 +1,3 @@
-ll sh
-pogo bbuild
-pogo bbuild LinuxHeaders
-pogo boots-check
-pogo bbuild
-ls /LiFo/Recipes/Core/LinuxHeaders/Recipe 
-man test
-pogo bbuild LinuxHeaders
-pogo bbuild 504
 pogo boots-check
 pogo compile 504
 pogo bbuild 504
@@ -498,3 +489,12 @@ du
 cd ..
 rm -rv gobo
 pogo tools shell
+pogo boots big
+cd /Data/Compile/Build/LFSboots/
+ll
+du
+cd
+pogo boots
+pogo boots build 504
+recipe chzeck 504
+recipe check 504

@@ -5,7 +5,7 @@ Name=UtilLinux
 Version=2.31.1
 Supplies=(https://www.kernel.org/pub/linux/utils/util-linux/v2.31/util-linux-2.31.1.tar.xz)
 
-Configure()
+Build()
 {
     ./configure \
         --prefix=/tools                 \
@@ -14,14 +14,6 @@ Configure()
         --without-systemdsystemunitdir  \
         --without-ncurses               \
         PKG_CONFIG=""
-}
-
-Build()
-{
     make
-}
-
-Install()
-{
     make install
 }

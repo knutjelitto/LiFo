@@ -5,18 +5,12 @@ Name=Bash
 Version=4.4.18
 Supplies=(http://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz)
 
-Configure()
-{
-    ./configure --prefix=/tools --without-bash-malloc
-}
-
 Build()
 {
-    make
-}
+    ./configure --prefix=/tools --without-bash-malloc
 
-Install()
-{
+    make
+    
     make install
     ln -sv bash /tools/bin/sh
 }

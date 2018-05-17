@@ -5,7 +5,7 @@ NeverInChroot
 
 BuildSetupRecipe ${1:-}
 
-Header "HARVEST $Recipe_Token: $Recipe_Coll / $Recipe_Title"
+Header "HARVEST $Recipe_Coll / $Recipe_Title"
 
 OnCleanup ()
 {

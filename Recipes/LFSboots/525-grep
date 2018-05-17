@@ -5,17 +5,9 @@ Name=Grep
 Version=3.1
 Supplies=(http://ftp.gnu.org/gnu/grep/grep-3.1.tar.xz)
 
-Configure()
-{
-    ./configure --prefix=/tools
-}
-
 Build()
 {
+    ./configure --prefix=/tools
     make
-}
-
-Install()
-{
     make install
 }
