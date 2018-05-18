@@ -28,16 +28,16 @@ BomFile=$StoreLocation/Bom
 blackout=$(mktemp)
 
 cat > $blackout << 'EOF'
-/\ttmp.*/ { next }
-/\tData.*/ { next }
-/\tbin$/ { next }
-/\tshare$/ { next }
-/\tshare\/man$/ { next }
-/\tshare\/man\/.*/ { next }
-/\tshare\/info$/ { next }
-/\tshare\/info\/.*/ { next }
-/\tshare\/doc$/ { next }
-/\tshare\/doc\/.*/ { next }
+/\ttmp.*/ { next; }
+/\tData.*/ { next; }
+/\tbin$/ { next; }
+/\tshare$/ { next; }
+/\tshare\/man$/ { next; }
+/\tshare\/man\/.*/ { next; }
+/\tshare\/info$/ { next; }
+/\tshare\/info\/.*/ { next; }
+/\tshare\/doc$/ { next; }
+/\tshare\/doc\/.*/ { next; }
 /.*/ { print $0 }
 EOF
 

@@ -31,6 +31,7 @@ PogoCompile=$PogoData/Compile
 PogoSources=$PogoCompile/Sources
 PogoBuild=$PogoCompile/Build
 PogoStore=$PogoCompile/Store
+PogoRoots=$PogoCompile/Roots
 PogoLfs=$PogoCompile/Lfs
 PogoTools=$PogoLfs/tools
 
@@ -42,23 +43,26 @@ PogoIndex=$PogoSystem/Index
 
 Recipes_Home=/LiFo/Recipes
 
-Boots_Collection=LFSboots
+Boots_Collection=Boots
+Boots_Root="$PogoRoots/$Boots_Collection"
 Boots_Store="$PogoStore/$Boots_Collection"
 Boots_Build="$PogoBuild/$Boots_Collection"
 
-Tools_Collection=LFStools
+Tools_Collection=Tools
+Tools_Root="$PogoRoots/$Tools_Collection"
 Tools_Store="$PogoStore/$Tools_Collection"
 Tools_Build="$PogoBuild/$Tools_Collection"
 
 Core_Collection=Core
-Optional_Collection=Optional
+Core_Root="$PogoRoots/$Core_Collection"
+Core_Store="$PogoStore/$Core_Collection"
+Core_Build="$PogoBuild/$Core_Collection"
 
 Recipes_Core=Core
 Recipes_Collections=(
     "$Boots_Collection"
     "$Tools_Collection"
     "$Core_Collection"
-    "$Optional_Collection"
 )
 
 

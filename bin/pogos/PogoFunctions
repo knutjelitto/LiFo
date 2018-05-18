@@ -49,6 +49,7 @@ EnsurePogoEnvironment ()
         /Data/Compile/Sources
         /Data/Compile/Build
         /Data/Compile/Store
+        /Data/Compile/Roots
         /Data/Compile/Lfs
         /Data/Compile/Lfs/tools
         /Data/Variable/Archives

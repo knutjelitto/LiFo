@@ -1,5 +1,3 @@
-pogo boots-check
-pogo compile 504
 pogo bbuild 504
 pogo boots-check
 pogo compile 504
@@ -498,3 +496,5 @@ pogo boots
 pogo boots build 504
 recipe chzeck 504
 recipe check 504
+ls -la
+ll
