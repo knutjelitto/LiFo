@@ -3,9 +3,9 @@
 Import PogoConfig
 NeverInChroot
 
-verbose=''
-
 trap 'BuildCleanBuildHead' EXIT
+
+verbose=''
 
 BuildSetupShell
 BuildCreateBuildHead

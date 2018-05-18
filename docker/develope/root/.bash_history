@@ -1,8 +1,3 @@
-pogo bbuild 504
-pogo boots-check
-pogo compile 504
-cd tools
-cd Data/
 cd Compile/
 cd Tools/
 ll
@@ -498,3 +493,8 @@ recipe chzeck 504
 recipe check 504
 ls -la
 ll
+ls -la
+cd /Data/Compile/
+ll
+pogo create
+pogo test

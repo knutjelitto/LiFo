@@ -11,6 +11,44 @@ RecipeOptionalFuncs=(Prepare Build Trim)
 declare Recipe_File Recipe_Coll
 declare Recipe_BuildHome Recipe_StoreHome
 
+RecipeFind2 ()
+{
+    # sets global Recipe_Coll / Recipe_File
+
+    local collection="$(dirname $Recipe_Token)"
+    local recipe="$(basename $Recipe_Token)"
+    declare -p collection
+    declare -p recipe
+
+    if [[ "$collection" == "." ]]; then
+        collection=Core
+    fi
+    if [[ ! -d "$Recipes_Home/$collection" ]]; then
+        Fatal "invalid recipe token - no '$collection' collection found"
+    fi
+
+    for Recipe_Coll in "${Recipes_Collections[@]}"; do
+        Recipe_File="$Recipes_Home/$Recipe_Coll/$Recipe_Token"
+        if [[ ! -f $Recipe_File ]]; then
+            for Recipe_File in "$Recipes_Home/$Recipe_Coll/$Recipe_Token"-*; do
+                if [[ -f $Recipe_File ]]; then
+                    return
+                fi
+            done
+        fi
+        if [[ ! -f $Recipe_File ]]; then
+            Recipe_File="$Recipes_Home/$Recipe_Coll/$Recipe_Token/Recipe"
+        fi
+        if [[ -f $Recipe_File ]]; then
+            return
+        fi
+    done
+
+    if [[ ! -f Recipe_File ]]; then
+        Fatal "can't resolve recipe token '$Recipe_Token'"
+    fi
+}
+
 RecipeFind ()
 {
     # sets global Recipe_Coll / Recipe_File
