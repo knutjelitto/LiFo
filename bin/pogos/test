@@ -4,7 +4,6 @@ Import PogoConfig
 
 EnsurePogoEnvironment
 
-Recipe_Token=504
-RecipeFind2
+Build_Build Boots 504
 
-#tree --noreport -a -d -L 4 $PogoVolume
+tree --noreport -a -d -L 12 /Data

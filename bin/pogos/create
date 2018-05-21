@@ -1,7 +1,7 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 
 Import PogoConfig
 
 EnsurePogoEnvironment
 
-tree --noreport -a -d -L 4 $PogoVolume
+tree --noreport -a -d -L 12 $PogoVolume

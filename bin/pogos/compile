@@ -1,11 +1,6 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-OnlyInChroot
 
-BuildSetupRecipe "${1:-}"
-
-BuildEnterMain    && Recipe_Prepare
-BuildEnterBuildIn && Recipe_Build
-BuildEnterBuildIn && Recipe_Trim
+Build_Compile "$@"
 

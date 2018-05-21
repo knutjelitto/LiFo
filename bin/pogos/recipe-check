@@ -13,9 +13,8 @@ RecipeSource "${1:-}"
 
 #exit
 
+declare -p Recipe_Collection
 declare -p Recipe_Token
-declare -p Recipe_Coll
-declare -p Recipe_File
 declare -p Recipe_Title
 declare -p Recipe_Name
 declare -p Recipe_Version

@@ -1,15 +1,5 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-NeverInChroot
 
-BuildSetupRecipe ${1:-}
-BuildCreateBuildHead
-
-Header "BUILD $Recipe_Coll / $Recipe_Title"
-
-MakeToolsRootfs $BuildChroot/Root
-
-BuildProvideSupplies
-
-ExecInToolsChroot "pogo compile $Recipe_Token"
+Build_Build Tools "$@"

@@ -30,7 +30,6 @@ PogoSystem=/System
 PogoCompile=$PogoData/Compile
 PogoSources=$PogoCompile/Sources
 PogoBuild=$PogoCompile/Build
-PogoStore=$PogoCompile/Store
 PogoRoots=$PogoCompile/Roots
 PogoLfs=$PogoCompile/Lfs
 PogoTools=$PogoLfs/tools
@@ -38,6 +37,7 @@ PogoTools=$PogoLfs/tools
 PogoVariable=$PogoData/Variable
 PogoArchives=$PogoVariable/Archives
 PogoDownloads=$PogoVariable/Downloads
+PogoStore=$PogoVariable/Store
 
 PogoIndex=$PogoSystem/Index
 
@@ -58,7 +58,17 @@ Core_Root="$PogoRoots/$Core_Collection"
 Core_Store="$PogoStore/$Core_Collection"
 Core_Build="$PogoBuild/$Core_Collection"
 
-Recipes_Core=Core
+declare Current_Collection
+declare Current_Root
+declare Current_Store
+declare Current_Build
+
+Build_Collections=(
+    "$Boots_Collection"
+    "$Tools_Collection"
+    "$Core_Collection"
+)
+
 Recipes_Collections=(
     "$Boots_Collection"
     "$Tools_Collection"
@@ -74,7 +84,7 @@ Fatal ()
         *) prefix="pogo " ;;
     esac
         
-    echo "${prefix}${0##*/}: $1" 1>&2
+    echo "${prefix}${0##*/}:" "$@" 1>&2
     exit 127
 }
 

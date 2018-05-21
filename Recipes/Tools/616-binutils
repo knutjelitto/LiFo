@@ -1,0 +1,27 @@
+#!/bin/bash
+
+Title="6.16. Binutils-2.30"
+Name=Binutils
+Version=2.30
+BuildIn=build
+Supplies=(http://ftp.gnu.org/gnu/binutils/binutils-2.30.tar.xz)
+
+Build ()
+{
+    ../configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --enable-gold       \
+        --enable-ld=default \
+        --enable-plugins    \
+        --enable-shared     \
+        --disable-werror    \
+        --enable-64-bit-bfd \
+        --with-system-zlib
+
+    make tooldir=/usr
+
+    #make -k check
+
+    make tooldir=/usr install
+}

@@ -1,65 +1,151 @@
-#!/bin/bash -eu (source-only)
+#!/bin/bash (source-only)
 
 [[ -z ${_buildFunctionsIncluded:-} ]] || exit
 _buildFunctionsIncluded=true
 
-BuildSetupRecipe ()
+Build_Build () # collection recipe
 {
-    RecipeSource "${1:-}"
+    NeverInChroot
 
-    _buildSetupWith "$Recipe_Coll/$Recipe_Name-$Recipe_Version"
+    _build_Enter "$@"
+    _build_EnsureCollection
+    _build_CleanBuild
+    _build_EnsureBuild
+    _build_MakeRootFs
+    _build_ProvideSupplies
+    _build_ExecInChroot "pogo compile $*"
 }
 
-BuildSetupShell ()
+Build_Shell () # collection recipe
 {
-    _buildSetupWith $(basename $(mktemp --dry-run --directory))
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_EnsureCollection
+    _build_CleanBuild
+    _build_EnsureBuild
+    _build_MakeRootFs
+    _build_ExecInChroot "bash"
 }
 
-_buildSetupWith ()
+Build_Compile ()
 {
-    local with="$1"
+    OnlyInChroot
 
+    _build_Enter "$@"
+    _build_EnsureCollection
+    _build_EnsureBuild
+
+    Header "BUILD $Current_Collection / $Recipe_Title"
+
+    BuildEnterMain    && Recipe_Prepare
+    BuildEnterBuildIn && Recipe_Build
+    BuildEnterBuildIn && Recipe_Trim
+}
+
+_build_Enter () # build name
+{
     EnsurePogoEnvironment
 
-    BuildHead="$PogoBuild/$with"
-    BuildChroot=$BuildHead/Chroot
-    BuildChanges=$BuildHead/Chroot/Changes
-    BuildState=$BuildHead/State
+    [[ -n "${1-}" ]] || Fatal "build name must be given"
+    local collection="${1^}"
+    local name
+    if ! ListContains "$collection" "${Build_Collections[@]}"; then
+        Fatal "build name '$collection' is not in (${Build_Collections[@]})"
+    fi
+    
+    Current_Collection=$collection
+    name="${collection}_Root"
+    Current_Root=${!name}
+    name="${collection}_Store"
+    Current_Store=${!name}
+    name="${collection}_Build"
+    Current_Build=${!name}
+
+    if [[ -n "{verbose}" ]]; then
+        declare -p Current_Collection
+        declare -p Current_Root
+        declare -p Current_Store
+        declare -p Current_Build
+    fi
+
+    if [[ -n "${2-}" ]]; then
+        RecipeSource "${2}"
+        Box_Top="$Current_Build/$Recipe_Name-$Recipe_Version"
+        Store_Top="$Current_Store/$Recipe_Name-$Recipe_Version"
+    else
+        Box_Top="$Current_Build/SHELL"
+        Store_Top="$Current_Store/SHELL"
+    fi
+
+    Box_Root=$Box_Top/Root
+    Box_Changes=$Box_Top/Changes
+    Box_Work=$Box_Top/Work
+    Box_Merged=$Box_Top/Merged
+    Box_Build=$Box_Top/Build
+    Store_Logs=$Store_Top/Logs
+
+    if [[ -n "{verbose}" ]]; then
+        declare -p Box_Top
+        declare -p Box_Root
+        declare -p Box_Changes
+        declare -p Box_Work
+        declare -p Box_Merged
+        declare -p Box_Build
+        declare -p Store_Top
+        declare -p Store_Logs
+    fi
 }
 
-
-BuildEnsureBuildHead ()
+_build_EnsureCollection ()
 {
     local directories=(
-        $BuildHead/Chroot/Root
-        $BuildHead/Chroot/Changes
-        $BuildHead/Chroot/Merged
-        $BuildHead/Chroot/Work
-        $BuildHead/State
+        "$Current_Root"
+        "$Current_Store"
+        "$Current_Build"
     )
     MakeDir "${directories[@]}"
 }
 
-BuildCleanBuildHead ()
+_build_CleanCollection ()
 {
-    rm $verbose --recursive --force $BuildHead
+    rm ${verbose} --recursive --force "$Current_Root"
+    rm ${verbose} --recursive --force "$Current_Store"
+    rm ${verbose} --recursive --force "$Current_Build"
 }
 
-BuildCreateBuildHead ()
+_build_EnsureBuild ()
 {
-    BuildCleanBuildHead
-    BuildEnsureBuildHead
+    local directories=(
+        "$Box_Top"
+        "$Box_Root"
+        "$Box_Changes"
+        "$Box_Work"
+        "$Box_Merged"
+        "$Box_Build"
+        "$Store_Top"
+        "$Store_Logs"
+    )
+    MakeDir "${directories[@]}"
 }
 
-BuildProvideSupplies ()
+_build_CleanBuild ()
+{
+    rm ${verbose} --recursive --force "$Box_Top"
+    rm ${verbose} --recursive --force "$Store_Top"
+}
+
+_build_ProvideSupplies ()
 {
     local supply
-    for supply in "${Recipe_Supplies[@]}"; do
-        _buildProvideSupply $supply
-    done
+    if [[ "${Recipe_Supplies[0]}" != "none" ]]; then
+        for supply in "${Recipe_Supplies[@]}"; do
+            _build_ProvideSupply $supply
+        done
+    fi
 }
 
-_buildProvideSupply ()
+_build_ProvideSupply ()
 {
     local supply="$1"
     local basename=$(basename "$supply")
@@ -72,10 +158,14 @@ _buildProvideSupply ()
         *.tar.?? | *.tar.???)
             stem=${basename%.tar.*}
             _buildExtractSupply $basename $stem
-            ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $BuildHead/$stem
-            ;;
+            ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $Box_Build/$stem
+        ;;
+        *.patch)
+            cp $verbose --force $PogoArchives/$basename $PogoSources/$basename
+        ;;
         *)
             Fatal "can't provide supply '$supply'"
+        ;;
     esac
 }
 
@@ -108,13 +198,13 @@ _buildExtractSupply ()
 
 BuildEnterMain ()
 {
-    if (( ${#Recipe_Supplies[@]} == 0 )); then
-        Fatal "No supplies given"
+    if [[ "${Recipe_Supplies[0]}" == "none" ]]; then
+        cd $Box_Build
     else
         local supply=${Recipe_Supplies[0]}
         local basename=$(basename $supply)
         local stem=${basename%.tar.*}
-        cd $BuildHead/$stem
+        cd $Box_Build/$stem
         #echo "PWD: $(pwd)"
     fi
 }
@@ -125,92 +215,104 @@ BuildEnterBuildIn ()
     #echo "PWD: $(pwd)"
     if [[ -n "$Recipe_BuildIn" ]]; then
         #echo "Recipe_BuildIn: $Recipe_BuildIn"
-        mkdir $verbose --parents ./$Recipe_BuildIn
+        MakeDir ./$Recipe_BuildIn
         cd $Recipe_BuildIn
         #echo "PWD: $(pwd)"
     fi
 }
 
+_build_MakeRootFs ()
+{
+    Make${Current_Collection}Rootfs
+}
+
+_build_ExecInChroot ()
+{
+    ExecIn${Current_Collection}Chroot "$@"
+}
+
+RootMakeDir ()
+{
+    local mode="--mode=$1"
+    shift 1
+    while (( $# > 0 )); do
+        local dir="$Box_Root/$1"
+        shift
+        mkdir "$verbose" --parents "$mode" "$dir"
+    done
+}
+
+RootSymLink ()
+{
+    local link="$Box_Root/$1"
+    local target="$2"
+    
+    ln "$verbose" --symbolic "$target" "$link"
+}
+
 MakeToolsRootfs ()
 {
-    local rootfs=$1
+    local rootfs=$Box_Root
 
-    RootfsMkDir ()
-    {
-        local mode="--mode=$1"
-        shift 1
-        while (( $# > 0 )); do
-            local dir=$rootfs/$1
-            shift
-            mkdir $verbose --parents $mode $dir
-        done
-    }
+    RootMakeDir 0775 LiFo
+    RootMakeDir 0775 root
+    RootMakeDir 0775 bin
+    RootMakeDir 0775 sbin
+    RootMakeDir 0775 etc
+    RootMakeDir 0775 lib
+    RootMakeDir 0775 lib64
+    RootMakeDir 1777 tmp
+    RootMakeDir 1777 dev
+    RootMakeDir 1777 proc
+    RootMakeDir 1777 sys
 
-    RootfsSymLn ()
-    {
-        local link=$rootfs/$1
-        local target=$2
-        
-        ln $verbose --symbolic $target $link
-    }
+    RootMakeDir 0775 run
+    RootMakeDir 0775 run/lock
 
-    RootfsMkDir 0775 LiFo
-    RootfsMkDir 0775 root
-    RootfsMkDir 0775 bin
-    RootfsMkDir 0775 sbin
-    RootfsMkDir 0775 etc
-    RootfsMkDir 0775 lib
-    RootfsMkDir 0775 lib64
-    RootfsMkDir 1777 tmp
-    RootfsMkDir 1777 dev
-    RootfsMkDir 1777 proc
-    RootfsMkDir 1777 sys
-    RootfsMkDir 0775 run
-    RootfsMkDir 0775 run/lock
-    RootfsMkDir 0775 var
-    RootfsMkDir 1777 var/tmp
-    RootfsMkDir 0775 var/log
-    RootfsMkDir 0775 var/cache
-    RootfsMkDir 0775 var/lib
-    RootfsMkDir 0775 usr/bin
-    RootfsMkDir 0775 usr/sbin
-    RootfsMkDir 0775 usr/include
-    RootfsMkDir 0775 usr/lib
-    RootfsMkDir 0775 usr/libexec
-    RootfsMkDir 0775 usr/share
-    RootfsMkDir 0775 usr/share/color
-    RootfsMkDir 0775 usr/share/dict
-    RootfsMkDir 0775 usr/share/doc
-    RootfsMkDir 0775 usr/share/info
-    RootfsMkDir 0775 usr/share/locale
-    RootfsMkDir 0775 usr/share/man
-    RootfsMkDir 0775 usr/share/misc
-    RootfsMkDir 0775 usr/share/terminfo
-    RootfsMkDir 0775 usr/share/zoneinfo
-    RootfsMkDir 0775 usr/share/man/man{1..8}
+    RootMakeDir 0775 var
+    RootMakeDir 0775 var/cache
+    RootMakeDir 0775 var/lib
+    RootMakeDir 0775 var/log
+    RootMakeDir 1777 var/tmp
 
-    RootfsSymLn tools                   /Data/Compile/Lfs/tools
+    RootMakeDir 0775 usr/bin
+    RootMakeDir 0775 usr/sbin
+    RootMakeDir 0775 usr/include
+    RootMakeDir 0775 usr/lib
+    RootMakeDir 0775 usr/lib/pkgconfig
+    RootMakeDir 0775 usr/libexec
+    RootMakeDir 0775 usr/share
+    RootMakeDir 0775 usr/share/color
+    RootMakeDir 0775 usr/share/dict
+    RootMakeDir 0775 usr/share/doc
+    RootMakeDir 0775 usr/share/info
+    RootMakeDir 0775 usr/share/locale
+    RootMakeDir 0775 usr/share/man
+    RootMakeDir 0775 usr/share/misc
+    RootMakeDir 0775 usr/share/terminfo
+    RootMakeDir 0775 usr/share/zoneinfo
+    RootMakeDir 0775 usr/share/man/man{1..8}
 
-    RootfsSymLn bin/bash                /tools/bin/bash
-    RootfsSymLn bin/sh                  bash
-    RootfsSymLn bin/cat                 /tools/bin/cat
-    RootfsSymLn bin/dd                  /tools/bin/dd
-    RootfsSymLn bin/echo                /tools/bin/echo
-    RootfsSymLn bin/ln                  /tools/bin/ln
-    RootfsSymLn bin/pwd                 /tools/bin/pwd
-    RootfsSymLn bin/rm                  /tools/bin/rm
-    RootfsSymLn bin/stty                /tools/bin/stty
+    RootSymLink bin/bash                /tools/bin/bash
+    RootSymLink bin/sh                  bash
+    RootSymLink bin/cat                 /tools/bin/cat
+    RootSymLink bin/dd                  /tools/bin/dd
+    RootSymLink bin/echo                /tools/bin/echo
+    RootSymLink bin/ln                  /tools/bin/ln
+    RootSymLink bin/pwd                 /tools/bin/pwd
+    RootSymLink bin/rm                  /tools/bin/rm
+    RootSymLink bin/stty                /tools/bin/stty
 
-    RootfsSymLn usr/bin/install         /tools/bin/install
-    RootfsSymLn usr/bin/perl            /tools/bin/perl
-    RootfsSymLn usr/bin/env             /tools/bin/env
+    RootSymLink usr/bin/install         /tools/bin/install
+    RootSymLink usr/bin/perl            /tools/bin/perl
+    RootSymLink usr/bin/env             /tools/bin/env
 
-    RootfsSymLn usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
-    RootfsSymLn usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
+    RootSymLink usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
+    RootSymLink usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
 
-    RootfsSymLn usr/lib/libstdc++.a     /tools/lib/libstdc++.a
-    RootfsSymLn usr/lib/libstdc++.so    /tools/lib/libstdc++.so
-    RootfsSymLn usr/lib/libstdc++.so.6  /tools/lib/libstdc++.so.6
+    RootSymLink usr/lib/libstdc++.a     /tools/lib/libstdc++.a
+    RootSymLink usr/lib/libstdc++.so    /tools/lib/libstdc++.so
+    RootSymLink usr/lib/libstdc++.so.6  /tools/lib/libstdc++.so.6
 
     touch $rootfs/etc/hostname
     touch $rootfs/etc/hosts
@@ -245,9 +347,6 @@ mail:x:34:
 nogroup:x:99:
 users:x:999:
 EOF
-
-    unset RootfsMkDir
-    unset RootfsSymLn
 }
 
 ExecInToolsChroot ()
@@ -255,10 +354,10 @@ ExecInToolsChroot ()
 
     local command="$1"
 
-    local lowerdir="$BuildChroot/Root:$PogoVolume"
-    local upperdir="$BuildChroot/Changes"
-    local workdir="$BuildChroot/Work"
-    local merged="$BuildChroot/Merged"
+    local lowerdir="$Box_Root:$PogoVolume:/Pogo/Data/Compile/Roots/Tools:/Pogo/Data/Compile/Roots/Boots"
+    local upperdir="$Box_Changes"
+    local workdir="$Box_Work"
+    local merged="$Box_Merged"
 
     local options=lowerdir=$lowerdir,upperdir=$upperdir,workdir=$workdir
 
@@ -284,33 +383,13 @@ ExecInToolsChroot ()
 
 MakeBootsRootfs ()
 {
-    local rootfs=$1
+    local rootfs=$Box_Root
 
-    RootfsMkDir ()
-    {
-        local mode="--mode=$1"
-        shift 1
-        while (( $# > 0 )); do
-            local dir=$rootfs/$1
-            shift
-            mkdir $verbose --parents $mode $dir
-        done
-    }
+    MakeDir $Current_Root/tools
 
-    RootfsSymLn ()
-    {
-        local link=$rootfs/$1
-        local target=$2
-        
-        ln $verbose --symbolic $target $link
-    }
-
-    RootfsMkDir 0775 bin
-    RootfsSymLn bin/sh      bash
-    RootfsSymLn tools       /Data/Compile/Lfs/tools
-
-    unset RootfsMkDir
-    unset RootfsSymLn
+    RootMakeDir 0775 bin
+    RootSymLink bin/sh      bash
+    RootSymLink tools       $Current_Root/tools
 }
 
 ExecInBootsChroot ()
@@ -318,10 +397,10 @@ ExecInBootsChroot ()
 
     local command="$1"
 
-    local lowerdir="$BuildChroot/Root:$PogoVolume:/"
-    local upperdir="$BuildChroot/Changes"
-    local workdir="$BuildChroot/Work"
-    local merged="$BuildChroot/Merged"
+    local lowerdir="$Box_Root:$PogoVolume:/"
+    local upperdir="$Box_Changes"
+    local workdir="$Box_Work"
+    local merged="$Box_Merged"
 
     local options=lowerdir=$lowerdir,upperdir=$upperdir,workdir=$workdir
 
@@ -340,7 +419,7 @@ ExecInBootsChroot ()
 
     POGO_CHROOT=Boots               \
     LC_ALL=POSIX                    \
-    LFS=/Data/Compile/Lfs           \
+    LFS=$Current_Root               \
     LFS_TGT=x86_64-lfs-linux-gnu    \
     FORCE_UNSAFE_CONFIGURE=1        \
     MAKEFLAGS="-j8"                 \
@@ -349,7 +428,7 @@ ExecInBootsChroot ()
 
 BuildUnmount ()
 {
-    local match=$BuildChroot
+    local match=$Box_Top
     local mountpoint
     while mount | grep -q "${match}"; do
         mount | grep "${match}" | cut -f3 -d" " | sort | while read mountpoint; do
@@ -360,4 +439,163 @@ BuildUnmount ()
             fi
         done
     done
+}
+
+_harvest_Bom () # bomFile topDir awkScript
+{
+    local bomFile="$1"
+    local topDir="$2"
+    local script="$3"
+
+    (
+        cd $topDir
+        find . -mindepth 1 \( \
+            -type l -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\t%l\n' \
+            -o      -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\n' \)
+    ) | gawk -- "$script" >"$bomFile"
+}
+
+_harvest_ListFiles () # bomFile
+{
+    local bomFile="$1"
+    gawk -- '/^f/ { print $6 }' $bomFile 
+}
+
+_harvest_ListKnown () # bomFile
+{ 
+    local bomFile="$1"
+    gawk -- '/^[dfl]/ { print $6 }' "$bomFile"
+}
+
+_harvest_ListUnknown () # bomFile
+{ 
+    local bomFile="$1"
+    gawk -- '/^[dfl]/ { next } { print $0 }' "$bomFile"
+}
+
+
+_harvest_Validate () # bomFile
+{
+    local bomFile="$1"
+    gawk -- '/^[dfl]\t/ { next } { print "=>"; print $0; exit 1; }' $bomFile || echo "unkown entry in bill of material"
+}
+
+_harvest_Strip () # bomFile topDir
+{
+    local bomFile="$1"
+    local topDir="$2"
+    cd $topDir
+
+    _stripUnneeded ()
+    {
+        [[ -z $verbose ]] || echo strip --strip-unneeded $1
+        strip --strip-unneeded $1
+    }
+
+    _stripDebug ()
+    {
+        [[ -z $verbose ]] || echo strip --strip-debug $1
+        strip --strip-debug $1
+    }
+
+    local name type
+    _harvest_ListFiles "$bomFile" | file --mime --files-from - | while IFS=$' :' read name type; do
+        case $type in
+            application/x-executable*)  _stripUnneeded $name ;;
+            application/x-sharedlib*)   _stripDebug $name ;;
+            application/x-object*)      _stripDebug $name ;;
+            application/x-archive*)     _stripDebug $name ;;
+        esac
+    done
+}
+
+_harvest_Archive ()
+{
+    local bomFile="$1"
+    local topDir="$2"
+    local archiveFile="$3"
+
+    (
+        cd $topDir
+        _harvest_ListKnown "$bomFile" | \
+        tar $verbose \
+            --create \
+            --no-recursion \
+            --verbatim-files-from \
+            --files-from=- \
+            --auto-compress \
+            --file "$archiveFile"
+    )
+}
+
+_harvest_Install ()
+{
+    local topDir="$1"
+    local archiveFile="$2"
+
+    (
+        cd $topDir
+        tar $verbose --extract --file=$archiveFile
+    )
+}
+
+Build_Harvest ()
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_EnsureCollection
+    _build_EnsureBuild
+
+    Header "HARVEST $Current_Collection / $Recipe_Title"
+
+    local topDir
+    if [[ "$Current_Collection" == "Boots" ]]; then
+        topDir="$Box_Changes$Current_Root"
+    else
+        topDir="$Box_Changes"
+    fi
+    local bomFile="$Store_Top/Bom"
+    local archiveFile="$Store_Top/Files.tar.xz"
+
+    declare -p topDir
+
+    [[ -d "$topDir" ]] || InfoExit "nothing to harvest"
+
+    #echo 'HARVEST>>>'
+    #(cd $topDir; find . -ls)
+    #echo '<<<HARVEST'
+
+    blackoutScript='
+        $6 ~ /^tools\/share\/(info|man|doc)\// { next; }
+        $6 ~ /^Data/ { next; }
+        $6 ~ /^tmp/ { next; }
+        $6 ~ /^etc$/ { next; }
+        $6 ~ /^lib$/ { next; }
+        $6 ~ /^usr$/ { next; }
+        $6 ~ /^usr\/bin$/ { next; }
+        $6 ~ /^usr\/lib$/ { next; }
+        $6 ~ /^usr\/lib\/pkgconfig$/ { next; }
+        $6 ~ /^usr\/include$/ { next; }
+        $6 ~ /^usr\/share$/ { next; }
+        $6 ~ /^usr\/share\/doc$/ { next; }
+        $6 ~ /^usr\/share\/info$/ { next; }
+        $6 ~ /^usr\/share\/info\/dir$/ { next; }
+        $6 ~ /^usr\/share\/man$/ { next; }
+        $6 ~ /^usr\/share\/man\/man[1-8]$/ { next; }
+        $6 ~ /^usr\/share\/misc$/ { next; }
+        $6 ~ /^usr\/share\/aclocal$/ { next; }
+        $6 ~ /^var$/ { next; }
+        $6 ~ /^var\/cache$/ { next; }
+        $6 ~ /^etc\/ld.so.cache$/ { next; }
+        $6 ~ /^var\/cache\// { next; }
+        { print $0 }'
+    
+    _harvest_Bom "$bomFile" "$topDir" "$blackoutScript"
+    _harvest_Validate "$bomFile"
+    _harvest_Strip "$bomFile" "$topDir"
+    _harvest_Bom "$bomFile" "$topDir" "$blackoutScript"
+    _harvest_Archive "$bomFile" "$topDir" "$archiveFile" >/dev/null
+    _harvest_Install "$Current_Root" "$archiveFile" >/dev/null
+    cat $bomFile
 }

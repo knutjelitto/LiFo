@@ -3,13 +3,6 @@
 Import PogoConfig
 NeverInChroot
 
-#verbose=''
-
-BuildSetupRecipe "${1:-}"
-
-blacklist=$(mktemp)
-bom=$(mktemp)
-
 cat > $blacklist << "EOF"
  /$
  /tmp.*
@@ -17,20 +10,3 @@ cat > $blacklist << "EOF"
  /usr$
  /usr/include$
 EOF
-
-topDir=$BuildChanges
-
-Pushd $topDir
-
-(
-    find . -mindepth 1 \( -type l -printf '%y %M %4m %3n %10s /%P -> %l\n' -o -printf '%y %M %4m %3n %10s /%P\n' \)
-) | grep -v -f $blacklist >$bom
-
-
-cat $bom | less
-
-cat $bom | cut -c 35- | tar --create --verbose --auto-compress --file /tmp/xxx.tar.xz --verbatim-files-from --directory=$topDir --files-from=-
-
-Popd
-
-rm $verbose --force $blacklist $bom

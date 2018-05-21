@@ -1,4 +1,4 @@
-#!/bin/bash -eu (source-only)
+#!/bin/bash (source-only)
 
 [[ -z ${_recipeFunctionsIncluded:-} ]] || exit
 _recipeFunctionsIncluded=true
@@ -8,83 +8,61 @@ RecipeOptionalVars=(BuildIn)
 RecipeRequiredFuncs=()
 RecipeOptionalFuncs=(Prepare Build Trim)
 
-declare Recipe_File Recipe_Coll
-declare Recipe_BuildHome Recipe_StoreHome
+declare Recipe_Collection Recipe_Token
 
-RecipeFind2 ()
+_recipeFindInCollection ()
 {
-    # sets global Recipe_Coll / Recipe_File
+    # sets global Recipe_Token
 
-    local collection="$(dirname $Recipe_Token)"
-    local recipe="$(basename $Recipe_Token)"
-    declare -p collection
-    declare -p recipe
+    local name="$1"
 
-    if [[ "$collection" == "." ]]; then
-        collection=Core
+    file="$Recipes_Home/$Recipe_Collection/$name"
+    if [[ -f "$file" ]]; then
+        Recipe_Token="$Recipe_Collection/$name"
+        return 0
+    else
+        for file in "$Recipes_Home/$Recipe_Collection/$name"-*; do
+            if [[ -f $file ]]; then
+                Recipe_Token="$Recipe_Collection/$(basename $file)"
+                return 0
+            fi
+        done
     fi
-    if [[ ! -d "$Recipes_Home/$collection" ]]; then
-        Fatal "invalid recipe token - no '$collection' collection found"
+    file="$Recipes_Home/$Recipe_Collection/$name/Recipe"
+    if [[ -f $file ]]; then
+        Recipe_Token="$Recipe_Collection/$name/Recipe"
+        return 0
     fi
 
-    for Recipe_Coll in "${Recipes_Collections[@]}"; do
-        Recipe_File="$Recipes_Home/$Recipe_Coll/$Recipe_Token"
-        if [[ ! -f $Recipe_File ]]; then
-            for Recipe_File in "$Recipes_Home/$Recipe_Coll/$Recipe_Token"-*; do
-                if [[ -f $Recipe_File ]]; then
-                    return
-                fi
-            done
-        fi
-        if [[ ! -f $Recipe_File ]]; then
-            Recipe_File="$Recipes_Home/$Recipe_Coll/$Recipe_Token/Recipe"
-        fi
-        if [[ -f $Recipe_File ]]; then
-            return
-        fi
-    done
-
-    if [[ ! -f Recipe_File ]]; then
-        Fatal "can't resolve recipe token '$Recipe_Token'"
-    fi
+    return 1
 }
 
-RecipeFind ()
+_recipeFind ()
 {
-    # sets global Recipe_Coll / Recipe_File
+    # sets global Recipe_Collection / Recipe_Token
 
-    for Recipe_Coll in "${Recipes_Collections[@]}"; do
-        Recipe_File="$Recipes_Home/$Recipe_Coll/$Recipe_Token"
-        if [[ ! -f $Recipe_File ]]; then
-            for Recipe_File in "$Recipes_Home/$Recipe_Coll/$Recipe_Token"-*; do
-                if [[ -f $Recipe_File ]]; then
-                    return
-                fi
-            done
-        fi
-        if [[ ! -f $Recipe_File ]]; then
-            Recipe_File="$Recipes_Home/$Recipe_Coll/$Recipe_Token/Recipe"
-        fi
-        if [[ -f $Recipe_File ]]; then
-            return
-        fi
-    done
+    Recipe_Collection="$(dirname $Recipe_Token)"
+    local name="$(basename $Recipe_Token)"
+    local path
 
-    if [[ ! -f Recipe_File ]]; then
-        Fatal "can't resolve recipe token '$Recipe_Token'"
+    if [[ "$Recipe_Collection" == "." ]]; then
+        for Recipe_Collection in "${Recipes_Collections[@]}"; do
+            if _recipeFindInCollection "$name"; then
+                return 0
+            fi
+        done
+    else
+        if _recipeFindInCollection "$name"; then
+            return 0
+        fi
     fi
+    
+    Fatal "can't resolve recipe token '$Recipe_Token'"
 }
 
-RecipeUnset () 
+_recipeUnset () 
 { 
     unset "${RecipeRequiredVars[@]}" "${RecipeRequiredFuncs[@]}" "${RecipeOptionalVars[@]}" "${RecipeOptionalFuncs[@]}"
-}
-
-RecipeSource ()
-{
-    local content
-    content=$(_recipeSource ${1:-})
-    eval "$content"
 }
 
 _recipeSource ()
@@ -95,25 +73,27 @@ _recipeSource ()
         Fatal "no recipe token given"
     fi
 
-    RecipeUnset
-    RecipeFind
+    _recipeUnset
+    _recipeFind
     
-    source $Recipe_File
+    source "$Recipes_Home/$Recipe_Token"
 
-    local savedRecipe_Coll="$Recipe_Coll"
+    local savedRecipe_Collection="$Recipe_Collection"
+    local savedTitle="$Title"
     while [[ -n "${Redirect:-}" ]]; do
         Recipe_Token="$Redirect"
         unset Redirect
-        RecipeUnset
-        RecipeFind
-        source $Recipe_File
+        _recipeUnset
+        _recipeFind
+        source "$Recipes_Home/$Recipe_Token"
     done
-    Recipe_Coll="$savedRecipe_Coll"
+    Recipe_Collection="$savedRecipe_Collection"
+    Title="$savedTitle"
 
     local variable
     for variable in "${RecipeRequiredVars[@]}"; do
         if [[ ! -v ${variable} ]]; then
-            Fatal "required variable '$variable' missing in receipe '$Recipe_Token' at '$Recipe_File'"
+            Fatal "required variable '$variable' missing in receipe '$Recipe_Token'"
         fi
     done
     for variable in "${RecipeOptionalVars[@]}"; do
@@ -124,7 +104,7 @@ _recipeSource ()
     local function
     for function in "${RecipeRequiredFuncs[@]}"; do
         if [[ ! "$(type -t $function)" == "function" ]]; then
-            Fatal "required function '$function' missing in receipe '$Recipe_Token' at '$Recipe_File'"
+            Fatal "required function '$function' missing in receipe '$Recipe_Token'"
         fi
     done
     for function in "${RecipeOptionalFuncs[@]}"; do
@@ -133,9 +113,8 @@ _recipeSource ()
         fi
     done
 
+    declare -p Recipe_Collection | sed 's/ -- / -g /'
     declare -p Recipe_Token | sed 's/ -- / -g /'
-    declare -p Recipe_Coll | sed 's/ -- / -g /'
-    declare -p Recipe_File | sed 's/ -- / -g /'
     declare -p Title | sed 's/-- Title=/-g Recipe_Title=/'
     declare -p Name | sed 's/-- Name=/-g Recipe_Name=/'
     declare -p Version | sed 's/-- Version=/-g Recipe_Version=/'
@@ -144,4 +123,25 @@ _recipeSource ()
     echo -n 'Recipe_' ; declare -pf Prepare
     echo -n 'Recipe_' ; declare -pf Build
     echo -n 'Recipe_' ; declare -pf Trim
+}
+
+RecipeDump ()
+{
+    declare -p Recipe_Collection
+    declare -p Recipe_Token
+    declare -p Recipe_Title
+    declare -p Recipe_Name
+    declare -p Recipe_Version
+    declare -p Recipe_Supplies
+    declare -p Recipe_BuildIn
+    declare -pf Recipe_Prepare
+    declare -pf Recipe_Build
+    declare -pf Recipe_Trim
+}
+
+RecipeSource ()
+{
+    local content
+    content=$(_recipeSource ${1:-})
+    eval "$content"
 }

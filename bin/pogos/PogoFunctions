@@ -1,4 +1,4 @@
-#!/bin/bash -eu (source-only)
+#!/bin/bash (source-only)
 
 [[ -z ${_pogoFunctionsIncluded:-} ]] || exit
 _pogoFunctionsIncluded=true
@@ -36,25 +36,35 @@ Header ()
     echo -ne "\033]0;$1\007"
 }
 
+ListContains ()
+{
+    local match="$1"
+    local element
+    shift
+    for element; do
+        [[ "$element" == "$match" ]] && return 0
+    done
+  
+    return 1
+}
+
 #
 # (Re-)Create then Pogo tree
 #
 EnsurePogoEnvironment ()
 {
     local directories=(
-        $PogoVolume/Data
-        $PogoVolume/Programs
-        $PogoVolume/System
         /Data/Compile
         /Data/Compile/Sources
         /Data/Compile/Build
-        /Data/Compile/Store
         /Data/Compile/Roots
         /Data/Compile/Lfs
         /Data/Compile/Lfs/tools
         /Data/Variable/Archives
         /Data/Variable/Downloads
+        /Data/Variable/Store
         /System/Index
+        /Programs
     )
 
     MakeDir "${directories[@]}"
@@ -62,7 +72,7 @@ EnsurePogoEnvironment ()
     local pogoDir
     for pogoDir in $(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//'); do
         if [[ ! -d ${!pogoDir} ]]; then
-            Fatal "no directory found for $pogoDir (${!pogoDir})"
+            [[ "$pogoDir" == "PogoVolume" ]] || Fatal "no directory found for $pogoDir (${!pogoDir})"
         fi
     done
 }

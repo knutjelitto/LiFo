@@ -1,0 +1,8 @@
+#!/bin/bash -eu
+
+Import PogoConfig
+NeverInChroot
+
+rm $verbose --force --recursive $Tools_Root
+rm $verbose --force --recursive $Tools_Build
+rm $verbose --force --recursive $Tools_Store

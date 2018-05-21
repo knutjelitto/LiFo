@@ -1,0 +1,91 @@
+#!/bin/bash
+
+Title="6.20. GCC-7.3.0"
+Name=Gcc
+Version=7.3.0
+BuildIn=build
+Supplies=(http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.xz)
+
+Prepare ()
+{
+    sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
+
+    rm -f /usr/lib/gcc
+
+    true
+}
+
+Build ()
+{
+    SED=sed                                 \
+    ../configure --prefix=/usr              \
+                 --disable-nls              \
+                 --enable-languages=c,c++   \
+                 --disable-multilib         \
+                 --disable-bootstrap        \
+                 --with-system-zlib
+    
+    make
+
+    #make -k check
+
+    make install
+
+    ln -sv ../usr/bin/cpp /lib
+
+    ln -vsf gcc /usr/bin/cc
+
+    install -v -dm755 /usr/lib/bfd-plugins
+    ln -vsf ../../libexec/gcc/$(gcc -dumpmachine)/7.3.0/liblto_plugin.so /usr/lib/bfd-plugins/
+
+    echo 'int main(){}' > dummy.c
+    cc dummy.c -v -Wl,--verbose &> dummy.log
+    readelf -l a.out | grep ': /lib'
+    echo 'X:[Requesting program interpreter: /lib64/ld-linux-x86-64.so.2]'
+
+    #read -p "Press Enter ..."
+
+    grep -o '/usr/lib.*/crt[1in].*succeeded' dummy.log
+    echo 'X:/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../lib/crt1.o succeeded'
+    echo 'X:/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../lib/crti.o succeeded'
+    echo 'X:/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/../../../../lib/crtn.o succeeded'
+
+    #read -p "Press Enter ..."
+
+    grep -B4 '^ /usr/include' dummy.log
+    echo 'X:#include <...> search starts here:'
+    echo 'X: /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include'
+    echo 'X: /usr/local/include'
+    echo 'X: /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include-fixed'
+    echo 'X: /usr/include'
+
+    #read -p "Press Enter ..."
+
+    grep 'SEARCH.*/usr/lib' dummy.log |sed 's|; |\n|g'
+    echo 'X:SEARCH_DIR("/usr/x86_64-pc-linux-gnu/lib64")'
+    echo 'X:SEARCH_DIR("/usr/local/lib64")'
+    echo 'X:SEARCH_DIR("/lib64")'
+    echo 'X:SEARCH_DIR("/usr/lib64")'
+    echo 'X:SEARCH_DIR("/usr/x86_64-pc-linux-gnu/lib")'
+    echo 'X:SEARCH_DIR("/usr/local/lib")'
+    echo 'X:SEARCH_DIR("/lib")'
+    echo 'X:SEARCH_DIR("/usr/lib");'
+
+    #read -p "Press Enter ..."
+
+    grep "/lib.*/libc.so.6 " dummy.log
+    echo 'X:attempt to open /lib/libc.so.6 succeeded'
+
+    #read -p "Press Enter ..."
+
+    grep found dummy.log
+    echo 'X:found ld-linux-x86-64.so.2 at /lib/ld-linux-x86-64.so.2'
+
+    #read -p "Press Enter ..."
+
+    mkdir -pv /usr/share/gdb/auto-load/usr/lib
+    mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
+
+    echo 'int main(){}' > dummy.cc
+    g++ dummy.cc -v -Wl,--verbose &> dummy.log
+}

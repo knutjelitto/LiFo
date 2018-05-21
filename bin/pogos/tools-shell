@@ -1,14 +1,5 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-NeverInChroot
 
-verbose=''
-
-trap 'BuildCleanBuildHead' EXIT
-
-BuildSetupShell
-BuildCreateBuildHead
-MakeToolsRootfs $BuildChroot/Root
-
-ExecInToolsChroot "bash"
+Build_Shell Tools

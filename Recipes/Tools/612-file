@@ -1,0 +1,14 @@
+#!/bin/bash
+
+Title="6.12. File-5.32"
+Name=File
+Version=5.32
+Supplies=(ftp://ftp.astron.com/pub/file/file-5.32.tar.gz)
+
+Build ()
+{
+    ./configure --prefix=/usr
+    make
+    make check
+    make install
+}
