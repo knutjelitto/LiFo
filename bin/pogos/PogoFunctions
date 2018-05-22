@@ -33,7 +33,7 @@ MakeDir ()
 
 Header ()
 {
-    echo -ne "\033]0;$1\007"
+    echo -ne "\033]0;$1\007" >/dev/console
 }
 
 ListContains ()
@@ -58,8 +58,8 @@ EnsurePogoEnvironment ()
         /Data/Compile/Sources
         /Data/Compile/Build
         /Data/Compile/Roots
-        /Data/Compile/Lfs
-        /Data/Compile/Lfs/tools
+        #/Data/Compile/Lfs
+        #/Data/Compile/Lfs/tools
         /Data/Variable/Archives
         /Data/Variable/Downloads
         /Data/Variable/Store

@@ -8,7 +8,7 @@ ENV TERM xterm-256color
 
 RUN    apt-get update -y \
     && apt-get install -y apt-utils \ 
-    && apt-get install -y build-essential bison file gawk texinfo wget sudo man-db info less tree nano \ 
+    && apt-get install -y build-essential bison file gawk texinfo wget curl sudo man-db info less tree nano \ 
     && apt-get -q -y autoremove \ 
     && rm -rvf /var/lib/apt/lists/*
 

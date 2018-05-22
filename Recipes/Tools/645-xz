@@ -1,0 +1,24 @@
+#!/bin/bash
+
+Title="6.45. Xz-5.2.3"
+Name=Xz
+Version=5.2.3
+Supplies=(http://tukaani.org/xz/xz-5.2.3.tar.xz)
+
+Build ()
+{
+    ./configure --prefix=/usr       \
+                --disable-nls       \
+                --disable-static    \
+                --docdir=/usr/share/doc/xz-5.2.3
+    make
+    
+    # make check
+    
+    make install
+
+    make install
+    mv -v   /usr/bin/{lzma,unlzma,lzcat,xz,unxz,xzcat} /bin
+    mv -v /usr/lib/liblzma.so.* /lib
+    ln -svf ../../lib/$(readlink /usr/lib/liblzma.so) /usr/lib/liblzma.so
+}

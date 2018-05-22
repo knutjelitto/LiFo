@@ -1,0 +1,21 @@
+#!/bin/bash
+
+Title="6.41. XML::Parser-2.44"
+Name=XML_Parser
+Version=2.44
+Supplies=(http://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.44.tar.gz)
+
+Build ()
+{
+    # Prepare XML::Parser for compilation: 
+    perl Makefile.PL
+
+    # Compile the package: 
+    make
+    
+    # To test the results, issue: 
+    # make test
+
+    # Install the package: 
+    make install
+}

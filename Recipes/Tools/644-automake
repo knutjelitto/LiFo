@@ -1,0 +1,19 @@
+#!/bin/bash
+
+Title="6.44. Automake-1.15.1"
+Name=Automake
+Version=1.15.1
+Supplies=(http://ftp.gnu.org/gnu/automake/automake-1.15.1.tar.xz)
+
+Build ()
+{
+    ./configure --prefix=/usr \
+                --docdir=/usr/share/doc/automake-1.15.1
+
+    make
+    
+    #sed -i "s:./configure:LEXLIB=/usr/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
+    # make -j4 check
+
+    make install
+}

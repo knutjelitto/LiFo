@@ -16,6 +16,15 @@ Build_Build () # collection recipe
     _build_ExecInChroot "pogo compile $*"
 }
 
+Build_Setup () # collection recipe
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_EnsureCollection
+    _build_EnsureBuild
+}
+
 Build_Shell () # collection recipe
 {
     NeverInChroot
@@ -84,6 +93,7 @@ _build_Enter () # build name
     Box_Merged=$Box_Top/Merged
     Box_Build=$Box_Top/Build
     Store_Logs=$Store_Top/Logs
+    Store_Files=($Store_Top/Bom $Store_Top/Files.tar.xz)
 
     if [[ -n "{verbose}" ]]; then
         declare -p Box_Top
@@ -132,7 +142,8 @@ _build_EnsureBuild ()
 _build_CleanBuild ()
 {
     rm ${verbose} --recursive --force "$Box_Top"
-    rm ${verbose} --recursive --force "$Store_Top"
+    #rm ${verbose} --recursive --force "$Store_Top"
+    rm ${verbose} --force "${Store_Files[@]}"
 }
 
 _build_ProvideSupplies ()
@@ -354,7 +365,7 @@ ExecInToolsChroot ()
 
     local command="$1"
 
-    local lowerdir="$Box_Root:$PogoVolume:/Pogo/Data/Compile/Roots/Tools:/Pogo/Data/Compile/Roots/Boots"
+    local lowerdir="/Pogo/Data/Compile/Roots/Tools:/Pogo/Data/Compile/Roots/Boots:$PogoVolume:$Box_Root"
     local upperdir="$Box_Changes"
     local workdir="$Box_Work"
     local merged="$Box_Merged"
@@ -379,6 +390,10 @@ ExecInToolsChroot ()
     FORCE_UNSAFE_CONFIGURE=1    \
     MAKEFLAGS="-j8"             \
     chroot $merged /bin/bash -l -c "$command"
+
+    BuildUnmount || true
+
+    trap EXIT
 )
 
 MakeBootsRootfs ()
@@ -422,7 +437,7 @@ ExecInBootsChroot ()
     LFS=$Current_Root               \
     LFS_TGT=x86_64-lfs-linux-gnu    \
     FORCE_UNSAFE_CONFIGURE=1        \
-    MAKEFLAGS="-j8"                 \
+    MAKEFLAGS="-j4"                 \
     chroot $merged /bin/bash -l -c "$command"
 )
 
@@ -435,10 +450,12 @@ BuildUnmount ()
             if [[ -z $verbose ]]; then
                 mountpoint --quiet ${mountpoint} &>/dev/null && umount --recursive ${mountpoint} &>/dev/null
             else
-                mountpoint --quiet ${mountpoint} &>/dev/null && umount --verbose --recursive ${mountpoint}
+                mountpoint --quiet ${mountpoint} &>/dev/null && umount --verbose --recursive ${mountpoint} 2>&1
             fi
         done
     done
+
+    true
 }
 
 _harvest_Bom () # bomFile topDir awkScript
@@ -458,26 +475,26 @@ _harvest_Bom () # bomFile topDir awkScript
 _harvest_ListFiles () # bomFile
 {
     local bomFile="$1"
-    gawk -- '/^f/ { print $6 }' $bomFile 
+    gawk -F'\t' -- '/^f/ { print $6 }' $bomFile 
 }
 
 _harvest_ListKnown () # bomFile
 { 
     local bomFile="$1"
-    gawk -- '/^[dfl]/ { print $6 }' "$bomFile"
+    gawk -F'\t' -- '/^[dfl]/ { print $6 }' "$bomFile"
 }
 
 _harvest_ListUnknown () # bomFile
 { 
     local bomFile="$1"
-    gawk -- '/^[dfl]/ { next } { print $0 }' "$bomFile"
+    gawk -F'\t' -- '/^[dfl]/ { next } { print $0 }' "$bomFile"
 }
 
 
 _harvest_Validate () # bomFile
 {
     local bomFile="$1"
-    gawk -- '/^[dfl]\t/ { next } { print "=>"; print $0; exit 1; }' $bomFile || echo "unkown entry in bill of material"
+    gawk -F'\t' -- '/^[dfl]\t/ { next } { print "=>"; print $0; exit 1; }' $bomFile || echo "unkown entry in bill of material"
 }
 
 _harvest_Strip () # bomFile topDir
@@ -499,12 +516,12 @@ _harvest_Strip () # bomFile topDir
     }
 
     local name type
-    _harvest_ListFiles "$bomFile" | file --mime --files-from - | while IFS=$' :' read name type; do
+    _harvest_ListFiles "$bomFile" | file --mime --files-from - | while IFS=$':' read name type; do
         case $type in
-            application/x-executable*)  _stripUnneeded $name ;;
-            application/x-sharedlib*)   _stripDebug $name ;;
-            application/x-object*)      _stripDebug $name ;;
-            application/x-archive*)     _stripDebug $name ;;
+            *application/x-executable*)  _stripUnneeded $name ;;
+            *application/x-sharedlib*)   _stripDebug $name ;;
+            *application/x-object*)      _stripDebug $name ;;
+            *application/x-archive*)     _stripDebug $name ;;
         esac
     done
 }
@@ -562,11 +579,11 @@ Build_Harvest ()
 
     [[ -d "$topDir" ]] || InfoExit "nothing to harvest"
 
-    if [[ -d "$topDir/usr/share/locale" ]]; then
-        (cd "$topDir/usr/share/locale"; find . -type f -path '*/LC_MESSAGES/*' -delete)
-        (cd "$topDir/usr/share/locale"; find . -type d -empty -delete)
-        rm -f "$topDir/usr/share/locale/locale.alias"
-    fi        
+    #if [[ -d "$topDir/usr/share/locale" ]]; then
+    #    (cd "$topDir/usr/share/locale"; find . -type f -path '*/LC_MESSAGES/*' -delete)
+    #    (cd "$topDir/usr/share/locale"; find . -type d -empty -delete)
+    #    rm -f "$topDir/usr/share/locale/locale.alias"
+    #fi        
 
     blackoutScript='
         $6 ~ /^tools\/share\/(info|man|doc)\// { next; }

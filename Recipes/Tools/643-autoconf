@@ -1,0 +1,15 @@
+#!/bin/bash
+
+Title="6.43. Autoconf-2.69"
+Name=Autoconf
+Version=2.69
+Supplies=(http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.xz)
+
+Build ()
+{
+    ./configure --prefix=/usr
+
+    make
+    #make check
+    make install
+}

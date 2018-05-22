@@ -8,12 +8,25 @@ rm $verbose --force --recursive $Tools_Build
 
 upto="$1"
 
-for recipe in {607..640}; do
+for recipe in {607..677}; do
+
+    Build_Setup tools $recipe
+
     if [[ "$recipe" == "$upto" ]]; then
-        pogo tools build $recipe
-        pogo tools harvest $recipe
+        #find $Store_Top -ls
+        #read -p "(Before BUILD) press enter ..."
+        pogo tools build   $recipe  | sed -u -e 's/^/BUILD  : /'   | tee "$Store_Logs/Build"
+        #find $Store_Top -ls
+        #read -p "(After BUILD) press enter ..."
+        pogo tools harvest $recipe  | sed -u -e 's/^/HARVEST: /'   | tee "$Store_Logs/Harvest"
+        #find $Store_Top -ls
+        #read -p "(After HARVEST) press enter ..."
         exit
     else
-        pogo tools rollout $recipe
+        #find $Store_Top -ls
+        #read -p "(Before ROLLOUT) press enter ..."
+        pogo tools rollout $recipe  | sed -u -e 's/^/ROLLOUT: /'   | tee "$Store_Logs/Rollout"
+        #find $Store_Top -ls
+        #read -p "(After ROLLOUT) press enter ..."
     fi
 done

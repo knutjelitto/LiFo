@@ -1,0 +1,40 @@
+#!/bin/bash
+
+Title="6.51. Python-3.6.4"
+Name=Python3
+Version=3.6.4
+Supplies=(
+    https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz
+    https://docs.python.org/ftp/python/doc/3.6.4/python-3.6.4-docs-html.tar.bz2
+)
+
+Build ()
+{
+
+    # Prepare Python for compilation: 
+    ./configure --prefix=/usr       \
+                --enable-shared     \
+                --with-system-expat \
+                --with-system-ffi   \
+                --with-ensurepip=yes
+
+    # Compile the package: 
+    make
+
+    # The test suite requires TK and and X Windows session and cannot be run until Python 3 is reinstalled in BLFS. 
+
+    # Install the package: 
+    make install
+    chmod -v 755 /usr/lib/libpython3.6m.so
+    chmod -v 755 /usr/lib/libpython3.so
+
+    # If desired, install the preformatted documentation: 
+    install -v -dm755 /usr/share/doc/python-3.6.4/html 
+    tar --strip-components=1  \
+        --no-same-owner       \
+        --no-same-permissions \
+        -C /usr/share/doc/python-3.6.4/html \
+        -xvf /Data/Variable/Archives/python-3.6.4-docs-html.tar.bz2
+
+    # tar: usr/lib/python3.6/site-packages/setuptools/script: Cannot stat: No such file or directory
+}

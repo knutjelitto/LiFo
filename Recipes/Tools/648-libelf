@@ -1,0 +1,21 @@
+#!/bin/bash
+
+Title="6.48. Libelf 0.170"
+Name=LibElf
+Version=0.170
+Supplies=(https://sourceware.org/ftp/elfutils/0.170/elfutils-0.170.tar.bz2)
+
+Build ()
+{
+    # Prepare Libelf for compilation: 
+    ./configure --prefix=/usr
+
+    # Compile the package: 
+    make
+
+    # To test the results, issue make check. 
+
+    # Install only Libelf: 
+    make -C libelf install
+    install -vm644 config/libelf.pc /usr/lib/pkgconfig
+}

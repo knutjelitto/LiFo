@@ -1,158 +1,3 @@
-cd tools/
-cd bin/
-ll
-cd x86_64-lfs-linux-gnu/
-cd /Data/Compile/Build/Binutils1-2.30/Chroot/Changes/
-find
-find | less
-cd
-pogo boots build 505
-pogo boots harvest 505
-pogo boots build 504
-pogo boots harvest 504
-pogo boots reset
-ll
-ls -la
-ll
-cd Lfs/
-cd tools/
-cd bin/
-cd x86_64-lfs-linux-gnu/
-cd /Data/Compile/Build/Binutils1-2.30/Chroot/Changes/
-find
-find | less
-cd
-pogo boots build 505
-pogo boots harvest 505
-pogo boots harvest 504
-pogo boots reset
-pogo boots build 504
-clear
-pogo boots build 506
-time pogo boots big
-cd /Data/Compile/
-du -h Store
-cd Store/LFSboots/XZ/
-cd 5.2.3/
-less Bom 
-tar tvf Files.tar.xz 
-pogo greate
-pogo create
-cd /Data/Compile/Build/
-cd Bash-4.4.18/
-cd /Pogo/
-cd gobo/
-ll
-du
-cd ..
-rm -rv gobo
-pogo tools shell
-pogo boots big
-cd /Data/Compile/Build/LFSboots/
-ll
-du
-cd
-pogo boots
-pogo boots build 504
-recipe chzeck 504
-recipe check 504
-ls -la
-ll
-ls -la
-cd /Data/Compile/
-ll
-pogo create
-pogo test
-pwd
-cd /
-ll
-ls -la
-cd root
-ls -la
-pogo test
-pogo test | less
-mount
-mount
-cd tools
-ll
-mkdir xxx
-mkdir xxx
-set
-env
-ch $LFS
-cd $LFS
-cd tools/
-ll
-ch $LFS
-cd $LFS
-cd tools/
-cd Data/
-cd Compile/
-l
-cd Variable/Archives/
-ll
-..
-cd ..
-cd Variable/Archives/
-..
-cd tools
-cd bin
-ll
-cd ..
-du -h
-pogo test | less
-mount
-mount
-cd tools
-mkdir xxx
-mkdir xxx
-set
-env
-ch $LFS
-cd $LFS
-ch $LFS
-cd $LFS
-cd Data/
-l
-cd Variable/Archives/
-..
-man gawk
-man file
-cd /Data/Variable/Store/Boots/Binutils1-2.30/
-less Bom 
-tar tvf Files.tar.xz 
-pogo boots harvest 504
-cd ..
-cd Compile/
-cd Roots/
-cd Boots/
-cd tools/
-ll
-pogo boots shell
-cd
-pogo boots build-all
-time pogo boots build-all
-pogo create
-pogo create | less
-pogo create | less
-du
-du -h tools
-ll
-env
-cd /
-ll
-cd /
-cd usr/
-cd include/
-ll
-cd /
-cd usr/
-cd include/
-ll
-cd ..
-cd usr/
-cd include/
-cd ..
 cd /usr/
 cd share/
 cd man/
@@ -498,3 +343,158 @@ cd ..
 ll
 cd
 time pogo tools build-all
+cd
+time pogo tools build-all
+rm a.out dummy.cc log tmp.*
+rm -rvf a.out dummy.cc log tmp.*
+less .lesshst 
+less .wget-hsts 
+ll
+curl
+man curl
+apt-get install curl
+apt-get install curl
+patch
+cd tools
+ls -la
+cd bin/
+ll
+ls -l patch
+which
+which patch
+sed
+which sed
+env
+which patch
+which
+which patch
+less /Data/Compile/Sources/ncurses-6.1/c++/etip.h.in 
+find / -name iostream.h
+find / -name iostream
+cd /usr/include/c++/
+cd 6
+cd /Data/Compile/Build/Tools/NCurses-6.1/
+cd Changes/
+cd c++
+less etip.h 
+pogo tools build 623
+pogo tools build-all
+cd /Data/Compile/Build/Tools/NCurses-6.1/Changes/
+cd Data/Compile/Sources/ncurses-6.1/
+less config.log 
+grep STREAM config.log 
+grep HAVE_IO config.log 
+grep HAVE config.log 
+grep HAVE config.log | less
+less config.status 
+grep HAVE *
+grep HAVE_ *
+grep HAVE_I *
+find . -type f -exec grep HAVE {} \;
+find . -type f -exec grep HAVE_ {} \;
+find . -type f -exec grep HAVE_IO {} \;
+find . -type f -exec grep -v HAVE_IO {} \;
+cd /Data/Compile/Build/Tools/NCurses-6.1/Changes/Data/Compile/Sources/ncurses-6.1/
+..
+find | less
+cd /Data/Compile/Sources/ncurses-6.1/
+less include/ncurses_defs 
+find . -name 'M*'
+less include/MKncurses_def.sh 
+find . -type f -exec grep HAVE_IO {} \+
+less c++/edit_cfg.sh 
+g++
+g++ -v
+cd /Data/Compile/Build/Tools/NCurses-6.1/Changes/Data/Compile/Sources/ncurses-6.1/
+find | less
+cd /Data/Compile/Sources/ncurses-6.1/
+less include/ncurses_defs 
+find . -name 'M*'
+less include/MKncurses_def.sh 
+less c++/edit_cfg.sh 
+find . -type f -exec grep HAVE_IO {} \+
+pogo tools build 623
+pogo tools build 623 | tee log
+pogo tools build 623 2>&1 | tee log
+less log
+cd /Data/Compile/Build/Tools/NCurses-6.1/Changes/Data/Compile/Sources/ncurses-6.1/c++
+less etip.h 
+pogo tools build-all
+pogo boots build-all; pogo tools build-all
+pogo tools shell
+cleare
+less dummy.log 
+clear
+cd /Data/Compile/Roots/Tools/usr/lib
+ll | less
+..
+time pogo tools build-all
+time pogo tools build-all
+rm a.out dummy.cc log tmp.*
+rm -rvf a.out dummy.cc log tmp.*
+less .lesshst 
+less .wget-hsts 
+curl
+apt-get install curl
+man curl
+cd /Data/
+cd Compile/
+l
+cd tools
+cd Build/
+du
+mv Lfs Roots/ 
+mv Lfs Boots
+cd Sources/
+rm -rv LFSboots/
+cd ll
+rmdir /Data/Compile/Store
+rm -rv /Data/Compile/Sources/
+pogo create
+pogo create | less
+pogo tools built-upto 607
+rm -rv /Data/Compile/Sources
+man tee
+cd /Data/Compile/
+cd Lfs/
+cd tools/
+cd Roots/
+cd ..
+cd Variable/
+cd Store/
+cd Tools/
+cd LinuxHeaders-4.15.3/Logs/
+ls -la
+cd -
+ll
+less Harvest 
+sdtbuf
+stdbuf
+man stdbuf
+cd
+man sed
+pogo tools build-upto 607[A
+ls -l /dev/ | less
+pogo tools build-upto 608
+pogo tools build-upto 609
+pogo boots build-all
+echo $?
+time pogo boots build-all
+pogo boots shell
+pogo tools empty
+ls -l /dev/
+pogo tools build-upto 607
+mount
+which
+env
+perl
+perl --version
+perl --help
+perl -V
+perl -V | more
+cd /usr/bin/
+ls -l perl
+cd /usr/bin/
+ls -l perl*
+cd /usr/bin/
+ls -la perl*
