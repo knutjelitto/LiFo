@@ -1,0 +1,27 @@
+#!/bin/bash
+
+Title="6.32. Flex-2.6.4"
+Name=Flex
+Version=2.6.4
+Supplies=(https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz)
+
+Build ()
+{
+    sed -i "/math.h/a #include <malloc.h>" src/flexdef.h
+
+    HELP2MAN=/tools/bin/true    \
+    ./configure --prefix=/usr   \
+                --disable-nls   \
+                --docdir=/usr/share/doc/flex-2.6.4
+
+    make
+    #make check
+    make install
+    ln -vsf flex /usr/bin/lex
+}
+
+Trim ()
+{
+    # don't know why
+    rm -vf /usr/lib/libstdc++.so.6
+}

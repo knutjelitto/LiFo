@@ -8,7 +8,7 @@ rm $verbose --force --recursive $Tools_Build
 
 upto="$1"
 
-for recipe in {607..623}; do
+for recipe in {607..640}; do
     if [[ "$recipe" == "$upto" ]]; then
         pogo tools build $recipe
         pogo tools harvest $recipe

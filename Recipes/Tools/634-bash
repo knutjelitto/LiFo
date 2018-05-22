@@ -1,0 +1,22 @@
+#!/bin/bash
+
+Title="6.34. Bash-4.4.18"
+Name=Bash
+Version=4.4.18
+Supplies=(http://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz)
+
+Build ()
+{    
+    ./configure --prefix=/usr               \
+                --disable-nls               \
+                --without-bash-malloc       \
+                --with-installed-readline   \
+                --docdir=/usr/share/doc/bash-4.4.18
+    make
+
+    #chown -Rv nobody .
+    #su nobody -s /bin/bash -c "PATH=$PATH make tests"
+    
+    make install
+    mv -vf /usr/bin/bash /bin
+}

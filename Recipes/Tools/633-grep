@@ -1,0 +1,17 @@
+#!/bin/bash
+
+Title="6.33. Grep-3.1"
+Name=Grep
+Version=3.1
+Supplies=(http://ftp.gnu.org/gnu/grep/grep-3.1.tar.xz)
+
+Build ()
+{    
+    ./configure --prefix=/usr   \
+                --disable-nls   \
+                --bindir=/bin
+
+    make
+    #make check
+    make install
+}

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+Title="6.30. Iana-Etc-2.30"
+Name=IanaEtc
+Version=2.30
+Supplies=(http://anduin.linuxfromscratch.org/LFS/iana-etc-2.30.tar.bz2)
+
+Build ()
+{
+    make
+
+    make install
+}

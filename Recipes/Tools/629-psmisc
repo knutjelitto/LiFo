@@ -1,0 +1,18 @@
+#!/bin/bash
+
+Title="6.29. Psmisc-23.1"
+Name=Psmisc
+Version=23.1
+Supplies=(https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-23.1.tar.xz)
+
+Build ()
+{
+    ./configure --prefix=/usr
+
+    make
+
+    make install
+
+    mv -v /usr/bin/fuser   /bin
+    mv -v /usr/bin/killall /bin
+}

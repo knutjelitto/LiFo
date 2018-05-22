@@ -1,0 +1,16 @@
+#!/bin/bash
+
+Title="6.37. Gperf-3.1"
+Name=Gperf
+Version=3.1
+Supplies=(http://ftp.gnu.org/gnu/gperf/gperf-3.1.tar.gz)
+
+Build ()
+{
+    ./configure --prefix=/usr \
+                --docdir=/usr/share/doc/gperf-3.1
+
+    make
+    #make -j1 check
+    make install
+}

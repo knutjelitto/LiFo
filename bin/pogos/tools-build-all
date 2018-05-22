@@ -5,8 +5,8 @@ NeverInChroot
 
 pogo tools empty
 
-for recipe in {607..623}; do
+for recipe in {607..640}; do
     pogo tools build $recipe
     pogo tools harvest $recipe
-    #pogo tools rollout $recipe
+    pogo tools rollout $recipe
 done

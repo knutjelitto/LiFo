@@ -562,22 +562,29 @@ Build_Harvest ()
 
     [[ -d "$topDir" ]] || InfoExit "nothing to harvest"
 
-    #echo 'HARVEST>>>'
-    #(cd $topDir; find . -ls)
-    #echo '<<<HARVEST'
+    if [[ -d "$topDir/usr/share/locale" ]]; then
+        (cd "$topDir/usr/share/locale"; find . -type f -path '*/LC_MESSAGES/*' -delete)
+        (cd "$topDir/usr/share/locale"; find . -type d -empty -delete)
+        rm -f "$topDir/usr/share/locale/locale.alias"
+    fi        
 
     blackoutScript='
         $6 ~ /^tools\/share\/(info|man|doc)\// { next; }
         $6 ~ /^Data/ { next; }
         $6 ~ /^tmp/ { next; }
+        $6 ~ /^bin$/ { next; }
+        $6 ~ /^sbin$/ { next; }
         $6 ~ /^etc$/ { next; }
         $6 ~ /^lib$/ { next; }
+        $6 ~ /^lib64$/ { next; }
         $6 ~ /^usr$/ { next; }
         $6 ~ /^usr\/bin$/ { next; }
         $6 ~ /^usr\/lib$/ { next; }
+        $6 ~ /^usr\/libexec$/ { next; }
         $6 ~ /^usr\/lib\/pkgconfig$/ { next; }
         $6 ~ /^usr\/include$/ { next; }
         $6 ~ /^usr\/share$/ { next; }
+        $6 ~ /^usr\/share\/locale$/ { next; }
         $6 ~ /^usr\/share\/doc$/ { next; }
         $6 ~ /^usr\/share\/info$/ { next; }
         $6 ~ /^usr\/share\/info\/dir$/ { next; }
@@ -587,6 +594,7 @@ Build_Harvest ()
         $6 ~ /^usr\/share\/aclocal$/ { next; }
         $6 ~ /^var$/ { next; }
         $6 ~ /^var\/cache$/ { next; }
+        $6 ~ /^var\/tmp$/ { next; }
         $6 ~ /^etc\/ld.so.cache$/ { next; }
         $6 ~ /^var\/cache\// { next; }
         { print $0 }'
@@ -595,7 +603,21 @@ Build_Harvest ()
     _harvest_Validate "$bomFile"
     _harvest_Strip "$bomFile" "$topDir"
     _harvest_Bom "$bomFile" "$topDir" "$blackoutScript"
-    _harvest_Archive "$bomFile" "$topDir" "$archiveFile" >/dev/null
-    _harvest_Install "$Current_Root" "$archiveFile" >/dev/null
+    _harvest_Archive "$bomFile" "$topDir" "$archiveFile"
     cat $bomFile
+}
+
+Build_Rollout ()
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_EnsureCollection
+
+    Header "ROLLOUT $Current_Collection / $Recipe_Title"
+
+    local bomFile="$Store_Top/Bom"
+    local archiveFile="$Store_Top/Files.tar.xz"
+    
+    _harvest_Install "$Current_Root" "$archiveFile"
 }

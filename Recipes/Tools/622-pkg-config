@@ -14,6 +14,6 @@ Build ()
         --docdir=/usr/share/doc/pkg-config-0.29.2
     
     make
-    make check
+    #make check
     make install
 }

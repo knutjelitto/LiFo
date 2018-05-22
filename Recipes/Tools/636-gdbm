@@ -1,0 +1,18 @@
+#!/bin/bash
+
+Title="6.36. GDBM-1.14.1"
+Name=Gdbm
+Version=1.14.1
+Supplies=(http://ftp.gnu.org/gnu/gdbm/gdbm-1.14.1.tar.gz)
+
+Build ()
+{    
+    ./configure --prefix=/usr       \
+                --disable-nls       \
+                --disable-static    \
+                --enable-libgdbm-compat    
+
+    make
+    #make check
+    make install
+}

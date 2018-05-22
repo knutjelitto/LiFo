@@ -1,0 +1,26 @@
+#!/bin/bash
+
+Title="6.39. Inetutils-1.9.4"
+Name=Inetutils
+Version=1.9.4
+Supplies=(http://ftp.gnu.org/gnu/inetutils/inetutils-1.9.4.tar.xz)
+
+Build ()
+{
+    ./configure --prefix=/usr        \
+                --localstatedir=/var \
+                --disable-logger     \
+                --disable-whois      \
+                --disable-rcp        \
+                --disable-rexec      \
+                --disable-rlogin     \
+                --disable-rsh        \
+                --disable-servers
+
+    make
+    #make check
+    make install
+
+    mv -vf /usr/bin/{hostname,ping,ping6,traceroute} /bin
+    mv -vf /usr/bin/ifconfig /sbin
+}
