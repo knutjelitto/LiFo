@@ -1,4 +1,4 @@
-#!/bin/bash -eu (source-only)
+#!/bin/bash (source-only)
 
 [[ -z ${_pogoConfigIncluded:-} ]] || exit
 _pogoConfigIncluded=true
@@ -109,7 +109,7 @@ Trace ()
 PogoExec ()
 {
     [[ -n "$1" ]] || Fatal "no argument given"
-    script=/LiFo/bin/pogos/$1
+    script="$Pogos/$1"
     [[ -e "$script" ]] || Fatal "unknown function '$1'"
     shift
     $script "$@"
@@ -117,7 +117,7 @@ PogoExec ()
 
 Import ()
 {
-    source /LiFo/bin/pogos/$1
+    source $Pogos/$1
 }
 
 # export Import function for convenience

@@ -1,0 +1,17 @@
+#!/bin/bash (source-only)
+
+Title="Python2"
+Name=Python2
+Version=2.7.14
+Supplies=(
+    https://www.python.org/ftp/python/$Version/Python-$Version.tar.xz 
+    md5:1f6db41ad91d9eb0a6f0c769b8613c5b
+)
+
+Build() 
+{
+    ./configure --prefix=/usr
+    make
+
+    make install
+}

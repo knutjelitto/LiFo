@@ -1,6 +1,5 @@
 #!/bin/bash -eu
 
 Import PogoConfig
-NeverInChroot
 
-Build_Shell Boots
+Build_Build Core "$@"

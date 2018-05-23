@@ -263,6 +263,101 @@ RootSymLink ()
     ln "$verbose" --symbolic "$target" "$link"
 }
 
+MakeCoreRootfs ()
+{
+    local rootfs=$Box_Root
+
+    RootMakeDir 0775 LiFo
+    RootMakeDir 0775 root
+    RootMakeDir 1777 bin
+    RootMakeDir 1777 etc
+    RootMakeDir 1777 tmp
+    RootMakeDir 1777 dev
+    RootMakeDir 1777 proc
+    RootMakeDir 1777 sys
+
+    RootMakeDir 0775 run
+    RootMakeDir 0775 run/lock
+
+    RootMakeDir 0775 var
+    RootMakeDir 0775 var/cache
+    RootMakeDir 0775 var/lib
+    RootMakeDir 0775 var/log
+    RootMakeDir 1777 var/tmp
+
+    RootSymLink bin/sh                  bash
+
+    touch $rootfs/etc/hostname
+    touch $rootfs/etc/hosts
+    touch $rootfs/etc/resolv.conf
+
+    cat > $rootfs/etc/passwd << "EOF"
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/dev/null:/bin/false
+nobody:x:99:99:Unprivileged User:/dev/null:/bin/false
+EOF
+
+    cat > $rootfs/etc/group << "EOF"
+root:x:0:
+bin:x:1:daemon
+sys:x:2:
+kmem:x:3:
+tape:x:4:
+tty:x:5:
+daemon:x:6:
+floppy:x:7:
+disk:x:8:
+lp:x:9:
+dialout:x:10:
+audio:x:11:
+video:x:12:
+utmp:x:13:
+usb:x:14:
+cdrom:x:15:
+adm:x:16:
+input:x:24:
+mail:x:34:
+nogroup:x:99:
+users:x:999:
+EOF
+}
+
+ExecInCoreChroot ()
+(   # execute in subshell
+
+    local command="$1"
+
+    local lowerdir="/Pogo/Data/Compile/Roots/Tools:$PogoVolume:$Box_Root"
+    local upperdir="$Box_Changes"
+    local workdir="$Box_Work"
+    local merged="$Box_Merged"
+
+    local options=lowerdir=$lowerdir,upperdir=$upperdir,workdir=$workdir
+
+    trap 'BuildUnmount || true' EXIT
+
+    mount $verbose --types overlay overlay --options $options $merged
+    
+    mount $verbose --bind /LiFo $merged/LiFo
+    mount $verbose --bind /root $merged/root
+    mount $verbose --rbind /dev $merged/dev
+    mount $verbose --rbind /sys $merged/sys
+    mount $verbose --rbind /proc $merged/proc
+    mount $verbose --bind /etc/hostname $merged/etc/hostname
+    mount $verbose --bind /etc/hosts $merged/etc/hosts
+    mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
+
+    POGO_CHROOT=Core            \
+    LC_ALL=POSIX                \
+    FORCE_UNSAFE_CONFIGURE=1    \
+    MAKEFLAGS="-j2"             \
+    chroot $merged /bin/bash -l -c "$command"
+
+    BuildUnmount || true
+
+    trap EXIT
+)
+
 MakeToolsRootfs ()
 {
     local rootfs=$Box_Root
@@ -390,7 +485,7 @@ ExecInToolsChroot ()
     POGO_CHROOT=Tools           \
     LC_ALL=POSIX                \
     FORCE_UNSAFE_CONFIGURE=1    \
-    MAKEFLAGS="-j8"             \
+    MAKEFLAGS="-j2"             \
     chroot $merged /bin/bash -l -c "$command"
 
     BuildUnmount || true

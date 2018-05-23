@@ -1,69 +1,3 @@
-pogo boots shell
-pogo boots build-all
-pogo create
-pogo create | less
-cd /Data/
-cd Variable/
-cd Boots
-cd Build/Tools/
-ls -l /Data/Compile/Build/Tools/LinuxHeaders-4.15.3/Changes
-cd /Data/Variable/Store/Tools/
-cd LinuxHeaders-4.15.3/
-tar tvf Files.tar.xz 
-cd Compile/
-cd Roots/
-cd Tools/
-cd usr/
-cd ..
-du -h
-pogo tools harvest 607
-pogo tools build 607
-man intro
-man patch
-pogo tools shell
-time pogo boots build-all
-man cp
-man localedef
-pogo tools harvest 609
-pogo tools harvest 609 | less
-cd /Data/Variable/Archives/
-tar tvf tzdata2018c.tar.gz 
-cd /Data/Compile/
-cd Build/Tools/GLibc-2.27/
-cd Changes/
-cd Data/
-cd Compile/Sources/glibc-2.27/
-find
-find -name "z*"
-man zic
-pogo tools build 609
-cd /Data/Variable/Store/Boots/
-cd GLibc-2.27/
-ll
-less Bom
-cd
-pogo tools build-all
-cd /usr/share/info/
-ll
-less dir
-more dir
-man intro
-man patch
-time pogo boots build-all
-man cp
-man localedef
-pogo tools harvest 609
-pogo tools harvest 609 | less
-cd /Data/Variable/Archives/
-tar tvf tzdata2018c.tar.gz 
-cd /Data/Compile/
-cd Build/Tools/GLibc-2.27/
-cd Changes/
-cd Data/
-cd Compile/Sources/glibc-2.27/
-find
-find -name "z*"
-man zic
 pogo tools build 609
 cd /Data/Variable/Store/Boots/
 cd GLibc-2.27/
@@ -498,3 +432,69 @@ find /Data/ -name rm
 pogo tools build 656
 time pogo tools build-all
 clear
+mount
+clear
+mount
+less
+tree
+cd
+cd /etc
+ll
+cd ..
+pogo tools build-upto 661
+pogo tools build-upto 662
+pogo tools build-upto 663
+pogo tools build-upto 664
+pogo tools build-upto 665
+pogo tools build-upto 666
+pogo tools build-upto 667
+pogo tools build-upto 668
+pogo tools build-upto 669
+pogo tools build-upto 670
+pogo tools build-upto 671
+pogo tools build-upto 672
+pogo tools build-upto 673
+pogo tools build-upto 674
+pogo tools build-upto 675
+pogo tools build-upto 676
+pogo tools build-upto 677
+echo $?
+find /Data
+find /Data/
+find /Data/ -nam rm
+find /Data/ -name rm
+pogo tools build 656
+time pogo tools build-all
+clear
+cd /fro
+cd /proc/
+l
+cat filesystems 
+man aufs
+find / -name "aufs"
+find / -name "aufs*"
+find / -name "*aufs*"
+pogo tools build-all
+cd /Data/Variable/Store/Tools/
+cd Vim-8.0.586/
+cls -la
+ls -la
+cd /Data/Compile/Roots/Tools/
+cd tools
+cd bin/
+cd lib/
+cd gcc/x86_64-pc-linux-gnu/7.3.0/specs 
+cd usr/
+cd etc
+cd ssl/
+less openssl.cnf
+less man_db.conf 
+less services 
+pogo core chell
+cd -
+cd var/
+cd ..
+cd bin
+ll
+cd
+pogo core shell

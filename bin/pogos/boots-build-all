@@ -1,6 +1,7 @@
 #!/bin/bash -eu
 
 Import PogoConfig
+NeverInChroot
 
 pogo boots empty
 

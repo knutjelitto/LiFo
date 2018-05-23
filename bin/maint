@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/bash -eu
 
-source $(dirname $0)/pogos/PogoConfig
+source "$Pogos/PogoConfig"
 
 what=maint-"$1"; shift
 PogoExec "$what" "$@"

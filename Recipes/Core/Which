@@ -1,0 +1,17 @@
+#!/bin/bash (source-only)
+
+Title="Which"
+Name=Which
+Version=2.21
+Supplies=(
+     https://ftp.gnu.org/gnu/which/which-$Version.tar.gz
+     md5:097ff1a324ae02e0a3b0369f07a7544a 
+)
+
+Build() 
+{
+    ./configure --prefix=/usr
+    make
+
+    make install
+}

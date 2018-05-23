@@ -3,5 +3,6 @@ set -euo pipefail
 IFS=$'\n\t'
 
 Import PogoConfig
+NeverInChroot
 
 Build_Rollout Boots "$@"
