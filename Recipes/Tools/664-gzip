@@ -1,0 +1,25 @@
+#!/bin/bash
+
+Title="6.64. Gzip-1.9"
+Name=GZip
+Version=1.9
+Supplies=(http://ftp.gnu.org/gnu/gzip/gzip-1.9.tar.xz)
+
+Build ()
+{
+    # Prepare Gzip for compilation: 
+    ./configure --prefix=/usr
+
+    # Compile the package: 
+    make
+
+    # To test the results, issue: 
+    # Two tests are known to fail in the LFS environment: help-version and zmore. 
+    #make check
+
+    # Install the package: 
+    make install
+
+    # Move a program that needs to be on the root filesystem: 
+    mv -v /usr/bin/gzip /bin
+}

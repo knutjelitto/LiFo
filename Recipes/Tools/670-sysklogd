@@ -1,0 +1,11 @@
+#!/bin/bash
+
+Title="6.70. Sysklogd-1.5.1 "
+Name=SysKLogD
+Version=1.5.1
+Supplies=(http://www.infodrom.org/projects/sysklogd/download/sysklogd-1.5.1.tar.gz)
+
+Build ()
+{
+    true
+}

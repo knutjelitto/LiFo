@@ -1,0 +1,26 @@
+#!/bin/bash
+
+Title="6.68. Make-4.2.1"
+Name=Make
+Version=4.2.1
+Supplies=(http://ftp.gnu.org/gnu/make/make-4.2.1.tar.bz2)
+
+Build ()
+{
+    # Again, work around an error caused by glibc-2.27: 
+    sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
+
+    # Prepare Make for compilation: 
+    ./configure \
+        --prefix=/usr   \
+        --disable-nls
+
+    # Compile the package: 
+    make
+
+    # The test suite needs to know where supporting perl files are located. We use an envronment variable to accomplish this. To test the results, issue: 
+    #make PERL5LIB=$PWD/tests/ check
+
+    # Install the package: 
+    make install
+}

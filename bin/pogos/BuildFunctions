@@ -93,7 +93,9 @@ _build_Enter () # build name
     Box_Merged=$Box_Top/Merged
     Box_Build=$Box_Top/Build
     Store_Logs=$Store_Top/Logs
-    Store_Files=($Store_Top/Bom $Store_Top/Files.tar.xz)
+    Store_FilesBom="$Store_Top/Bom"
+    Store_FilesFiles="$Store_Top/Files.tar.xz"
+    Store_Files=("$Store_FilesBom" "$Store_FilesFiles")
 
     if [[ -n "{verbose}" ]]; then
         declare -p Box_Top
@@ -572,8 +574,8 @@ Build_Harvest ()
     else
         topDir="$Box_Changes"
     fi
-    local bomFile="$Store_Top/Bom"
-    local archiveFile="$Store_Top/Files.tar.xz"
+    local bomFile="$Store_FilesBom"
+    local archiveFile="$Store_FilesFiles"
 
     declare -p topDir
 
@@ -611,6 +613,7 @@ Build_Harvest ()
         $6 ~ /^usr\/share\/aclocal$/ { next; }
         $6 ~ /^var$/ { next; }
         $6 ~ /^var\/cache$/ { next; }
+        $6 ~ /^var\/lib$/ { next; }
         $6 ~ /^var\/tmp$/ { next; }
         $6 ~ /^etc\/ld.so.cache$/ { next; }
         $6 ~ /^var\/cache\// { next; }
@@ -633,8 +636,8 @@ Build_Rollout ()
 
     Header "ROLLOUT $Current_Collection / $Recipe_Title"
 
-    local bomFile="$Store_Top/Bom"
-    local archiveFile="$Store_Top/Files.tar.xz"
+    local bomFile="$Store_FilesBom"
+    local archiveFile="$Store_FilesFiles"
     
     _harvest_Install "$Current_Root" "$archiveFile"
 }

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+Title="6.53. Meson-0.44.0"
+Name=Meson
+Version=0.44.0
+Supplies=(https://github.com/mesonbuild/meson/releases/download/0.44.0/meson-0.44.0.tar.gz)
+
+Build ()
+{
+    # Compile Meson with the following command: 
+    python3 setup.py build
+    
+    # This package does not come with a test suite. 
+    
+    # Install the package: 
+    python3 setup.py install
+}

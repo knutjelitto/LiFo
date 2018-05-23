@@ -1,0 +1,22 @@
+#!/bin/bash
+
+Title="6.67. Libpipeline-1.5.0"
+Name=LibPipeline
+Version=1.5.0
+Supplies=(http://download.savannah.gnu.org/releases/libpipeline/libpipeline-1.5.0.tar.gz)
+
+Build ()
+{
+    #Prepare Libpipeline for compilation: 
+    ./configure \
+        --prefix=/usr
+
+    #Compile the package: 
+    make
+
+    # To test the results, issue: 
+    #make check
+
+    # Install the package: 
+    make install
+}

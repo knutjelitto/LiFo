@@ -1,0 +1,35 @@
+#!/bin/bash
+
+Title="6.73. Util-linux-2.31.1"
+Name=UtilLinux
+Version=2.31.1
+Supplies=(https://www.kernel.org/pub/linux/utils/util-linux/v2.31/util-linux-2.31.1.tar.xz)
+
+Build ()
+{
+    # The FHS recommends using the /var/lib/hwclock directory instead of the usual
+    # /etc directory as the location for the adjtime file. First create a directory
+    # to enable storage for the hwclock program: 
+    mkdir -pv /var/lib/hwclock
+
+    ./configure \
+        ADJTIME_PATH=/var/lib/hwclock/adjtime       \
+        --disable-nls                               \
+        --docdir=/usr/share/doc/util-linux-2.31.1   \
+        --disable-chfn-chsh  \
+        --disable-login      \
+        --disable-nologin    \
+        --disable-su         \
+        --disable-setpriv    \
+        --disable-runuser    \
+        --disable-pylibmount \
+        --disable-static     \
+        --without-python     \
+        --without-systemd    \
+        --without-systemdsystemunitdir
+
+    make
+
+    make install
+
+}

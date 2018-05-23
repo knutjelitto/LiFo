@@ -1,76 +1,3 @@
-cd /usr/
-cd share/
-cd man/
-du -h
-man
-cd man1
-ll
-man intro
-patch
-env
-cd /tools/bin/
-ll
-ll | less
-ll | more
-cd /Data/Compile/Build/LFSboots/
-du
-pogo boots
-pogo boots build 504
-recipe chzeck 504
-recipe check 504
-ls -la
-ls -la
-pogo create
-pogo test
-pwd
-cd /
-ls -la
-cd root
-ls -la
-pogo test
-pogo test | less
-mount
-mount
-cd tools
-mkdir xxx
-mkdir xxx
-set
-env
-ch $LFS
-cd $LFS
-cd tools/
-ch $LFS
-cd $LFS
-cd tools/
-l
-cd Variable/Archives/
-..
-cd Variable/Archives/
-..
-cd tools
-cd bin
-pogo test | less
-mount
-mount
-cd tools
-mkdir xxx
-mkdir xxx
-set
-env
-ch $LFS
-cd $LFS
-ch $LFS
-cd $LFS
-l
-cd Variable/Archives/
-..
-man gawk
-man file
-cd /Data/Variable/Store/Boots/Binutils1-2.30/
-less Bom 
-pogo boots harvest 504
-cd Boots/
-cd tools/
 pogo boots shell
 pogo boots build-all
 pogo create
@@ -498,3 +425,76 @@ cd /usr/bin/
 ls -l perl*
 cd /usr/bin/
 ls -la perl*
+pogo tools build-upto 607
+mount
+which
+env
+perl
+perl --version
+perl --help
+perl -V
+perl -V | more
+cd /usr/bin/
+ls -l perl
+cd /usr/bin/
+ls -l perl*
+cd /usr/bin/
+ls -la perl*
+cd /tmp
+find cruc
+find crux
+lfspider | less
+lfspider 
+cd /Data/Variable/Store/
+man ls
+cd Tools/
+ll
+ll -t
+pogo tools build-upto 640
+pogo tools build-upto 641
+pogo tools build-upto 642
+pogo tools build-upto 643
+pogo tools build-upto 644
+pogo tools build-upto 645
+pogo tools build-upto 646
+pogo tools build-upto 647
+pogo tools build-upto 648
+pogo tools build-upto 649
+pogo tools build-upto 650
+pogo tools build-upto 651
+pogo tools build-upto 652
+pogo tools build-upto 653
+pogo tools build-upto 654
+pogo tools build-upto 655
+pogo tools build-upto 656
+pogo tools build-upto 657
+pogo tools build-upto 658
+pogo tools build-upto 659
+pogo tools build-upto 660
+pogo tools build-upto 661
+pogo tools build-upto 662
+pogo tools build-upto 663
+pogo tools build-upto 664
+pogo tools build-upto 665
+pogo tools build-upto 666
+pogo tools build-upto 667
+pogo tools build-upto 668
+pogo tools build-upto 669
+pogo tools build-upto 670
+pogo tools build-upto 671
+pogo tools build-upto 672
+pogo tools build-upto 673
+pogo tools build-upto 674
+pogo tools build-upto 675
+pogo tools build-upto 676
+pogo tools build-upto 677
+cd
+pogo tools build-all
+echo $?
+find /Data
+find /Data/
+find /Data/ -nam rm
+find /Data/ -name rm
+pogo tools build 656
+time pogo tools build-all
+clear

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+Title="6.62. GRUB-2.02"
+Name=GRUB
+Version=2.02
+Supplies=(http://ftp.gnu.org/gnu/grub/grub-2.02.tar.xz)
+
+Build ()
+{
+    # DOCKER: not needed
+    return 0
+}

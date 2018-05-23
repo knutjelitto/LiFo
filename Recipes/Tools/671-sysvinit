@@ -1,0 +1,11 @@
+#!/bin/bash
+
+Title="6.71. Sysvinit-2.88dsf"
+Name=SysVInit
+Version=2.88dsf
+Supplies=(http://download.savannah.gnu.org/releases/sysvinit/sysvinit-2.88dsf.tar.bz2)
+
+Build ()
+{
+    true
+}

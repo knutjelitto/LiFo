@@ -1,0 +1,23 @@
+#!/bin/bash
+
+Title="6.58. Diffutils-3.6"
+Name=DiffUtils
+Version=3.6
+Supplies=(http://ftp.gnu.org/gnu/diffutils/diffutils-3.6.tar.xz)
+
+Build ()
+{
+    # Prepare Diffutils for compilation: 
+    ./configure \
+        --prefix=/usr   \
+        --disable-nls
+
+    # Compile the package: 
+    make
+
+    # To test the results, issue: 
+    #make check
+
+    # Install the package: 
+    make install
+}

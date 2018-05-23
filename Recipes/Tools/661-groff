@@ -1,0 +1,22 @@
+#!/bin/bash
+
+Title="6.61. Groff-1.22.3"
+Name=Groff
+Version=1.22.3
+Supplies=(http://ftp.gnu.org/gnu/groff/groff-1.22.3.tar.gz)
+
+Build ()
+{
+    # Groff expects the environment variable PAGE to contain the default paper size. For users in the United States, PAGE=letter is appropriate. Elsewhere, PAGE=A4 may be more suitable. While the default paper size is configured during compilation, it can be overridden later by echoing either “A4” or “letter” to the /etc/papersize file. 
+
+    # Prepare Groff for compilation: 
+    PAGE=A4 ./configure --prefix=/usr
+
+    # This package does not support parallel build. Compile the package: 
+    make -j1
+
+    # This package does not come with a test suite. 
+
+    # Install the package: 
+    make install
+}

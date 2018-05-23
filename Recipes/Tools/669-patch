@@ -1,0 +1,21 @@
+#!/bin/bash
+
+Title="6.69. Patch-2.7.6"
+Name=Patch
+Version=2.7.6
+Supplies=(http://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz)
+
+Build ()
+{
+    # Prepare Patch for compilation: 
+    ./configure --prefix=/usr
+
+    # Compile the package: 
+    make
+
+    # To test the results, issue: 
+    #make check
+
+    # Install the package: 
+    make install
+}
