@@ -3,7 +3,9 @@
 Title="Linux headers"
 Name=LinuxHeaders
 Version=4.15.3
-Supplies=(https://www.kernel.org/pub/linux/kernel/v${Version:0:1}.x/linux-$Version.tar.xz)
+Supplies=(
+    https://www.kernel.org/pub/linux/kernel/v${Version:0:1}.x/linux-$Version.tar.xz
+)
 
 Build()
 {

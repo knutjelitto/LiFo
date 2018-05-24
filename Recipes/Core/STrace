@@ -1,0 +1,15 @@
+#!/bin/bash
+
+Title="STrace"
+Name=STrace
+Version=4.22
+Supplies=(https://strace.io/files/$Version/strace-$Version.tar.xz)
+
+Build()
+{
+    ./configure --prefix=/usr
+
+    make
+
+    make install
+}

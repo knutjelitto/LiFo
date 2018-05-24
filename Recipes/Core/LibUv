@@ -1,0 +1,20 @@
+#!/bin/bash
+
+Title="LibUv"
+Name=LibUv
+Version=1.20.3
+Supplies=(https://dist.libuv.org/dist/v$Version/libuv-v$Version.tar.gz)
+
+Build()
+{
+    # Install libuv by running the following commands: 
+    sh autogen.sh
+    ./configure --prefix=/usr --disable-static
+
+    make
+
+    #To execute the test suite, run make check. 
+
+    # Now, as the root user: 
+    make install
+}

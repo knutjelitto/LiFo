@@ -8,11 +8,10 @@ Build_Build () # collection recipe
     NeverInChroot
 
     _build_Enter "$@"
-    _build_EnsureCollection
     _build_CleanBuild
     _build_EnsureBuild
-    _build_MakeRootFs
     _build_ProvideSupplies
+    _build_MakeRootFs
     _build_ExecInChroot "pogo compile $*"
 }
 
@@ -21,7 +20,6 @@ Build_Setup () # collection recipe
     NeverInChroot
 
     _build_Enter "$@"
-    _build_EnsureCollection
     _build_EnsureBuild
 }
 
@@ -30,7 +28,6 @@ Build_Shell () # collection recipe
     NeverInChroot
 
     _build_Enter "$@"
-    _build_EnsureCollection
     _build_CleanBuild
     _build_EnsureBuild
     _build_MakeRootFs
@@ -42,7 +39,6 @@ Build_Compile ()
     OnlyInChroot
 
     _build_Enter "$@"
-    _build_EnsureCollection
     _build_EnsureBuild
 
     Header "BUILD $Current_Collection / $Recipe_Title"
@@ -97,6 +93,8 @@ _build_Enter () # build name
     Store_FilesFiles="$Store_Top/Files.tar.xz"
     Store_Files=("$Store_FilesBom" "$Store_FilesFiles")
 
+    _build_EnsureCollection
+
     if [[ -n "{verbose}" ]]; then
         declare -p Box_Top
         declare -p Box_Root
@@ -144,7 +142,6 @@ _build_EnsureBuild ()
 _build_CleanBuild ()
 {
     rm ${verbose} --recursive --force "$Box_Top"
-    #rm ${verbose} --recursive --force "$Store_Top"
     rm ${verbose} --force "${Store_Files[@]}"
 }
 
@@ -158,10 +155,27 @@ _build_ProvideSupplies ()
     fi
 }
 
+_build_wget ()
+{
+    local supply="$1"
+
+    already=$(basename $supply)
+    [[ -f $PogoArchives/$already ]] && return 0
+    if ! wget ${supply} --continue --directory-prefix=$PogoDownloads; then
+        Fatal "download of '$supply' failed"
+    fi
+    mv ${verbose} --force $PogoDownloads/$already $PogoArchives/$already
+}
+
 _build_ProvideSupply ()
 {
     local supply="$1"
     local basename=$(basename "$supply")
+
+    if [[ ! -f $PogoArchives/$basename ]]; then
+        echo "must download '$supply'"
+        _build_wget $supply
+    fi
 
     [[ -f $PogoArchives/$basename ]] || Fatal "local archive '$basename' for supply '$supply' missing"
 
@@ -171,6 +185,12 @@ _build_ProvideSupply ()
         *.tar.?? | *.tar.???)
             stem=${basename%.tar.*}
             _buildExtractSupply $basename $stem
+            ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $Box_Build/$stem
+        ;;
+        *.tgz)
+            stem=${basename%.tgz}
+            _buildExtractSupply $basename $stem
+            echo ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $Box_Build/$stem
             ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $Box_Build/$stem
         ;;
         *.patch)
@@ -216,7 +236,9 @@ BuildEnterMain ()
     else
         local supply=${Recipe_Supplies[0]}
         local basename=$(basename $supply)
-        local stem=${basename%.tar.*}
+        local stem="$basename"
+        local stem=${stem%.tar.*}
+        local stem=${stem%.tgz}
         cd $Box_Build/$stem
         #echo "PWD: $(pwd)"
     fi
@@ -658,7 +680,6 @@ Build_Harvest ()
     NeverInChroot
 
     _build_Enter "$@"
-    _build_EnsureCollection
     _build_EnsureBuild
 
     Header "HARVEST $Current_Collection / $Recipe_Title"
@@ -727,7 +748,6 @@ Build_Rollout ()
     NeverInChroot
 
     _build_Enter "$@"
-    _build_EnsureCollection
 
     Header "ROLLOUT $Current_Collection / $Recipe_Title"
 

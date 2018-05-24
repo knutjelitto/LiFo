@@ -16,10 +16,10 @@ mount -o loop -t squashfs ./iso/Packages-List-Bindings.squashfs                 
 mount -o loop -t squashfs ./iso/Packages-List-GoboLinuxTools-Stable.squashfs    ./sqc
 mount -o loop -t squashfs ./iso/Packages-List-LFS.squashfs                      ./sqd
 mount -o loop -t squashfs ./iso/Packages-List-Desktop.squashfs                  ./sqe
-#mount -o loop -t squashfs ./iso/Packages-List-GTKMM.squashfs                    ./sqf
-#mount -o loop -t squashfs ./iso/Packages-List-Multimedia.squashfs               ./sqg
-#mount -o loop -t squashfs ./iso/Packages-List-Networking.squashfs               ./sqh
-#mount -o loop -t squashfs ./iso/Packages-List-Printing.squashfs                 ./sqi
-#mount -o loop -t squashfs ./iso/Packages-List-Xorg.squashfs                     ./sqj
+mount -o loop -t squashfs ./iso/Packages-List-GTKMM.squashfs                    ./sqf
+mount -o loop -t squashfs ./iso/Packages-List-Multimedia.squashfs               ./sqg
+mount -o loop -t squashfs ./iso/Packages-List-Networking.squashfs               ./sqh
+mount -o loop -t squashfs ./iso/Packages-List-Printing.squashfs                 ./sqi
+mount -o loop -t squashfs ./iso/Packages-List-Xorg.squashfs                     ./sqj
 
 mount -t overlay overlay -o lowerdir=./sq1:./sq2:./sq3:./sqa:./sqb:./sqc:./sqd:./sqe:./sqf:./sqg:./sqh:./sqi:./sqj,upperdir=/Pogo/gobo/merge,workdir=/Pogo/gobo/work ./root

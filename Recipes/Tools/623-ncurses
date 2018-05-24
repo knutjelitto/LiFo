@@ -22,7 +22,7 @@ Build ()
 
     make install
 
-    mv -vf /usr/lib/libncursesw.so.6* /lib
+    mv -vf /usr/lib/    libncursesw.so.6* /lib
 
     ln -vsf ../../lib/$(readlink /usr/lib/libncursesw.so) /usr/lib/libncursesw.so
 

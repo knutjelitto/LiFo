@@ -1,7 +1,0 @@
-#!/bin/bash
-
-source LifoConfig
-
-for Script in {504..534}; do
-    lf-bootstrap-build $Script
-done

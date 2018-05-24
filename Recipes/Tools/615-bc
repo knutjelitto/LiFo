@@ -32,7 +32,10 @@ EOF
 
     make
 
-    echo "quit" | ./bc/bc -l Test/checklib.b
+    #echo "quit" | ./bc/bc -l Test/checklib.b
 
     make install
+
+    rm -vf /usr/lib/libncursesw.so.6 # remove to avoid future problems
+    rm -vf /usr/lib/libncurses.so # remove to avoid future problems
 }

@@ -3,7 +3,9 @@
 Title="Man pages"
 Name=ManPages
 Version=4.15
-Supplies=(https://www.kernel.org/pub/linux/docs/man-pages/man-pages-4.15.tar.xz)
+Supplies=(
+    https://www.kernel.org/pub/linux/docs/man-pages/man-pages-4.15.tar.xz
+)
 
 Build() 
 {
