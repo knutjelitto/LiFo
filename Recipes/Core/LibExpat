@@ -1,11 +1,14 @@
 #!/bin/bash
 
-Title="6.38. Expat-2.2.5"
-Name=Expat
+Title="LibExpat"
+Home="https://libexpat.github.io/"
+Name=LibExpat
 Version=2.2.5
-Supplies=(http://prdownloads.sourceforge.net/expat/expat-2.2.5.tar.bz2)
+BuildDeps=()
+RunDeps=()
+Supplies=(https://github.com/libexpat/libexpat/releases/download/R_2_2_5/expat-2.2.5.tar.bz2)
 
-Build ()
+Build()
 {
     sed -i 's|usr/bin/env |bin/|' run.sh.in
 

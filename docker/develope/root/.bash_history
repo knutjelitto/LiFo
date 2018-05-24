@@ -1,170 +1,3 @@
-which patch
-sed
-which sed
-env
-which patch
-which
-which patch
-less /Data/Compile/Sources/ncurses-6.1/c++/etip.h.in 
-find / -name iostream.h
-find / -name iostream
-cd /usr/include/c++/
-cd 6
-cd /Data/Compile/Build/Tools/NCurses-6.1/
-cd Changes/
-cd c++
-less etip.h 
-pogo tools build 623
-pogo tools build-all
-cd /Data/Compile/Build/Tools/NCurses-6.1/Changes/
-cd Data/Compile/Sources/ncurses-6.1/
-less config.log 
-grep STREAM config.log 
-grep HAVE_IO config.log 
-grep HAVE config.log 
-grep HAVE config.log | less
-less config.status 
-grep HAVE *
-grep HAVE_ *
-grep HAVE_I *
-find . -type f -exec grep HAVE {} \;
-find . -type f -exec grep HAVE_ {} \;
-find . -type f -exec grep HAVE_IO {} \;
-find . -type f -exec grep -v HAVE_IO {} \;
-cd /Data/Compile/Build/Tools/NCurses-6.1/Changes/Data/Compile/Sources/ncurses-6.1/
-..
-find | less
-cd /Data/Compile/Sources/ncurses-6.1/
-less include/ncurses_defs 
-find . -name 'M*'
-less include/MKncurses_def.sh 
-find . -type f -exec grep HAVE_IO {} \+
-less c++/edit_cfg.sh 
-g++
-g++ -v
-cd /Data/Compile/Build/Tools/NCurses-6.1/Changes/Data/Compile/Sources/ncurses-6.1/
-find | less
-cd /Data/Compile/Sources/ncurses-6.1/
-less include/ncurses_defs 
-find . -name 'M*'
-less include/MKncurses_def.sh 
-less c++/edit_cfg.sh 
-find . -type f -exec grep HAVE_IO {} \+
-pogo tools build 623
-pogo tools build 623 | tee log
-pogo tools build 623 2>&1 | tee log
-less log
-cd /Data/Compile/Build/Tools/NCurses-6.1/Changes/Data/Compile/Sources/ncurses-6.1/c++
-less etip.h 
-pogo tools build-all
-pogo boots build-all; pogo tools build-all
-pogo tools shell
-cleare
-less dummy.log 
-clear
-cd /Data/Compile/Roots/Tools/usr/lib
-ll | less
-..
-time pogo tools build-all
-time pogo tools build-all
-rm a.out dummy.cc log tmp.*
-rm -rvf a.out dummy.cc log tmp.*
-less .lesshst 
-less .wget-hsts 
-curl
-apt-get install curl
-man curl
-cd /Data/
-cd Compile/
-l
-cd tools
-cd Build/
-du
-mv Lfs Roots/ 
-mv Lfs Boots
-cd Sources/
-rm -rv LFSboots/
-cd ll
-rmdir /Data/Compile/Store
-rm -rv /Data/Compile/Sources/
-pogo create
-pogo create | less
-pogo tools built-upto 607
-rm -rv /Data/Compile/Sources
-man tee
-cd /Data/Compile/
-cd Lfs/
-cd tools/
-cd Roots/
-cd ..
-cd Variable/
-cd Store/
-cd Tools/
-cd LinuxHeaders-4.15.3/Logs/
-ls -la
-cd -
-ll
-less Harvest 
-sdtbuf
-stdbuf
-man stdbuf
-cd
-man sed
-pogo tools build-upto 607[A
-ls -l /dev/ | less
-pogo tools build-upto 608
-pogo tools build-upto 609
-pogo boots build-all
-echo $?
-time pogo boots build-all
-pogo boots shell
-pogo tools empty
-ls -l /dev/
-pogo tools build-upto 607
-mount
-which
-env
-perl
-perl --version
-perl --help
-perl -V
-perl -V | more
-cd /usr/bin/
-ls -l perl
-cd /usr/bin/
-ls -l perl*
-cd /usr/bin/
-ls -la perl*
-pogo tools build-upto 607
-mount
-which
-env
-perl
-perl --version
-perl --help
-perl -V
-perl -V | more
-cd /usr/bin/
-ls -l perl
-cd /usr/bin/
-ls -l perl*
-cd /usr/bin/
-ls -la perl*
-cd /tmp
-find cruc
-find crux
-lfspider | less
-lfspider 
-cd /Data/Variable/Store/
-man ls
-cd Tools/
-ll
-ll -t
-pogo tools build-upto 640
-pogo tools build-upto 641
-pogo tools build-upto 642
-pogo tools build-upto 643
-pogo tools build-upto 644
 pogo tools build-upto 645
 pogo tools build-upto 646
 pogo tools build-upto 647
@@ -498,3 +331,170 @@ pogo tools build-upto 616
 pogo tools build-all
 pogo core build LibUv
 pogo core harvest LibUv
+configure --help
+./configure --help
+./configure --help | less
+make doc
+make man
+make man
+tree
+cd usr/bin/
+ll
+cd /usr/bin
+ll tree
+ll
+cd /usr/bin
+ll tree
+ll
+export LANG=en_US.UTF-8
+locale
+man locale
+locale -a
+locale -a | less
+export LANG=en_US.utf8
+tree
+ll
+./configure --help
+./configure --help
+cd doc
+ll
+cd ..
+find .
+find . -name '*.1'
+find . -name '*.3'
+./configure --help
+cd /usr/share/info/
+ll
+info mpc
+strace
+amn strace
+strace pogo core build LibUv
+strace pogo core harvest LibUv
+strace -f pogo core harvest LibUv
+strace -f pogo core build LibUv
+strace -f -e trace=file -pogo core build LibUv
+man
+strace -f -e trace=file pogo core build LibUv
+man strace
+strace -f -e trace=file pogo core build LibUv | grep unlink
+strace -f -e trace=file pogo core build LibUv &| grep unlink
+strace -f -e trace=file pogo core build LibUv 2>&1 | grep unlink
+pogo core build LibUv | grep libncursesw
+pogo core build LibUv 2>&1 | grep libncursesw
+strace -f -e trace=file pogo core build LibUv 2>&1 | grep libncursesw
+man grep
+strace -f -e trace=file pogo core build LibUv 2>&1 | grep -B 10 libncursesw
+strace -f -e trace=file pogo core build LibUv 2>&1 | grep -B 10 -e 'unlink.*libncursesw'
+strace -f -e trace=file pogo core build LibUv 2>&1 | grep -B 200 -e 'unlink.*libncursesw' | less
+find /Data/Compile/Build/Core/
+find /Data/Compile/Build/Core | grep libn
+find /Data/Compile/Build/Core
+find /Data/Compile/Build/Core -name "libn*"
+find /Data/Compile/Build/Core -name "libn*" -ls
+cd /Data/Variable/Store/Core/LibUv-1.20.3/
+less Bom 
+cd Logs/
+cd .
+tar tvf Files.tar.xz 
+cd Compile/Build/Core/LibUv-1.20.3/
+cd Changes/
+cd Data/Compile/Sources/libuv-v1.20.3/
+less Makefile
+cd /Data/Compile/Roots/Tools/
+find . -type L
+find . -type l
+find . -type l -name 'libn*'
+find -l . -type l -name 'libn*'
+find -L . -type l -name 'libn*'
+ll libss*
+find -L . -type l -name 'lib*'
+find -L . -type l -name 'lib*' -ls
+find -L . -type l -ls
+find -L . -type l -ls | grep tools
+find . -name "libn*"
+find . -name "libn*" -ls
+cd /lib
+cd lib
+cd usr/lib
+ln -svf ../../lib/libncursesw.so.6 libncursesw.so.6 
+ll libn*
+cd
+pogo tools build-upto 615
+pogo tools build-upto 616
+pogo core build LibExpat
+pogo core harvest LibExpat
+pogo tools build 623
+pogo tools harvest 623
+pogo tools rollout 623
+pogo tools build-all
+clear
+pogo core build
+cd /Data/Compile/Sources/libuv-v1.20.3/
+cd docs
+cd code
+cd tty
+less Makefile.am 
+less ChangeLog 
+pogo core build LibUv | less
+less README.md 
+pogo core build LibUv
+pogo core harvest LibUv
+cd /Data/Compile/Roots/
+cd usr/
+cd include/
+man touch
+pogo core rollout LibUv
+cat /Data/Variable/Store/Tools/LibFfi-3.2.1/Bom 
+help test
+pogo core build LibFfi
+pogo core harvest LibFfi
+pogo core rollout LibFfi
+LANG=en_US.UTF-8
+pogo core build Tree
+pogo core harvest Tree
+tree
+pogo core build Which
+pogo core harvest Which
+pogo core rollout Which
+pogo core rollout Tree
+pogo core build M4
+pogo core harvest M4
+pogo core rollout M4
+man strings
+cd -
+cd .rollout/
+strings M4-1.4.18 
+strings -f M4-1.4.18 
+cd Core/
+cd usr/bin/
+ll
+strings -f m4
+strings -f m4 | grep 64
+strings -f m4 | less
+strings -f m4 | less 
+pogo core build ManPages
+pogo core harvest ManPages
+pogo core rollout ManPages
+cd ..
+find
+find | less
+pogo core build LinuxHeaders
+pogo core harvest LinuxHeaders
+pogo core rollout LinuxHeaders
+du
+du -h
+pocore LibLZO
+pocore LibLZO done
+pocore LibArchive
+pocore LibArchive done
+pocore LibGMP
+pocore LibGMP done
+rm /Data/Variable/Archives/mpfr-4.0.1.tar.xz 
+pocore LibMPFR
+pocore LibMPFR done
+pocore LibMPC
+pocore LibMPC done
+pogo core shell
+find /Data/Variable/Store/Tools
+find /Data/Variable/Store/Tools -name Bom
+find /Data/Variable/Store/Tools -name Bom -exec grep lib64 {} \+

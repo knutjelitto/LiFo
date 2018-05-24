@@ -1,0 +1,19 @@
+#!/bin/bash
+
+Title="LibLZO"
+Home=(http://www.oberhumer.com/opensource/lzo/)
+Name=LibLZO
+Version=2.10
+Supplies=(http://www.oberhumer.com/opensource/lzo/download/lzo-2.10.tar.gz)
+
+Build()
+{
+    ./configure --prefix=/usr       \
+                --disable-nls       \
+                --enable-shared     \
+                --disable-static
+
+    make
+    #make check
+    make install
+}

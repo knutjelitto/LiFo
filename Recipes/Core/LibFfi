@@ -1,0 +1,34 @@
+#!/bin/bash
+
+Title="LibFfi"
+Home=(https://sourceware.org/libffi/ https://github.com/libffi/libffi)
+Name=LibFfi
+Version=3.2.1
+BuildDeps=()
+RunDeps=()
+Supplies=(ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz)
+
+Build()
+{
+    # Modify the Makefile to install headers into the standard /usr/include directory instead of /usr/lib/libffi-3.2.1/include. 
+    sed -e '/^includesdir/ s/$(libdir).*$/$(includedir)/' -i include/Makefile.in
+
+    sed -e '/^includedir/ s/=.*$/=@includedir@/' \
+        -e 's/^Cflags: -I${includedir}/Cflags:/' \
+        -i libffi.pc.in
+
+    # Prepare libffi for compilation: 
+    ./configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --disable-static
+
+    # Compile the package: 
+    make
+
+    # To test the results, issue: 
+    #make check
+
+    # Install the package: 
+    make install
+}

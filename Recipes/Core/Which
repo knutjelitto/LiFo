@@ -1,16 +1,14 @@
 #!/bin/bash (source-only)
 
 Title="Which"
+Home="https://carlowood.github.io/which/"
 Name=Which
 Version=2.21
-Supplies=(
-     https://ftp.gnu.org/gnu/which/which-$Version.tar.gz
-)
+Supplies=(https://ftpmirror.gnu.org/gnu/which/which-2.21.tar.gz)
 
 Build() 
 {
     ./configure --prefix=/usr
     make
-
     make install
 }

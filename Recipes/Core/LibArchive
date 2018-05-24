@@ -1,0 +1,18 @@
+#!/bin/bash
+
+Title="LibArchive"
+Home=" http://www.libarchive.org/"
+Name=LibArchive
+Version=3.3.2
+BuildDeps=(LibLZO)
+RunDeps=()
+Supplies=(http://www.libarchive.org/downloads/libarchive-3.3.2.tar.gz)
+
+Build()
+{
+    ./configure --prefix=/usr --disable-static
+
+    make
+    #make check
+    make install
+}

@@ -1,10 +1,11 @@
 #!/bin/bash
 
 Title="Man pages"
+Home=https://www.kernel.org/doc/man-pages/
 Name=ManPages
-Version=4.15
+Version=4.16
 Supplies=(
-    https://www.kernel.org/pub/linux/docs/man-pages/man-pages-4.15.tar.xz
+    https://www.kernel.org/pub/linux/docs/man-pages/man-pages-$Version.tar.xz
 )
 
 Build() 

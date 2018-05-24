@@ -1,0 +1,27 @@
+#!/bin/bash
+
+Title="Lib-GMP"
+Home="https://gmplib.org/"
+Name=LibGMP
+Version=6.1.2
+BuildDeps=()
+RunDeps=()
+Supplies=(https://ftpmirror.gnu.org/gnu/gmp/gmp-$Version.tar.xz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr       \
+        --enable-cxx        \
+        --disable-static    \
+        --docdir=/usr/share/doc/gmp
+
+    make
+    make html
+
+    #make check 2>&1 | tee gmp-check-log
+    #gawk '/# PASS:/{total+=$3} ; END{print total}' gmp-check-log
+
+    make install
+    make install-html
+}

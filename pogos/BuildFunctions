@@ -67,12 +67,12 @@ _build_Enter () # build name
     name="${collection}_Build"
     Current_Build=${!name}
 
-    if [[ -n "{verbose}" ]]; then
-        declare -p Current_Collection
-        declare -p Current_Root
-        declare -p Current_Store
-        declare -p Current_Build
-    fi
+    #if [[ -n "{verbose}" ]]; then
+    #    declare -p Current_Collection
+    #    declare -p Current_Root
+    #    declare -p Current_Store
+    #    declare -p Current_Build
+    #fi
 
     if [[ -n "${2-}" ]]; then
         RecipeSource "${2}"
@@ -95,16 +95,16 @@ _build_Enter () # build name
 
     _build_EnsureCollection
 
-    if [[ -n "{verbose}" ]]; then
-        declare -p Box_Top
-        declare -p Box_Root
-        declare -p Box_Changes
-        declare -p Box_Work
-        declare -p Box_Merged
-        declare -p Box_Build
-        declare -p Store_Top
-        declare -p Store_Logs
-    fi
+    #if [[ -n "{verbose}" ]]; then
+    #    declare -p Box_Top
+    #    declare -p Box_Root
+    #    declare -p Box_Changes
+    #    declare -p Box_Work
+    #    declare -p Box_Merged
+    #    declare -p Box_Build
+    #    declare -p Store_Top
+    #    declare -p Store_Logs
+    #fi
 }
 
 _build_EnsureCollection ()
@@ -240,7 +240,6 @@ BuildEnterMain ()
         local stem=${stem%.tar.*}
         local stem=${stem%.tgz}
         cd $Box_Build/$stem
-        #echo "PWD: $(pwd)"
     fi
 }
 
@@ -349,7 +348,7 @@ ExecInCoreChroot ()
 
     local command="$1"
 
-    local lowerdir="/Pogo/Data/Compile/Roots/Tools:$PogoVolume:$Box_Root"
+    local lowerdir="/Data/Compile/Roots/Core:/Data/Compile/Roots/Tools:$PogoVolume:$Box_Root"
     local upperdir="$Box_Changes"
     local workdir="$Box_Work"
     local merged="$Box_Merged"
@@ -751,8 +750,16 @@ Build_Rollout ()
 
     Header "ROLLOUT $Current_Collection / $Recipe_Title"
 
+    local rolloutMarkers="$Current_Root/.rollout"
+    local rolloutMarker="$rolloutMarkers/$Recipe_Name-$Recipe_Version"
     local bomFile="$Store_FilesBom"
     local archiveFile="$Store_FilesFiles"
-    
-    _harvest_Install "$Current_Root" "$archiveFile"
+
+    if [[ ! -f $rolloutMarker || $bomFile -nt $rolloutMarker ]]; then
+        
+        _harvest_Install "$Current_Root" "$archiveFile"
+
+        MakeDir "$rolloutMarkers"
+        touch "$rolloutMarker"
+    fi
 }

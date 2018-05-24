@@ -1,0 +1,26 @@
+#!/bin/bash
+
+Title="CMake"
+Home="https://cmake.org/"
+Name=CMake
+Version=3.11.2
+BuildIn=build
+BuildDeps=(LibUv LibExpat)
+RunDeps()
+Supplies=(https://cmake.org/files/v3.11/cmake-3.11.2.tar.gz)
+
+Build()
+{
+    sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
+
+    ./bootstrap --prefix=/usr        \
+                --system-libs        \
+                --mandir=/share/man  \
+                --no-system-jsoncpp  \
+                --no-system-librhash \
+                --docdir=/share/doc/cmake-3.10.2
+
+    make
+
+    make install
+}
