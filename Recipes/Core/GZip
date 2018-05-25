@@ -1,0 +1,15 @@
+#!/bin/bash
+
+Title="GZip"
+Home=(https://www.gnu.org/software/gzip/)
+Name=GZip
+Version=1.9
+Supplies=(https://ftpmirror.gnu.org/gnu/gzip/gzip-$Version.tar.xz)
+
+Build()
+{
+    ./configure --prefix=/usr
+    make
+    #make check
+    make install
+}

@@ -1,0 +1,14 @@
+#!/bin/bash -eu
+
+ 
+bom1=/Data/Variable/Store/Tools/Gcc-7.3.0/Bom
+bom2=/Data/Variable/Store/Core/GCC-7.3.0/Bom
+
+#diff -Naru  $bom1 $bom2
+diff -NarU0  $bom1 $bom2
+
+# dirs:
+#diff -crB dir_original dir_updated > dfile.patch
+#patch -p1 --dry-run < dfile.patch
+
+

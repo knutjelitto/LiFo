@@ -1,8 +1,9 @@
 #!/bin/bash (source-only)
 
 Title="Python2"
+Home=(https://www.python.org/)
 Name=Python2
-Version=2.7.14
+Version=2.7.15
 Supplies=(
     https://www.python.org/ftp/python/$Version/Python-$Version.tar.xz 
 )

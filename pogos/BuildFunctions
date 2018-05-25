@@ -696,11 +696,11 @@ Build_Harvest ()
 
     [[ -d "$topDir" ]] || InfoExit "nothing to harvest"
 
-    #if [[ -d "$topDir/usr/share/locale" ]]; then
-    #    (cd "$topDir/usr/share/locale"; find . -type f -path '*/LC_MESSAGES/*' -delete)
-    #    (cd "$topDir/usr/share/locale"; find . -type d -empty -delete)
-    #    rm -f "$topDir/usr/share/locale/locale.alias"
-    #fi        
+    if [[ -d "$topDir/usr/share/locale" ]]; then
+        (cd "$topDir/usr/share/locale"; find . -type f -path '*/LC_MESSAGES/*' -delete)
+        (cd "$topDir/usr/share/locale"; find . -type d -empty -delete)
+        rm -f "$topDir/usr/share/locale/locale.alias"
+    fi        
 
     blackoutScript='
         $6 ~ /^tools\/share\/(info|man|doc)\// { next; }

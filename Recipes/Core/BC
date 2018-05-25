@@ -2,7 +2,7 @@
 
 Title="BC"
 Home=(https://www.gnu.org/software/bc/)
-Name=Bison
+Name=BC
 Version=1.07.1
 ToolDeps=(Flex Ed)
 BuildDeps=(LibReadline)

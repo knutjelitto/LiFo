@@ -1,0 +1,25 @@
+#!/bin/bash
+
+Title="Acl"
+Home=(https://savannah.nongnu.org/projects/acl/)
+Name=Acl
+Version=2.2.52
+Supplies=(http://download.savannah.gnu.org/releases/acl/acl-$Version.src.tar.gz)
+
+Build ()
+{
+    sed -i "s:| sed.*::g" test/{sbits-restore,cp,misc}.test
+
+    sed -i 's/{(/\\{(/' test/run
+
+    sed -i -e "/TABS-1;/a if (x > (TABS-1)) x = (TABS-1);" libacl/__acl_to_any_text.c
+
+    ./configure --prefix=/usr    \
+                --disable-nls    \
+                --disable-static \
+                --libexecdir=/usr/lib
+    make
+
+    make install install-dev install-lib
+    chmod -v 755 /usr/lib/libacl.so
+}

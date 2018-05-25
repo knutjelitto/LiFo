@@ -1,0 +1,24 @@
+#!/bin/bash
+
+Title="Nano"
+Home="https://www.nano-editor.org/"
+Name=Nano
+Version=2.9.7
+ToolDeps=()
+BuildDeps=()
+RunDeps=()
+Supplies=(https://ftpmirror.gnu.org/gnu/nano/nano-$Version.tar.xz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --sysconfdir=/etc   \
+        --enable-utf8
+
+    make
+
+    make install
+    install -v -m644 doc/{nano.html,sample.nanorc} /usr/share/doc/nano
+}

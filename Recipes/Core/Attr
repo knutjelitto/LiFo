@@ -1,0 +1,26 @@
+#!/bin/bash
+
+Title="Attr"
+Home=(https://savannah.nongnu.org/projects/attr/)
+Name=Attr
+Version=2.4.47
+ToolDeps=()
+BuildDeps=()
+Supplies=(http://download.savannah.nongnu.org/releases/attr/attr-$Version.src.tar.gz)
+
+Build ()
+{
+    sed -i -e "/SUBDIRS/s|man[25]||g" man/Makefile
+
+    sed -i 's:{(:\\{(:' test/run
+
+    ./configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --disable-static
+     
+    make
+    #make -j1 tests root-tests
+    make install install-dev install-lib
+    chmod -v 755 /usr/lib/libattr.so
+}

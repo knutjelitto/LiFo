@@ -1,72 +1,3 @@
-losetup -v
-man losetup
-losetup -l
-losetup -l -a
-losetup --list
-losetup -f
-ll
-gobolook 
-mount
-gobolook 
-gobolook 
-lsmod
-env
-pogo create
-mount
-cd share/
-l
-cd aclocal
-cd aclocal
-losetup
-losetup -v
-man losetup
-losetup -l
-losetup -l -a
-losetup --list
-losetup -f
-lsmod
-env
-pogo create
-cd /dev/
-mknod -m 0660 /dev/loop8 b 7 8
-mknod -m 0660 /dev/loop10 b 7 10
-mknod -m 0660 /dev/loop11 b 7 11
-mknod -m 0660 /dev/loop12 b 7 12
-mknod -m 0660 /dev/loop13 b 7 13
-mknod -m 0660 /dev/loop14 b 7 14
-mknod -m 0660 /dev/loop15 b 7 15
-mknod -m 0660 /dev/loop16 b 7 16
-ll l*
-gobolook 
-cd /tmp/gobo/root/
-cd var
-cd cache/
-cd ldconfig/
-cd lib/
-cd root 
-cd usr/
-cd man
-cd man1
-ll
-ll | less
-cd ..
-mount
-rc
-pogo core build LibIcu
-ping www.google.com
-ping www.google.com
-cd /Data/Compile/Build/Core/
-ll
-pogo core build LibIcu
-ll
-less
-less INSTALL 
-./configure --help
-cd ..
-mount
-rc
-ping www.google.com
-ping www.google.com
 cd /Data/Compile/Build/Core/
 pogo core harvest LibIcu
 cd /Data/Compile/Sources/icu4c-60_2-src/
@@ -498,3 +429,72 @@ unxz ed-1.14.2.tar.lz
 man bsdtar
 ll
 ./configure --help
+ll
+less entities.xml 
+less manual.xml 
+less make
+less Makefile
+less xmlproc.sh 
+which
+which bzip2
+env
+cd /usr/bin/
+ll
+./bzip2
+./bzip2 --help
+./bzip2 --help
+less README 
+ll
+less zcat
+./bzip2 --help
+less README 
+less zcat
+cd docs
+cd doc
+cd ..
+less Doxyfile
+ll
+Less Makefile
+less Makefile
+../configure --help
+../configure --help | less
+which sed
+../configure --help | less
+which sed
+cd /usr/lib/gcc/
+cd x86_64-pc-linux-gnu/
+cd 7.3.0/
+ll
+cd 7.3.0/
+cd /Data/Compile/Sources/gcc-7.3.0/
+cd contrib
+ll
+less download_prerequisites 
+nano
+./configure --help
+which sed
+env
+cd /usr/bin/
+ls -l sed
+ll
+..
+whcih sed
+which sed
+./configure --help
+./configure --help
+less config.status 
+grep docdir config.status 
+ll
+which sed
+./configure --help
+./configure --help
+less config.status 
+grep docdir config.status 
+cd doc
+cd -
+less Makefile 
+cd ..
+cd include/
+less builddefs
+ll
+less builddefs.in 

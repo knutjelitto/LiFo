@@ -4,15 +4,10 @@ Title="BZip2"
 Home=(http://www.bzip.org/)
 Name=BZip2
 Version=1.0.6
-Supplies=(
-    http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz
-    http://www.linuxfromscratch.org/patches/lfs/8.2/bzip2-1.0.6-install_docs-1.patch
-)
+Supplies=(http://www.bzip.org/$Version/bzip2-$Version.tar.gz)
 
 Build()
 {
-    patch -Np1 -i ../bzip2-1.0.6-install_docs-1.patch
-
     # make relative symlinks
     sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
 
@@ -24,10 +19,12 @@ Build()
     make
     make PREFIX=/usr install
 
-    #cp -v bzip2-shared /bin/bzip2
-    #cp -av libbz2.so* /lib
-    #ln -vfs ../../lib/libbz2.so.1.0 /usr/lib/libbz2.so
-    #rm -vf /usr/bin/{bunzip2,bzcat,bzip2}
-    #ln -vsf bzip2 /bin/bunzip2
-    #ln -vsf bzip2 /bin/bzcat
+    install -v -d -m755 /usr/share/doc/bzip2
+    install -v -m644 manual.ps manual.html manual.pdf bzip2.txt /usr/share/doc/bzip2
+
+    cp -vf bzip2-shared /usr/bin/bzip2
+    cp -av libbz2.so* /usr/lib
+    rm -vf /usr/bin/{bunzip2,bzcat}
+    ln -vsf bzip2 /bin/bunzip2
+    ln -vsf bzip2 /bin/bzcat
 }

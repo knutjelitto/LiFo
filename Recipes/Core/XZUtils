@@ -1,0 +1,18 @@
+#!/bin/bash
+
+Title="XZUtils"
+Home=(https://tukaani.org/xz/)
+Name=XZUtils
+Version=5.2.4
+Supplies=(https://tukaani.org/xz/xz-5.2.4.tar.xz)
+
+Build()
+{
+    ./configure --prefix=/usr       \
+                --disable-nls       \
+                --disable-static
+
+    make
+    #make check
+    make install
+}

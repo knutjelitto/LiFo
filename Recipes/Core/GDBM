@@ -1,0 +1,21 @@
+#!/bin/bash
+
+Title="GDBM"
+Home=(https://www.gnu.org/software/gdbm/)
+Name=GDBM
+Version=1.14.1
+ToolDeps=()
+BuildDeps=()
+Supplies=(https://ftpmirror.gnu.org/gnu/gdbm/gdbm-$Version.tar.gz)
+
+Build()
+{
+    ./configure --prefix=/usr       \
+                --disable-nls       \
+                --disable-static    \
+                --enable-libgdbm-compat    
+
+    make
+    #make check
+    make install
+}

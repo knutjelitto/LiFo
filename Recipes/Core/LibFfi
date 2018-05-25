@@ -1,8 +1,8 @@
 #!/bin/bash
 
-Title="LibFfi"
+Title="LibFFI"
 Home=(https://sourceware.org/libffi/ https://github.com/libffi/libffi)
-Name=LibFfi
+Name=LibFFI
 Version=3.2.1
 BuildDeps=()
 RunDeps=()
@@ -17,18 +17,12 @@ Build()
         -e 's/^Cflags: -I${includedir}/Cflags:/' \
         -i libffi.pc.in
 
-    # Prepare libffi for compilation: 
     ./configure \
         --prefix=/usr       \
         --disable-nls       \
         --disable-static
 
-    # Compile the package: 
     make
-
-    # To test the results, issue: 
     #make check
-
-    # Install the package: 
     make install
 }
