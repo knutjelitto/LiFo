@@ -119,9 +119,9 @@ _build_EnsureCollection ()
 
 _build_CleanCollection ()
 {
-    rm ${verbose} --recursive --force "$Current_Root"
-    rm ${verbose} --recursive --force "$Current_Store"
-    rm ${verbose} --recursive --force "$Current_Build"
+    RemoveDir "$Current_Root"
+    RemoveDir "$Current_Store"
+    RemoveDir "$Current_Build"
 }
 
 _build_EnsureBuild ()
@@ -141,7 +141,7 @@ _build_EnsureBuild ()
 
 _build_CleanBuild ()
 {
-    rm ${verbose} --recursive --force "$Box_Top"
+    RemoveDir "$Box_Top"
     rm ${verbose} --force "${Store_Files[@]}"
 }
 
@@ -211,7 +211,7 @@ _buildExtractSupply ()
 
     local tmpExtract=$extract.tmp
 
-    rm $verbose --recursive --force $tmpExtract
+    RemoveDir $tmpExtract
 
     [[ -d $extract ]] && return
 
@@ -371,7 +371,7 @@ ExecInCoreChroot ()
     POGO_CHROOT=Core            \
     LC_ALL=POSIX                \
     FORCE_UNSAFE_CONFIGURE=1    \
-    MAKEFLAGS="-j2"             \
+    MAKEFLAGS="-j8"             \
     chroot $merged /bin/bash -l -c "$command"
 
     BuildUnmount || true
@@ -713,6 +713,7 @@ Build_Harvest ()
         $6 ~ /^lib64$/ { next; }
         $6 ~ /^usr$/ { next; }
         $6 ~ /^usr\/bin$/ { next; }
+        $6 ~ /^usr\/sbin$/ { next; }
         $6 ~ /^usr\/lib$/ { next; }
         $6 ~ /^usr\/libexec$/ { next; }
         $6 ~ /^usr\/lib\/pkgconfig$/ { next; }

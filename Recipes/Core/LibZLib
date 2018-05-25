@@ -1,0 +1,16 @@
+#!/bin/bash
+
+Title="Lib ZLib"
+Home=(https://zlib.net/)
+Name=LibZLib
+Version=1.2.11
+Supplies=(https://zlib.net/zlib-$Version.tar.xz)
+
+Build()
+{
+    ./configure --prefix=/usr #--disable-nls
+
+    make
+    #make check
+    make install
+}

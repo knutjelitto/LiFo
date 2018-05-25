@@ -28,7 +28,12 @@ Popd ()
 
 MakeDir ()
 {
-    mkdir ${verbose} --parents "$@"
+    mkdir $verbose --parents "$@"
+}
+
+RemoveDir ()
+{
+    rm $verbose --force --recursive "$@"
 }
 
 Header ()

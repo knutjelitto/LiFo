@@ -1,0 +1,19 @@
+#!/bin/bash
+
+Title="File"
+Home=(http://www.darwinsys.com/file/ http://directory.fsf.org/file.html)
+Name=File
+Version=5.33
+Supplies=(ftp://ftp.astron.com/pub/file/file-$Version.tar.gz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr \
+        --disable-nls
+
+    bash -l
+    make
+    #make check
+    make install
+}

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+Title="Ed"
+Home=(https://www.gnu.org/software/ed/)
+Name=Ed
+Version=1.14.2
+BuildDeps=()
+Supplies=(https://ftpmirror.gnu.org/gnu/ed/ed-$Version.tar.lz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr \
+        --bindir=/bin
+
+    make
+    #make check. 
+    make install
+}

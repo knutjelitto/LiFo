@@ -1,0 +1,30 @@
+#!/bin/bash
+
+Title="Curl"
+Home="https://curl.haxx.se/"
+Name=Curl
+Version=7.60.0
+ToolDeps=()
+BuildDeps=()
+RunDeps=()
+Supplies=(https://curl.haxx.se/download/curl-$Version.tar.xz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr                   \
+        --disable-static                \
+        --enable-threaded-resolver      \
+        --with-ca-path=/etc/ssl/certs
+
+    make
+
+    make install &&
+
+    rm -rf docs/examples/.deps
+
+    find docs \( -name Makefile\* -o -name \*.1 -o -name \*.3 \) -exec rm {} \;
+
+    install -v -d -m755 /usr/share/doc/curl
+    cp -v -R docs/*     /usr/share/doc/curl
+}

@@ -5,8 +5,9 @@ Home="http://www.doxygen.org/"
 Name=DoxyGen
 Version=1.8.14
 BuildIn=build
-BuildDeps=(CMake)
-RunDeps()
+ToolDeps=(CMake)
+BuildDeps=()
+RunDeps=()
 Supplies=(http://ftp.stack.nl/pub/doxygen/doxygen-1.8.14.src.tar.gz )
 
 Build()
@@ -18,9 +19,9 @@ Build()
 
     make
 
-    cmake -DDOC_INSTALL_DIR=share/doc/doxygen-1.8.14 -Dbuild_doc=ON ..
-
-    make docs
+    # docs: heavy dependencies
+    #cmake -DDOC_INSTALL_DIR=share/doc/doxygen -Dbuild_doc=ON ..
+    #make docs
 
     make install
     install -vm644 ../doc/*.1 /usr/share/man/man1

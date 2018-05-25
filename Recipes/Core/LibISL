@@ -1,0 +1,19 @@
+#!/bin/bash
+
+Title="LibISL"
+Home=(http://isl.gforge.inria.fr/)
+Name=LibISL
+Version=0.19
+ToolDeps=()
+BuildDeps=(LibGMP)
+RunDeps=()
+Supplies=(http://isl.gforge.inria.fr/isl-0.19.tar.xz)
+
+Build()
+{
+    ./configure --prefix=/usr --disable-nls --disable-static
+
+    make
+    #make check
+    make install
+}

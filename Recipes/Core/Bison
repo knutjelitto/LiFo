@@ -1,0 +1,17 @@
+#!/bin/bash
+
+Title="Bison"
+Home=(https://www.gnu.org/software/bison/)
+Name=Bison
+Version=3.0.4
+Supplies=(https://ftpmirror.gnu.org/gnu/bison/bison-$Version.tar.xz)
+
+Build()
+{
+    ./configure --prefix=/usr \
+                --disable-nls \
+                --disable-static
+
+    make
+    make install
+}

@@ -3,8 +3,8 @@
 Import PogoConfig
 NeverInChroot
 
-rm $verbose --force --recursive $Tools_Root
-rm $verbose --force --recursive $Tools_Build
+RemoveDir $Tools_Root
+RemoveDir $Tools_Build
 
 upto="$1"
 

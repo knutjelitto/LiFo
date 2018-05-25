@@ -1,0 +1,33 @@
+#!/bin/bash -eu
+
+source "$Pogos/PogoConfig"
+
+TODO=(
+    #LibArchive
+    #LibExpat
+    #LibFFI
+    #LibGMP
+    #LibICU
+    #LibLZO
+    #LibMPC
+    #LibMPFR
+    #LibUV
+    #LibZLib
+    #CMake
+    #Curl
+    #DoxyGen
+    #File
+    #Flex
+    #BinUtils
+    #Bison
+    #M4
+    #Which
+    #TimezoneData
+)
+
+if [[ "${2-}" == "done" ]]; then
+    pogo core rollout "$1"
+else
+    pogo core build "$1"
+    pogo core harvest "$1"
+fi

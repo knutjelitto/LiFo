@@ -1,0 +1,28 @@
+#!/bin/bash
+
+Title="BinUtils"
+Home=(https://www.gnu.org/software/binutils/)
+Name=BinUtils
+Version=2.30
+BuildIn=build
+BuildDeps=(LibZLib)
+Supplies=(https://ftpmirror.gnu.org/gnu/binutils/binutils-$Version.tar.xz)
+
+Build()
+{
+    ../configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --enable-gold       \
+        --enable-ld=default \
+        --enable-plugins    \
+        --enable-shared     \
+        --disable-static    \
+        --disable-werror    \
+        --enable-64-bit-bfd \
+        --with-system-zlib
+
+    make tooldir=/usr
+    #make -k tooldir=/usr check
+    make tooldir=/usr install
+}

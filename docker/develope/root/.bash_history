@@ -1,146 +1,3 @@
-pogo tools build-upto 645
-pogo tools build-upto 646
-pogo tools build-upto 647
-pogo tools build-upto 648
-pogo tools build-upto 649
-pogo tools build-upto 650
-pogo tools build-upto 651
-pogo tools build-upto 652
-pogo tools build-upto 653
-pogo tools build-upto 654
-pogo tools build-upto 655
-pogo tools build-upto 656
-pogo tools build-upto 657
-pogo tools build-upto 658
-pogo tools build-upto 659
-pogo tools build-upto 660
-pogo tools build-upto 661
-pogo tools build-upto 662
-pogo tools build-upto 663
-pogo tools build-upto 664
-pogo tools build-upto 665
-pogo tools build-upto 666
-pogo tools build-upto 667
-pogo tools build-upto 668
-pogo tools build-upto 669
-pogo tools build-upto 670
-pogo tools build-upto 671
-pogo tools build-upto 672
-pogo tools build-upto 673
-pogo tools build-upto 674
-pogo tools build-upto 675
-pogo tools build-upto 676
-pogo tools build-upto 677
-cd
-pogo tools build-all
-echo $?
-find /Data
-find /Data/
-find /Data/ -nam rm
-find /Data/ -name rm
-pogo tools build 656
-time pogo tools build-all
-clear
-mount
-clear
-mount
-less
-tree
-cd
-cd /etc
-ll
-cd ..
-pogo tools build-upto 661
-pogo tools build-upto 662
-pogo tools build-upto 663
-pogo tools build-upto 664
-pogo tools build-upto 665
-pogo tools build-upto 666
-pogo tools build-upto 667
-pogo tools build-upto 668
-pogo tools build-upto 669
-pogo tools build-upto 670
-pogo tools build-upto 671
-pogo tools build-upto 672
-pogo tools build-upto 673
-pogo tools build-upto 674
-pogo tools build-upto 675
-pogo tools build-upto 676
-pogo tools build-upto 677
-echo $?
-find /Data
-find /Data/
-find /Data/ -nam rm
-find /Data/ -name rm
-pogo tools build 656
-time pogo tools build-all
-clear
-cd /fro
-cd /proc/
-l
-cat filesystems 
-man aufs
-find / -name "aufs"
-find / -name "aufs*"
-find / -name "*aufs*"
-pogo tools build-all
-cd /Data/Variable/Store/Tools/
-cd Vim-8.0.586/
-cls -la
-ls -la
-cd /Data/Compile/Roots/Tools/
-cd tools
-cd bin/
-cd lib/
-cd gcc/x86_64-pc-linux-gnu/7.3.0/specs 
-cd usr/
-cd etc
-cd ssl/
-less openssl.cnf
-less man_db.conf 
-less services 
-pogo core chell
-cd -
-cd var/
-cd ..
-cd bin
-ll
-cd
-pogo core shell
-cd ssl/
-less openssl.cnf
-less man_db.conf 
-less services 
-pogo core chell
-cd -
-cd var/
-cd bin
-cd
-pogo core shell
-gobolook 
-cd /tmp/gobo/
-cd merge/
-mount
-cd root/
-cd Programs/
-cd m4
-cd M4
-cd System/Index/
-find .
-find . -name m4
-cd bin/
-ll m*
-ll m4*
-lll
-ll | less
-cd ..
-find . -name aclocal
-cd share/
-l
-cd aclocal
-ll
-cd aclocal
-losetup
 losetup -v
 man losetup
 losetup -l
@@ -498,3 +355,146 @@ pogo core shell
 find /Data/Variable/Store/Tools
 find /Data/Variable/Store/Tools -name Bom
 find /Data/Variable/Store/Tools -name Bom -exec grep lib64 {} \+
+find /Data/Variable/Store/Tools -name Bom
+find /Data/Variable/Store/Tools -name Bom -exec grep lib64 {} \+
+cat /Data/Variable/Store/Tools/GLibc-2.27/Bom 
+cat /Data/Variable/Store/Tools/GLibc-2.27/Bom  | less
+cat /Data/Variable/Store/Tools/GLibc-2.27/Bom  | grep ld-
+cd /Data/Compile/Roots/Tools/
+find
+find . type f
+find . type f | wc
+find . type f | wc -l
+find . type f -exec strings -f {} \+
+find . type f -exec strings -f {} \+ | grep lib64
+find . type f -exec strings -f {} \+ | grep '/lib64'
+find . type f -exec strings -f {} \+ | grep '/lib64/ld'
+find . type f -exec strings -f {} \+ | grep '/lib64/ld' | less
+find . type f -exec strings -f {} \+ 2>&1 | grep '/lib64/ld' | less
+rm /Data/Variable/Archives/glibc-2.27.tar.xz 
+ll
+cd ..
+cd
+pocore G
+pocore GLibc
+ping www.google.com
+ping www.google.com
+./configure --help
+grep misc *
+../configure --help
+./configure --help
+../configure --help
+find
+find . type f
+find . type f | wc
+find . type f | wc -l
+find . type f -exec strings -f {} \+
+find . type f -exec strings -f {} \+ | grep lib64
+find . type f -exec strings -f {} \+ | grep '/lib64'
+find . type f -exec strings -f {} \+ | grep '/lib64/ld'
+find . type f -exec strings -f {} \+ | grep '/lib64/ld' | less
+find . type f -exec strings -f {} \+ 2>&1 | grep '/lib64/ld' | less
+rm /Data/Variable/Archives/glibc-2.27.tar.xz 
+cd ..
+pocore G
+ping www.google.com
+pocore GLibc
+less glibc-2.27-fhs-1.patch 
+diff /Data/Variable/Store/Tools/File-5.32/Bom  /Data/Variable/Store/Core/File-5.33/Bom 
+pocore File
+pocore File done
+pocore LibArchive
+mtree
+pocore LibArchive done
+pocore LibExpat
+pocore LibExpat done
+pocore LibFFI
+pocore LibFFI done
+pocore LibGMP
+pocore LibGMP done
+pocore LibICU
+pocore LibICU done
+pocore LibLZO
+pocore LibLZO done
+pocore LibMPFR
+pocore LibMPFR done
+pocore LibMPC
+pocore LibMPC done
+pocore LibUV
+pocore LibUV done
+cd /Data/Variable/Archives/
+rm *
+ll
+cd
+pocore LibZLib
+pocore LibZLib done
+poco LibZLib done
+poco Curl
+poco Curl done
+poco CMake
+poco CMake done
+poco DoxyGen
+poco DoxyGen done
+poco Flex
+poco Flex done
+poco Bison
+poco Bison done
+poco LibReadline
+poco LibReadline done
+poco LibISL
+poco BinUtils
+poco BinUtils done
+readelf
+readelf
+poco Bison
+poco Bison done
+poco M4
+poco Which
+man zic
+poco TimezoneData
+poco TimezoneData done
+man doxygen
+readelf
+poco Bison
+poco Bison done
+poco Which
+man zic
+poco TimezoneData
+poco TimezoneData done
+cd /Data/Variable/Store/
+rm -rv TimezoneData-2018es/
+cd ..
+cd Compile/l
+cd Compile/
+cd Roots/
+cd Core/
+cd .rollout/
+cd
+poco CMake
+poco CMake done
+ll
+poco Curl
+poco 
+poco Curl done
+poco DoxyGen
+poco DoxyGen done
+pogo core shell
+poco LibZLib
+poco LibZLib done
+poco LibReadline
+poco LibReadline done
+poco M4
+poco M4 done
+poco BC
+ping www.google.com
+poco BC
+poco BC
+poco Ed
+cd /Data/Variable/Archives/
+ll ed*
+bsdtar -t ed-1.14.2.tar.lz 
+unlzma ed-1.14.2.tar.lz 
+unxz ed-1.14.2.tar.lz 
+man bsdtar
+ll
+./configure --help

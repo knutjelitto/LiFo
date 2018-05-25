@@ -1,0 +1,25 @@
+#!/bin/bash
+
+Title="Timezone Data"
+Home=(https://www.iana.org/time-zones/)
+Name=TimezoneData
+Version=2018e
+BuildDeps=(GLibc)
+Supplies=(http://www.iana.org/time-zones/repository/releases/tzdata$Version.tar.gz)
+
+Build()
+{
+    local ZONEINFO=/usr/share/zoneinfo
+    local timezone
+    mkdir -pv $ZONEINFO/{posix,right}
+
+    for timezone in etcetera southamerica northamerica europe africa antarctica  \
+            asia australasia backward pacificnew systemv; do
+        zic -L /dev/null   -d $ZONEINFO       -y "sh yearistype.sh" ${timezone}
+        zic -L /dev/null   -d $ZONEINFO/posix -y "sh yearistype.sh" ${timezone}
+        zic -L leapseconds -d $ZONEINFO/right -y "sh yearistype.sh" ${timezone}
+    done
+
+    cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
+    zic -d $ZONEINFO -p America/New_York
+}

@@ -3,6 +3,6 @@
 Import PogoConfig
 NeverInChroot
 
-rm $verbose --force --recursive $Core_Root
-rm $verbose --force --recursive $Core_Build
-rm $verbose --force --recursive $Core_Store
+RemoveDir $Core_Root
+RemoveDir $Core_Build
+RemoveDir $Core_Store

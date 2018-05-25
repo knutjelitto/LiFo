@@ -1,0 +1,14 @@
+#!/bin/bash
+
+Title="GLibc"
+Home="https://www.gnu.org/software/libc/"
+Name=GLibc
+Version=2.27
+BuildIn=build
+BuildDeps=(LinuxHeaders)
+RunDeps=()
+Supplies=(
+    https://ftpmirror.gnu.org/gnu/glibc/glibc-$Version.tar.xz
+    http://www.linuxfromscratch.org/patches/lfs/8.2/glibc-2.27-fhs-1.patch
+)
+

@@ -4,9 +4,10 @@ Title="LibArchive"
 Home=" http://www.libarchive.org/"
 Name=LibArchive
 Version=3.3.2
+ToolDeps=()
 BuildDeps=(LibLZO)
 RunDeps=()
-Supplies=(http://www.libarchive.org/downloads/libarchive-3.3.2.tar.gz)
+Supplies=(http://www.libarchive.org/downloads/libarchive-$Version.tar.gz)
 
 Build()
 {
