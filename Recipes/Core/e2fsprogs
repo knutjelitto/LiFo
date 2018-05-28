@@ -1,0 +1,33 @@
+#!/bin/bash
+
+Title="Ext2 Filesystems Utilities"
+Home=(https://sourceforge.net/projects/e2fsprogs/)
+Name=e2fsprogs
+Version=1.44.2
+ToolDeps=(texinfo)
+BuildIn=build
+Supplies=(https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz)
+
+Build ()
+{
+    ../configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --sysconfdir=/etc   \
+        --sbindir=/usr/bin  \
+        --enable-elf-shlibs \
+        --disable-libblkid  \
+        --disable-libuuid   \
+        --disable-uuidd     \
+        --disable-fsck
+    
+    make
+    
+    make install
+    make install-libs
+
+    chmod -v u+w /usr/lib/{libcom_err,libe2p,libext2fs,libss}.a    
+    gunzip -v /usr/share/info/libext2fs.info.gz
+    makeinfo -o      doc/com_err.info ../lib/et/com_err.texinfo
+    install -v -m644 doc/com_err.info /usr/share/info
+}

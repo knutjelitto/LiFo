@@ -1,10 +1,10 @@
 #!/bin/bash
 
-Title="GetText"
+Title="GNU gettext"
 Home=(https://www.gnu.org/software/gettext/)
-Name=GetText
+Name=gettext
 Version=0.19.8.1
-Supplies=(https://ftpmirror.gnu.org/gnu/gettext/gettext-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build()
 {

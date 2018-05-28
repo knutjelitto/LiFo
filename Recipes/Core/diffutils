@@ -1,0 +1,17 @@
+#!/bin/bash (source only)
+
+Title="GNU diff utils"
+Home=(https://www.gnu.org/software/diffutils/)
+Name=diffutils
+Version=3.6
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr   \
+        --disable-nls
+
+    make
+    make install
+}

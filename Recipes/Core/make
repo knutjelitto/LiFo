@@ -1,0 +1,20 @@
+#!/bin/bash (source-only)
+
+Title="GNU Make"
+Home="https://www.gnu.org/software/make/"
+Name=make
+Version=4.2.1
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
+
+Build() 
+{
+    # Work around an error caused by glibc-2.27: 
+    sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
+
+    ./configure \
+        --prefix=/usr   \
+        --disable-nls
+
+    make
+    make install
+}

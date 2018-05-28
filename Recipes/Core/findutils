@@ -1,0 +1,19 @@
+#!/bin/bash (source only)
+
+Title="GNU find utils"
+Home=(https://www.gnu.org/software/findutils/)
+Name=findutils
+Version=4.6.0
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr \
+        --disable-nls \
+        --libexecdir=/usr/lib/locate \
+        --localstatedir=/var/lib/locate
+
+    make
+    make install
+}

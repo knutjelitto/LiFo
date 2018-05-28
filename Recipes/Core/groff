@@ -1,0 +1,17 @@
+#!/bin/bash
+
+Title="GNU troff (groff)"
+Home=(https://www.gnu.org/software/groff/)
+Name=groff
+Version=1.22.3
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
+
+Build()
+{
+    PAGE=A4 ./configure \
+        --prefix=/usr \
+        --docdir=/usr/share/doc/groff
+        
+    make -j1
+    make install
+}

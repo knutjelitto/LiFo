@@ -1,0 +1,17 @@
+#!/bin/bash
+
+Title="GNU libiconv"
+Home=(https://www.gnu.org/software/libiconv/)
+Name=libiconv
+Version=1.15
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr   \
+        --disable-nls
+    
+    make
+    make install
+}

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+Title="Man DB"
+Home=(http://man-db.nongnu.org/ https://savannah.nongnu.org/projects/man-db)
+Name=man-db
+Version=2.8.3
+BuildDeps=(GDBM libpipeline)
+Supplies=(http://download.savannah.gnu.org/releases/man-db/man-db-$Version.tar.xz)
+
+Build() 
+{
+    ./configure \
+        --prefix=/usr                   \
+        --disable-nls                   \
+        --sbindir=/usr/bin              \
+        --libexecdir=/usr/lib           \
+        --sysconfdir=/etc               \
+        --disable-setuid                \
+        --enable-cache-owner=bin        \
+        --with-browser=/usr/bin/lynx    \
+        --with-vgrind=/usr/bin/vgrind   \
+        --with-grap=/usr/bin/grap       \
+        --with-systemdtmpfilesdir=
+
+    make
+    make install
+}
+

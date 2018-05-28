@@ -1,14 +1,15 @@
 #!/bin/bash (source-only)
 
-Title="Which"
-Home=(https://carlowood.github.io/which/)
-Name=which
-Version=2.21
+Title="GNU Patch"
+Home="https://www.gnu.org/software/patch/"
+Name=patch
+Version=2.7.6
 Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
 
-Build ()
+Build() 
 {
     ./configure --prefix=/usr
+
     make
     make install
 }

@@ -2,11 +2,9 @@
 
 Title="LibFFI"
 Home=(https://sourceware.org/libffi/ https://github.com/libffi/libffi)
-Name=LibFFI
+Name=libffi
 Version=3.2.1
-BuildDeps=()
-RunDeps=()
-Supplies=(ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz)
+Supplies=(ftp://sourceware.org/pub/libffi/libffi-$Version.tar.gz)
 
 Build()
 {
@@ -23,6 +21,5 @@ Build()
         --disable-static
 
     make
-    #make check
     make install
 }

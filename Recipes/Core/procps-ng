@@ -1,0 +1,22 @@
+#!/bin/bash
+
+Title="Procps-NG"
+Home=(https://sourceforge.net/projects/procps-ng/ https://gitlab.com/procps-ng/procps)
+Name=procps-ng
+Version=3.3.15
+Supplies=(http://sourceforge.net/projects/$Name/files/Production/$Name-$Version.tar.xz)
+
+Build()
+{
+    # Prepare procps-ng for compilation: 
+    ./configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --sbindir=/usr/bin  \
+        --libdir=/usr/lib   \
+        --disable-static    \
+        --disable-kill
+
+    make
+    make install
+}

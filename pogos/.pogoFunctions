@@ -32,6 +32,14 @@ RemoveFile ()
     done
 }
 
+Rename ()
+{
+    local source="$1"
+    local target="$2"
+
+    mv $verbose --no-target-directory "$source" "$target"
+}
+
 LinkFile ()
 {
     local link="$1"

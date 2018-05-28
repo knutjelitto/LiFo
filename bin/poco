@@ -3,84 +3,84 @@
 source "$Pogos/PogoConfig" "Core"
 
 TODO=(
-    ###607-linux-headers
-    ManPages    #608-man-pages          #X
-    ###609-glibc
-    ###610-adjusting
-    LibZLib     #611-zlib               #X
-    File        #612-file               #X
-    LibReadline #613-readline           #X
-    M4          #614-m4                 #X
-    BC          #615-bc                 #X
-    BinUtils    #616-binutils           #X
-    LibGMP      #617-gmp                #X
-    LibMPFR     #618-mpfr               #X
-    LibMPC      #619-mpc                #X
-    LibISL      #                       #X
-    GCC         #620-gcc                #X
-    BZip2       #621-bzip2              #X
-    PkgConfig   #622-pkg-config         #X
-    NCurses     #623-ncurses            #X
-    Attr        #624-attr               #X
-    Acl         #625-acl                #X
-    LibCap      #626-libcap             #X
-    Sed         #627-sed                #X
-    ###628-shadow
-    PsMisc      #629-psmisc             #X
-    IanaEtc     #630-iana-etc           #X
-    Bison       #631-bison              #X
-    Flex        #632-flex               #X
-    Grep        #633-grep               #X
-    Bash        #634-bash               #X
-    Libtool     #635-libtool            #X
-    GDBM        #636-gdbm               #X
-    GPerf       #637-gperf              #X
-    LibExpat    #638-expat              #X
-    InetUtils   #639-inetutils          #X
-    ###640-perl
-    ###641-xml-parser
+    #--#607-linux-headers
+    ManPages        #608-man-pages          #X
+    #--#609-glibc
+    #--#610-adjusting
+    zlib            #611-zlib               #!
+    File            #612-file               #X
+    readline        #613-readline           #!
+    M4              #614-m4                 #X
+    BC              #615-bc                 #X
+    BinUtils        #616-binutils           #X
+    LibGMP          #617-gmp                #X
+    LibMPFR         #618-mpfr               #X
+    LibMPC          #619-mpc                #X
+    GCC             #620-gcc                #X
+    bzip2           #621-bzip2              #!
+    PkgConfig       #622-pkg-config         #X
+    NCurses         #623-ncurses            #X
+    Attr            #624-attr               #X
+    Acl             #625-acl                #X
+    LibCap          #626-libcap             #X
+    Sed             #627-sed                #X
+    #--#628-shadow
+    PsMisc          #629-psmisc             #X
+    IanaEtc         #630-iana-etc           #X
+    Bison           #631-bison              #X
+    Flex            #632-flex               #X
+    Grep            #633-grep               #X
+    bash            #634-bash               #!
+    libtool         #635-libtool            #!
+    gdbm            #636-gdbm               #!
+    GPerf           #637-gperf              #X
+    expat           #638-expat              #!
+    InetUtils       #639-inetutils          #X
+    perl            #640-perl               #!
+    perl-xml-parser #641-xml-parser         #!
     ###642-intltool
-    AutoConf    #643-autoconf           #X
-    AutoMake    #644-automake           #X
-    XzUtils     #645-xz                 #X
+    AutoConf        #643-autoconf           #X
+    AutoMake        #644-automake           #X
+    XzUtils         #645-xz                 #X
     ###646-kmod
-    GetText     #647-gettext            #X
-    LibElf      #648-libelf             #X
-    LibFFI      #649-libffi             #X
-    OpenSSL     #650-openssl            #X
-    #651-python
-    #652-ninja
-    #653-meson
-    #654-procps-ng
-    #655-e2fsprogs
-    #656-coreutils
-    #657-check
-    #658-diffutils
-    #659-gawk
-    #660-findutils
-    #661-groff
-    #662-grub
-    #663-less
-    GZip        #664-gzip               #X
+    gettext         #647-gettext            #!
+    LibElf          #648-libelf             #X
+    LibFFI          #649-libffi             #X
+    OpenSSL         #650-openssl            #X
+    python3         #651-python             #!
+    #--#652-ninja
+    #--#653-meson
+    procps-ng       #654-procps-ng          #!
+    e2fsprogs       #655-e2fsprogs          #!
+    coreutils       #656-coreutils          #!
+    check           #657-check              #!
+    diffutils       #658-diffutils          #!
+    gawk            #659-gawk               #!
+    findutils       #660-findutils          #!
+    groff           #661-groff              #!
+    #--#662-grub
+    less            #663-less               #!
+    gzip            #664-gzip               #!
     #665-iproute
     #666-kbd
-    #667-libpipeline
-    #668-make
-    #669-patch
-    #670-sysklogd
-    #671-sysvinit
-    #672-eudev
-    #673-utillinux
-    #674-man-db
-    #675-tar
-    #676-texinfo
-    #677-vim
-    LibLZO                              #X
-    LibUV                               #X
-    Tree                                #X
-    Which                               #X
-    Ed                                  #X
-    Nano                                #X
+    libpipeline     #667-libpipeline        #!
+    make            #668-make               #!
+    patch           #669-patch              #!
+    #--#670-sysklogd
+    #--#671-sysvinit
+    #--#672-eudev
+    util-linux      #673-utillinux          #?
+    man-db          #674-man-db             #!
+    tar             #675-tar                #!
+    texinfo         #676-texinfo            #!
+    #--#677-vim
+    LibLZO                                  #X
+    LibUV                                   #X
+    isl                                     #!
+    tree                                    #!
+    which                                   #!
+    ed                                      #!
+    nano                                    #!
 )
 
 if [[ "${1}" == "clean" ]]; then
@@ -89,6 +89,8 @@ elif [[ "${1}" == "shell" ]]; then
     pogo core shell
 elif [[ "${2-}" == "done" ]]; then
     pogo core make "$1" 'done'
+elif [[ "${2-}" == "break" ]]; then
+    pogo core make "$1" 'break'
 elif [[ "${2-}" == "new" ]]; then
     pogo core make "$1" 'new'
 else

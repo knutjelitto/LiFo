@@ -1,12 +1,11 @@
 #!/bin/bash
 
-Title="Bash"
+Title="The GNU Bourne-Again SHell"
 Home=(https://www.gnu.org/software/bash/ https://tiswww.case.edu/php/chet/bash/bashtop.html)
-Name=Bash
+Name=bash
 Version=4.4.18
-ToolDeps=()
-BuildDeps=(LibReadline)
-Supplies=(https://ftpmirror.gnu.org/gnu/bash/bash-$Version.tar.gz)
+BuildDeps=(readline libiconv gettext)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
 
 Build()
 {

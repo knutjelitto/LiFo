@@ -2,15 +2,13 @@
 
 Title="Tree"
 Home="http://mama.indstate.edu/users/ice/tree/"
-Name=Tree
+Name=tree
 Version=1.7.0
-Supplies=(http://mama.indstate.edu/users/ice/tree/src/tree-1.7.0.tgz)
+Supplies=(http://mama.indstate.edu/users/ice/tree/src/tree-$Version.tgz)
 
 Build()
 {
     make
-
     make MANDIR=/usr/share/man/man1 install
-
     chmod -v 644 /usr/share/man/man1/tree.1
 }

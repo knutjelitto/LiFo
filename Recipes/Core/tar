@@ -1,0 +1,19 @@
+#!/bin/bash (source only)
+
+Title="GNU tar"
+Home=(https://www.gnu.org/software/tar/)
+Name=tar
+Version=1.30
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr   \
+        --disable-nls   \
+        --with-rmt=/usr/bin/true
+
+    make
+    make install
+    make -C doc install-html docdir=/usr/share/doc/tar
+}

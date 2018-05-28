@@ -1,13 +1,11 @@
 #!/bin/bash
 
-Title="LibISL"
+Title="Integer Set Library"
 Home=(http://isl.gforge.inria.fr/)
-Name=LibISL
+Name=isl
 Version=0.19
-ToolDeps=()
-BuildDeps=(LibGMP)
-RunDeps=()
-Supplies=(http://isl.gforge.inria.fr/isl-0.19.tar.xz)
+BuildDeps=(gmp)
+Supplies=(http://isl.gforge.inria.fr/isl-$Version.tar.xz)
 
 Build()
 {

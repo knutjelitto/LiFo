@@ -1,0 +1,15 @@
+#!/bin/bash
+
+Title="Lib Pipeline"
+Home=(http://libpipeline.nongnu.org/ http://savannah.nongnu.org/projects/libpipeline)
+Name=libpipeline
+Version=1.5.0
+Supplies=(http://download.savannah.gnu.org/releases/libpipeline/libpipeline-$Version.tar.gz)
+
+Build ()
+{
+    ./configure --prefix=/usr
+
+    make
+    make install
+}

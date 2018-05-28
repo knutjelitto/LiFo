@@ -1,19 +1,18 @@
 #!/bin/bash
 
-Title="LibExpat"
-Home="https://libexpat.github.io/"
-Name=LibExpat
+Title="Expat XML parser"
+Home=(https://libexpat.github.io/)
+Name=expat
 Version=2.2.5
-BuildDeps=()
-RunDeps=()
 Supplies=(https://github.com/libexpat/libexpat/releases/download/R_2_2_5/expat-2.2.5.tar.bz2)
 
 Build()
 {
     sed -i 's|usr/bin/env |bin/|' run.sh.in
 
-    ./configure --prefix=/usr \
-                --disable-static
+    ./configure \
+        --prefix=/usr \
+        --disable-static
 
     make
     make install

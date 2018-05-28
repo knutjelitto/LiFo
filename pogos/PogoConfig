@@ -87,7 +87,7 @@ Fatal ()
 {
     local prefix
     case $0 in
-        */pogo) ;;
+        */pogo) prefix='' ;;
         *) prefix="pogo " ;;
     esac
         

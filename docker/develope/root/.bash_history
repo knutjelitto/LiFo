@@ -1,155 +1,3 @@
-pocore LibUV
-pocore LibUV done
-cd /Data/Variable/Archives/
-rm *
-ll
-cd
-pocore LibZLib
-pocore LibZLib done
-poco LibZLib done
-poco Curl
-poco Curl done
-poco CMake
-poco CMake done
-poco DoxyGen
-poco DoxyGen done
-poco Flex
-poco Flex done
-poco Bison
-poco Bison done
-poco LibReadline
-poco LibReadline done
-poco LibISL
-poco BinUtils
-poco BinUtils done
-readelf
-readelf
-poco Bison
-poco Bison done
-poco M4
-poco Which
-man zic
-poco TimezoneData
-poco TimezoneData done
-man doxygen
-readelf
-poco Bison
-poco Bison done
-poco Which
-man zic
-poco TimezoneData
-poco TimezoneData done
-cd /Data/Variable/Store/
-rm -rv TimezoneData-2018es/
-cd ..
-cd Compile/l
-cd Compile/
-cd Roots/
-cd Core/
-cd .rollout/
-cd
-poco CMake
-poco CMake done
-ll
-poco Curl
-poco 
-poco Curl done
-poco DoxyGen
-poco DoxyGen done
-pogo core shell
-poco LibZLib
-poco LibZLib done
-poco LibReadline
-poco LibReadline done
-poco M4
-poco M4 done
-poco BC
-ping www.google.com
-poco BC
-poco BC
-poco Ed
-cd /Data/Variable/Archives/
-ll ed*
-bsdtar -t ed-1.14.2.tar.lz 
-unlzma ed-1.14.2.tar.lz 
-unxz ed-1.14.2.tar.lz 
-man bsdtar
-ll
-./configure --help
-ll
-less entities.xml 
-less manual.xml 
-less make
-less Makefile
-less xmlproc.sh 
-which
-which bzip2
-env
-cd /usr/bin/
-ll
-./bzip2
-./bzip2 --help
-./bzip2 --help
-less README 
-ll
-less zcat
-./bzip2 --help
-less README 
-less zcat
-cd docs
-cd doc
-cd ..
-less Doxyfile
-ll
-Less Makefile
-less Makefile
-../configure --help
-../configure --help | less
-which sed
-../configure --help | less
-which sed
-cd /usr/lib/gcc/
-cd x86_64-pc-linux-gnu/
-cd 7.3.0/
-ll
-cd 7.3.0/
-cd /Data/Compile/Sources/gcc-7.3.0/
-cd contrib
-ll
-less download_prerequisites 
-nano
-./configure --help
-which sed
-env
-cd /usr/bin/
-ls -l sed
-ll
-..
-whcih sed
-which sed
-./configure --help
-./configure --help
-less config.status 
-grep docdir config.status 
-ll
-which sed
-./configure --help
-./configure --help
-less config.status 
-grep docdir config.status 
-cd doc
-cd -
-less Makefile 
-cd ..
-cd include/
-less builddefs
-ll
-less builddefs.in 
-cd /usr/lib
-ls -l libreadline.so*
-Less Makefile
-less Makefile
-../configure --help
 ../configure --help | less
 which sed
 ../configure --help | less
@@ -498,3 +346,155 @@ poco OpenSSL
 poco OpenSSL done
 poco Less
 poco Less done
+./configure --help | less
+../configure --help
+../configure --help | less
+poco AutoConf done
+poco AutoMake
+poco AutoMake done
+poco PkgConfig
+poco PkgConfig done
+poco GetText
+poco GetText done
+poco LibElf
+poco LibElf done
+poco LibElf done
+less Makefile
+poco LibUV
+poco LibUV done
+poco OpenSSL
+poco OpenSSL done
+poco Less
+poco Less done
+poco clean
+poco GDBM
+poco GDBM done
+poco ManDB
+poco ManDB done
+poco GZip
+poco GZip done
+poco LibPipeline
+poco LibPipeline done
+find / -name '*.la'
+clear
+find / -name '*.la' | less
+man find
+poco procps-ng
+poco procps-ng done
+cd /Data/Variable/Store/Core/
+cd procps-ng-3.3.15/
+cd Logs/
+cd Compile/
+cd Core/
+cd usr/
+find
+find | less
+cd Roots/
+cd ..
+cd Variable/Store/Tools/TexInfo-6.5/
+ll
+less Bom 
+poco e2fsprogs
+poco e2fsprogs done
+cd
+man losetup
+ls -l /dev/loop*
+gobolook
+poco Less
+poco Less done
+poco clean
+poco GDBM
+poco GDBM done
+poco ManDB
+poco ManDB done
+poco GZip
+poco GZip done
+poco LibPipeline
+poco LibPipeline done
+find / -name '*.la'
+clear
+find / -name '*.la' | less
+man find
+poco procps-ng
+poco procps-ng done
+cd /Data/Variable/Store/Core/
+cd procps-ng-3.3.15/
+cd Logs/
+cd Core/
+cd usr/
+find
+find | less
+cd Roots/
+cd Variable/Store/Tools/TexInfo-6.5/
+less Bom 
+poco e2fsprogs
+poco e2fsprogs done
+man losetup
+ls -l /dev/loop*
+gobolook
+cd /tmp/
+cd gobo/
+cd merge/
+cd .
+cd ro
+cd root/
+cd Data/
+cd Compile/
+cd Archives/
+cd Sources/
+cd Store/
+cd System/Kernel/
+cd Config/
+cd Settings/
+cd Environment/
+cd Cache 
+less Cache 
+cd ll
+cd Index/
+cd bin
+cd ..
+cd ../../usr/
+cd libexec/
+ll
+cd
+cd bin
+cd ..
+cd ../../usr/
+cd libexec/
+cd
+autoconf
+find . -name '*.log'
+autoreconf 
+man autoconf
+autoconf -v
+less configure.ac
+ll
+ll | less
+./configure --help
+ll
+./configure --help
+ll
+grep usrsbin *
+less configure
+mandb
+grep usrsbin *
+less configure
+mandb
+cd /Data/Compile/Build/Core/texinfo-6.5/Changes/
+cd usr/
+ldd
+cd bin/
+ldd info
+cd ..
+cd bib
+cd lib/
+cd /usr/lib
+ll
+ls -l libnc*
+ll
+less INSTALL
+ll
+less Makefile-libbz2_so 
+grep rmt *
+../configure --help
+./configure --help

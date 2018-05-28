@@ -1,0 +1,19 @@
+#!/bin/bash
+
+Title="Texinfo"
+Home=(https://www.gnu.org/software/texinfo/)
+Name=texinfo
+Version=6.5
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr   \
+        --disable-nls   \
+        --disable-static
+
+    make
+    make install
+    make TEXMF=/usr/share/texmf install-tex
+}

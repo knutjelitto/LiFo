@@ -2,9 +2,9 @@
 
 Title="Python3"
 Home=(https://www.python.org/)
-Name=Python3
+Name=python3
 Version=3.6.5
-BuildDeps=(LibExpat LibFfi)
+BuildDeps=(expat libffi)
 Supplies=(https://www.python.org/ftp/python/$Version/Python-$Version.tar.xz)
 
 Build() 

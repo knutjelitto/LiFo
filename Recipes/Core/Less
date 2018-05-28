@@ -1,16 +1,14 @@
 #!/bin/bash
 
-Title="6.63. Less-530"
+Title="Less"
 Home=(http://www.greenwoodsoftware.com/less/ https://www.gnu.org/software/less/)
-Name=Less
+Name=less
 Version=530
-Supplies=(https://ftpmirror.gnu.org/gnu/less/less-$Version.tar.gz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
 
 Build ()
 {
     ./configure --prefix=/usr --sysconfdir=/etc
-
-    bash -l
 
     make
     make install

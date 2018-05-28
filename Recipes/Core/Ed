@@ -1,11 +1,10 @@
-#!/bin/bash
+#!/bin/bash (source-only)
 
-Title="Ed"
+Title="GNU ed"
 Home=(https://www.gnu.org/software/ed/)
-Name=Ed
+Name=ed
 Version=1.14.2
-BuildDeps=()
-Supplies=(https://ftpmirror.gnu.org/gnu/ed/ed-$Version.tar.lz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.lz)
 
 Build()
 {
@@ -14,6 +13,5 @@ Build()
         --bindir=/bin
 
     make
-    #make check. 
     make install
 }

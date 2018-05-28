@@ -1,0 +1,14 @@
+#!/bin/bash
+
+Title="Check"
+Home=(https://libcheck.github.io/check/)
+Name=check
+Version=0.12.0
+Supplies=(https://github.com/libcheck/check/releases/download/$Version/check-$Version.tar.gz)
+
+Build ()
+{
+    ./configure --prefix=/usr
+    make
+    make install
+}

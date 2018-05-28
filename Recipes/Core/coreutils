@@ -1,0 +1,22 @@
+#!/bin/bash
+
+Title="GNU core utilies"
+Home=(https://www.gnu.org/software/coreutils/)
+Name=coreutils
+Version=8.29
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr   \
+        --disable-nls   \
+        --libexecdir=/usr/lib \
+        --enable-no-install-program=kill,uptime
+
+    make
+    make install
+
+    mv -v /usr/share/man/man1/chroot.1 /usr/share/man/man8/chroot.8
+    sed -i s/\"1\"/\"8\"/1 /usr/share/man/man8/chroot.8
+}

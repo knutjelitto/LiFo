@@ -1,5 +1,15 @@
 #!/bin/bash
 
+for i in {8..15}; do
+    if [ -e /dev/loop$i ]; then
+        continue
+    fi
+    mknod /dev/loop$i b 7 $i
+    chown --reference=/dev/loop0 /dev/loop$i
+    chmod --reference=/dev/loop0 /dev/loop$i
+done
+
+
 mkdir --verbose --parents /tmp/gobo/{iso,root,merge,work,sq1,sq2,sq3,sqa,sqb,sqc,sqd,sqe,sqf,sqg,sqh,sqi,sqj}
 mkdir --verbose --parents /Pogo/gobo/{merge,work}
 

@@ -2,9 +2,9 @@
 
 Title="BZip2"
 Home=(http://www.bzip.org/)
-Name=BZip2
+Name=bzip2
 Version=1.0.6
-Supplies=(http://www.bzip.org/$Version/bzip2-$Version.tar.gz)
+Supplies=(http://www.bzip.org/$Version/$Name-$Version.tar.gz)
 
 Build()
 {
@@ -24,7 +24,6 @@ Build()
 
     cp -vf bzip2-shared /usr/bin/bzip2
     cp -av libbz2.so* /usr/lib
-    rm -vf /usr/bin/{bunzip2,bzcat}
-    ln -vsf bzip2 /bin/bunzip2
-    ln -vsf bzip2 /bin/bzcat
+    ln -vsf bzip2 /usr/bin/bunzip2
+    ln -vsf bzip2 /usr/bin/bzcat
 }

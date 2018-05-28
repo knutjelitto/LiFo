@@ -1,10 +1,10 @@
 #!/bin/bash
 
-Title="Libtool"
+Title="GNU Libtool"
 Home=(https://www.gnu.org/software/libtool/)
-Name=Libtool
+Name=libtool
 Version=2.4.6
-Supplies=(https://ftpmirror.gnu.org/gnu/libtool/libtool-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build()
 {

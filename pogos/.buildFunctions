@@ -18,6 +18,11 @@ Build_Make () # collection recipe-token
         RemoveDir $marks
     fi
 
+    if [[ "break" == "${3-}" ]]; then
+        _build_Break
+        return
+    fi
+
     if [[ ! -f $buildMarker || "$Recipe_File" -nt "$buildMarker" ]]; then
         RemoveFile $buildMarker $harvestMarker $rolloutMarker
         _build_Build
@@ -64,6 +69,20 @@ Build_Shell () # collection recipe
     _build_ExecInChroot
 }
 
+Build_Break ()
+{
+    OnlyInChroot
+
+    _build_Enter "$@"
+    _build_EnsureBuild
+
+    Header "BREAK $Current_Collection / $Recipe_Title"
+
+    Pushd "$Box_Build"
+    _build_EnterTop && bash -l
+    Popd
+}
+
 Build_Compile ()
 {
     OnlyInChroot
@@ -75,6 +94,15 @@ Build_Compile ()
 
     _build_RecipePrepare
     _build_RecipeBuild
+}
+
+_build_Break ()
+{
+    _build_CleanBuild
+    _build_EnsureBuild
+    _build_ProvideSupplies
+    _build_MakeRootFs
+    _build_ExecInChroot "pogo break $Current_Collection $Recipe_Token"
 }
 
 _build_Build ()
@@ -201,7 +229,9 @@ _build_wget ()
     already=$(basename $supply)
     [[ -f $PogoArchives/$already ]] && return 0
     if ! wget ${supply} --continue --directory-prefix=$PogoDownloads; then
-        Fatal "download of '$supply' failed"
+        if ! wget ${supply} --no-check-certificate --continue --directory-prefix=$PogoDownloads; then
+            Fatal "download of '$supply' failed"
+        fi
     fi
     mv ${verbose} --force $PogoDownloads/$already $PogoArchives/$already
 }
@@ -729,6 +759,7 @@ _harvest_Bom () # bomFile topDir
         $6 ~ /^usr\/sbin$/ { next; }
         $6 ~ /^usr\/lib$/ { next; }
         $6 ~ /^usr\/libexec$/ { next; }
+        $6 ~ /^usr\/lib\/charset.alias$/ { next; }
         $6 ~ /^usr\/lib\/pkgconfig$/ { next; }
         $6 ~ /^usr\/include$/ { next; }
         $6 ~ /^usr\/share$/ { next; }
@@ -772,6 +803,10 @@ _build_Harvest ()
     declare -p topDir
 
     [[ -d "$topDir" ]] || InfoExit "nothing to harvest"
+
+    if [[ -d $topDir/usr/lib ]]; then
+        find $topDir/usr/lib -type f -name '*.la' -delete
+    fi
     
     _harvest_Bom "$bomFile" "$topDir"
     _harvest_Validate "$bomFile"

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 Title="6.42. Intltool-0.51.0"
-Home=(https://www.gnu.org/software/inetutils/)
-Name=IntlTool
+Home=(https://launchpad.net/intltool)
+Name=intltool
 Version=0.51.0
-BuildDeps=(Perl)
-Supplies=(http://launchpad.net/intltool/trunk/$Version/+download/intltool-$Version.tar.gz)
+BuildDeps=(perl)
+Supplies=(http://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz)
 
 Build ()
 {
@@ -16,5 +16,5 @@ Build ()
 
     make
     make install
-    install -v -Dm644 doc/I18N-HOWTO /usr/share/doc/intltool-0.51.0/I18N-HOWTO
+    install -v -Dm644 doc/I18N-HOWTO /usr/share/doc/intltool/I18N-HOWTO
 }
