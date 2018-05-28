@@ -1,8 +1,4 @@
-#!/bin/bash -eu
-set -euo pipefail
-IFS=$'\n\t'
-
-Import PogoConfig
-NeverInChroot
+#!/bin/bash -euo pipefail
+EnterWorldOfPogo Boots
 
 Build_Harvest Boots "$@"

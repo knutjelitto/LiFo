@@ -1,6 +1,5 @@
 #!/bin/bash -eu
-
-Import PogoConfig
+EnterWorldOfPogo Core
 
 action="${1:-undefined}"
 shift || true

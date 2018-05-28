@@ -1,0 +1,23 @@
+#!/bin/bash
+
+Title="Lib-MPC"
+Home=(http://www.multiprecision.org/mpc/)
+Name=LibMPC
+Version=1.1.0
+BuildDeps=()
+RunDeps=()
+Supplies=(https://ftpmirror.gnu.org/gnu/mpc/mpc-$Version.tar.gz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --disable-static
+
+    make
+    make html
+    #make check
+    make install
+    make install-html
+}

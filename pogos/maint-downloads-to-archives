@@ -1,6 +1,5 @@
-#!/bin/bash -e
-
-Import PogoConfig
+#!/bin/bash -eu
+EnterWorldOfPogo
 
 for download in $PogoDownloads/*; do
     case $download in

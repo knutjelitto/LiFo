@@ -1,5 +1,4 @@
 #!/bin/bash -eu
-
-Import PogoConfig
+EnterWorldOfPogo Core
 
 Build_Shell Core

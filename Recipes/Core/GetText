@@ -1,0 +1,19 @@
+#!/bin/bash
+
+Title="GetText"
+Home=(https://www.gnu.org/software/gettext/)
+Name=GetText
+Version=0.19.8.1
+Supplies=(https://ftpmirror.gnu.org/gnu/gettext/gettext-$Version.tar.xz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --disable-static
+
+    make
+    make install
+    chmod -v 0755 /usr/lib/preloadable_libintl.so
+}

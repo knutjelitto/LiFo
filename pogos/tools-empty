@@ -1,6 +1,5 @@
 #!/bin/bash -eu
-
-Import PogoConfig
+EnterWorldOfPogo Tools
 NeverInChroot
 
 RemoveDir $Tools_Root

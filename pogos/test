@@ -1,6 +1,5 @@
 #!/bin/bash -e
-
-Import PogoConfig
+EnterWorldOfPogo Boots
 
 EnsurePogoEnvironment
 

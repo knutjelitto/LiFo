@@ -1,0 +1,14 @@
+#!/bin/bash
+
+Title="AutoConf"
+Home=(https://www.gnu.org/software/autoconf/)
+Name=AutoConf
+Version=2.69
+Supplies=(https://ftpmirror.gnu.org/gnu/autoconf/autoconf-$Version.tar.xz)
+
+Build()
+{
+    ./configure --prefix=/usr
+    make
+    make install
+}

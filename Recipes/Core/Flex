@@ -2,7 +2,7 @@
 
 Title="Flex"
 Home=(https://github.com/westes/flex)
-Name=Flex   
+Name=Flex
 Version=2.6.4
 Supplies=(https://github.com/westes/flex/releases/download/v$Version/flex-$Version.tar.gz)
 
@@ -16,7 +16,6 @@ Build()
         --disable-static
 
     make
-    #make check
     make install
-    ln -vsf flex /usr/bin/lex
+    ln -vfs flex /usr/bin/lex
 }

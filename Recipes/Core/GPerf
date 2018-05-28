@@ -1,0 +1,17 @@
+#!/bin/bash
+
+Title="GPerf"
+Home=(https://www.gnu.org/software/gperf/ http://savannah.gnu.org/projects/gperf/)
+Name=GPerf
+Version=3.1
+ToolDeps=()
+BuildDeps=()
+Supplies=(https://ftpmirror.gnu.org/gnu/gperf/gperf-$Version.tar.gz)
+
+Build()
+{
+    ./configure --prefix=/usr --disable-nls
+
+    make
+    make install
+}

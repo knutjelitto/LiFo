@@ -12,7 +12,6 @@ Build()
         --prefix=/usr \
         --disable-nls
 
-    bash -l
     make
     #make check
     make install

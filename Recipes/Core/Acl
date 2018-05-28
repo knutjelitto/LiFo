@@ -14,12 +14,17 @@ Build ()
 
     sed -i -e "/TABS-1;/a if (x > (TABS-1)) x = (TABS-1);" libacl/__acl_to_any_text.c
 
-    ./configure --prefix=/usr    \
-                --disable-nls    \
-                --disable-static \
-                --libexecdir=/usr/lib
+    ./configure \
+        --prefix=/usr           \
+        --disable-static        \
+        --libexecdir=/usr/lib
+    
     make
-
     make install install-dev install-lib
     chmod -v 755 /usr/lib/libacl.so
+}
+
+Cleanup ()
+{
+    RemoveDir usr/share/locale
 }

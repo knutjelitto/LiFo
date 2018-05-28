@@ -20,8 +20,8 @@ Build ()
     ln -vsf flex /usr/bin/lex
 }
 
-Trim ()
+Cleanup ()
 {
     # don't know why
-    rm -vf /usr/lib/libstdc++.so.6
+    rm -vf usr/lib/libstdc++.so.6
 }

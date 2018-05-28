@@ -3,19 +3,6 @@
 [[ -z ${_pogoFunctionsIncluded:-} ]] || exit
 _pogoFunctionsIncluded=true
 
-Capitalize ()
-{
-    local old_IFS=$IFS
-    local part
-    local captitalized
-    IFS='-'
-    for part in ${1,,}; do
-        captitalized=$captitalized${part^}
-    done
-    IFS=$old_IFS
-    echo $captitalized
-}
-
 Pushd ()
 {
     pushd $1 >/dev/null
@@ -34,6 +21,30 @@ MakeDir ()
 RemoveDir ()
 {
     rm $verbose --force --recursive "$@"
+}
+
+RemoveFile ()
+{
+    local file
+    for file in "$@"; do
+        [[ -f $file || -h $file ]] || continue
+        rm $verbose --force "$file"
+    done
+}
+
+LinkFile ()
+{
+    local link="$1"
+    local target="$2"
+    ln $verbose --symlink --force --no-target-directory --relative "$target" "$link"
+}
+
+Touch ()
+{
+    local path="$1"
+
+    MakeDir "$(dirname $path)"
+    touch "$path"
 }
 
 Header ()

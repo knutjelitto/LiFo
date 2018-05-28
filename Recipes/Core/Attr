@@ -15,12 +15,16 @@ Build ()
     sed -i 's:{(:\\{(:' test/run
 
     ./configure \
-        --prefix=/usr       \
-        --disable-nls       \
-        --disable-static
+        --prefix=/usr           \
+        --disable-static        \
+        --libexecdir=/usr/lib
      
     make
-    #make -j1 tests root-tests
     make install install-dev install-lib
     chmod -v 755 /usr/lib/libattr.so
+}
+
+Cleanup ()
+{
+    RemoveDir usr/share/locale
 }

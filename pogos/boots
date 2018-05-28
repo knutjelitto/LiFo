@@ -1,6 +1,5 @@
 #!/bin/bash -ue
-
-Import PogoConfig
+EnterWorldOfPogo Boots
 
 action="${1:-undefined}"
 shift || true

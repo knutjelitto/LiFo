@@ -1,0 +1,23 @@
+#!/bin/bash
+
+Title="Bash"
+Home=(https://www.gnu.org/software/bash/ https://tiswww.case.edu/php/chet/bash/bashtop.html)
+Name=Bash
+Version=4.4.18
+ToolDeps=()
+BuildDeps=(LibReadline)
+Supplies=(https://ftpmirror.gnu.org/gnu/bash/bash-$Version.tar.gz)
+
+Build()
+{
+    ./configure \
+        --prefix=/usr               \
+        --disable-nls               \
+        --without-bash-malloc       \
+        --with-installed-readline
+    
+    make
+    make install
+    ln -vfsr /usr/bin/bash /bin/bash
+    ln -vfs bash /bin/sh
+}

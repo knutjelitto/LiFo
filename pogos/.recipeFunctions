@@ -6,9 +6,9 @@ _recipeFunctionsIncluded=true
 RecipeRequiredVars=(Title Name Version Supplies)
 RecipeOptionalVars=(BuildIn)
 RecipeRequiredFuncs=()
-RecipeOptionalFuncs=(Prepare Build Trim)
+RecipeOptionalFuncs=(Prepare Build Cleanup)
 
-declare Recipe_Collection Recipe_Token
+declare Recipe_Collection Recipe_Token Recipe_File Recipe_Tag
 
 _recipeFindInCollection ()
 {
@@ -16,20 +16,20 @@ _recipeFindInCollection ()
 
     local name="$1"
 
-    file="$Recipes_Home/$Recipe_Collection/$name"
-    if [[ -f "$file" ]]; then
+    Recipe_File="$Recipes_Home/$Recipe_Collection/$name"
+    if [[ -f "$Recipe_File" ]]; then
         Recipe_Token="$Recipe_Collection/$name"
         return 0
     else
-        for file in "$Recipes_Home/$Recipe_Collection/$name"-*; do
-            if [[ -f $file ]]; then
-                Recipe_Token="$Recipe_Collection/$(basename $file)"
+        for Recipe_File in "$Recipes_Home/$Recipe_Collection/$name"-*; do
+            if [[ -f "$Recipe_File" ]]; then
+                Recipe_Token="$Recipe_Collection/$(basename $Recipe_File)"
                 return 0
             fi
         done
     fi
-    file="$Recipes_Home/$Recipe_Collection/$name/Recipe"
-    if [[ -f $file ]]; then
+    Recipe_File="$Recipes_Home/$Recipe_Collection/$name/Recipe"
+    if [[ -f "$Recipe_File" ]]; then
         Recipe_Token="$Recipe_Collection/$name/Recipe"
         return 0
     fi
@@ -39,7 +39,7 @@ _recipeFindInCollection ()
 
 _recipeFind ()
 {
-    # sets global Recipe_Collection / Recipe_Token
+    # sets global Recipe_Collection / Recipe_Token / Recipe_File
 
     Recipe_Collection="$(dirname $Recipe_Token)"
     local name="$(basename $Recipe_Token)"
@@ -75,8 +75,8 @@ _recipeSource ()
 
     _recipeUnset
     _recipeFind
-    
-    source "$Recipes_Home/$Recipe_Token"
+
+    source "$Recipe_File"
 
     local savedRecipe_Collection="$Recipe_Collection"
     local savedTitle="$Title"
@@ -85,10 +85,11 @@ _recipeSource ()
         unset Redirect
         _recipeUnset
         _recipeFind
-        source "$Recipes_Home/$Recipe_Token"
+        source "$Recipe_File"
     done
     Recipe_Collection="$savedRecipe_Collection"
     Title="$savedTitle"
+    Recipe_Tag=$Name-$Version
 
     local variable
     for variable in "${RecipeRequiredVars[@]}"; do
@@ -115,28 +116,27 @@ _recipeSource ()
 
     declare -p Recipe_Collection | sed 's/ -- / -g /'
     declare -p Recipe_Token | sed 's/ -- / -g /'
+    declare -p Recipe_File | sed 's/ -- / -g /'
+    declare -p Recipe_Tag | sed 's/ -- / -g /'
     declare -p Title | sed 's/-- Title=/-g Recipe_Title=/'
     declare -p Name | sed 's/-- Name=/-g Recipe_Name=/'
     declare -p Version | sed 's/-- Version=/-g Recipe_Version=/'
     declare -p Supplies | sed 's/-a Supplies=/-ga Recipe_Supplies=/'
     declare -p BuildIn | sed 's/-- BuildIn=/-g Recipe_BuildIn=/'
-    echo -n 'Recipe_' ; declare -pf Prepare
-    echo -n 'Recipe_' ; declare -pf Build
-    echo -n 'Recipe_' ; declare -pf Trim
 }
 
-RecipeDump ()
+Recipe_Dump ()
 {
     declare -p Recipe_Collection
     declare -p Recipe_Token
+    declare -p Recipe_File
+    declare -p Recipe_Tag
+
     declare -p Recipe_Title
     declare -p Recipe_Name
     declare -p Recipe_Version
     declare -p Recipe_Supplies
     declare -p Recipe_BuildIn
-    declare -pf Recipe_Prepare
-    declare -pf Recipe_Build
-    declare -pf Recipe_Trim
 }
 
 RecipeSource ()
@@ -145,3 +145,15 @@ RecipeSource ()
     content=$(_recipeSource ${1:-})
     eval "$content"
 }
+
+Recipe_ExecIfExists ()
+(   # execute in subshell
+
+    local function="$1"
+
+    source "$Recipes_Home/$Recipe_Token"
+
+    if [[ $(type -t "$function") == "function" ]]; then
+        $function
+    fi
+)

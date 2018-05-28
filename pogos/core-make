@@ -1,4 +1,4 @@
 #!/bin/bash -eu
 EnterWorldOfPogo Core
 
-Build_Harvest Core "$@"
+Build_Make Core "$@"

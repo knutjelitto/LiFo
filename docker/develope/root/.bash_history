@@ -1,356 +1,3 @@
-cd /Data/Compile/Build/Core/
-pogo core harvest LibIcu
-cd /Data/Compile/Sources/icu4c-60_2-src/
-less readme.html 
-cd source/
-ll
-less Makefile.in 
-cd
-pogo core build LibIcu
-pogo core build LibUv
-pogo core harvest LibUv
-pogo core build STrace
-pogo core harvest STrace
-pogo core rollout STrace
-pogo core empty
-mknod -m 0660 /dev/loop10 b 7 10
-mknod -m 0660 /dev/loop11 b 7 11
-mknod -m 0660 /dev/loop12 b 7 12
-mknod -m 0660 /dev/loop13 b 7 13
-mknod -m 0660 /dev/loop14 b 7 14
-mknod -m 0660 /dev/loop15 b 7 15
-mknod -m 0660 /dev/loop16 b 7 16
-ll l*
-gobolook 
-cd /tmp/gobo/root/
-cd var
-cd cache/
-cd ldconfig/
-cd lib/
-cd root 
-cd usr/
-cd man
-cd man1
-ll | less
-mount
-rc
-pogo core build LibIcu
-ping www.google.com
-ping www.google.com
-cd /Data/Compile/Build/Core/
-pogo core build LibIcu
-less
-less INSTALL 
-./configure --help
-mount
-rc
-ping www.google.com
-ping www.google.com
-cd /Data/Compile/Build/Core/
-pogo core harvest LibIcu
-cd /Data/Compile/Sources/icu4c-60_2-src/
-less readme.html 
-cd source/
-less Makefile.in 
-pogo core build LibIcu
-pogo core build STrace
-pogo core harvest STrace
-pogo core rollout STrace
-pogo core empty
-strace
-amn strace
-strace pogo core build LibUv
-strace pogo core harvest LibUv
-strace -f pogo core harvest LibUv
-strace -f pogo core build LibUv
-strace -f -e trace=file -pogo core build LibUv
-man
-strace -f -e trace=file pogo core build LibUv
-man strace
-strace -f -e trace=file pogo core build LibUv | grep unlink
-strace -f -e trace=file pogo core build LibUv &| grep unlink
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep unlink
-pogo core build LibUv | grep libncursesw
-pogo core build LibUv 2>&1 | grep libncursesw
-pogo core build LibUv | less
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep libncursesw
-man grep
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep -B 10 libncursesw
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep -B 10 -e 'unlink.*libncursesw'
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep -B 200 -e 'unlink.*libncursesw' | less
-find /Data/Compile/Build/Core/
-find /Data/Compile/Build/Core | grep libn
-find /Data/Compile/Build/Core
-find /Data/Compile/Build/Core -name "libn*"
-find /Data/Compile/Build/Core -name "libn*" -ls
-cd /Data/Variable/Store/Core/LibUv-1.20.3/
-less Bom 
-cd Logs/
-cd .
-tar tvf Files.tar.xz 
-cd Compile/Build/Core/LibUv-1.20.3/
-cd Changes/
-cd Data/Compile/Sources/libuv-v1.20.3/
-less Makefile
-cd /Data/Compile/Roots/Tools/
-find . -type L
-find . -type l
-find . -type l -name 'libn*'
-find -l . -type l -name 'libn*'
-find -L . -type l -name 'libn*'
-ll libss*
-find -L . -type l -name 'lib*'
-find -L . -type l -name 'lib*' -ls
-find -L . -type l -ls
-find -L . -type l -ls | grep tools
-find . -name "libn*"
-find . -name "libn*" -ls
-cd /lib
-cd -
-cd lib
-cd ..
-cd usr/lib
-ln -svf ../../lib/libncursesw.so.6 libncursesw.so.6 
-ll
-ll libn*
-cd
-pogo tools build-upto 615
-pogo tools build-upto 616
-pogo tools build-all
-pogo core build LibUv
-pogo core harvest LibUv
-configure --help
-./configure --help
-./configure --help | less
-make doc
-make man
-make man
-tree
-cd usr/bin/
-ll
-cd /usr/bin
-ll tree
-ll
-cd /usr/bin
-ll tree
-ll
-export LANG=en_US.UTF-8
-locale
-man locale
-locale -a
-locale -a | less
-export LANG=en_US.utf8
-tree
-ll
-./configure --help
-./configure --help
-cd doc
-ll
-cd ..
-find .
-find . -name '*.1'
-find . -name '*.3'
-./configure --help
-cd /usr/share/info/
-ll
-info mpc
-strace
-amn strace
-strace pogo core build LibUv
-strace pogo core harvest LibUv
-strace -f pogo core harvest LibUv
-strace -f pogo core build LibUv
-strace -f -e trace=file -pogo core build LibUv
-man
-strace -f -e trace=file pogo core build LibUv
-man strace
-strace -f -e trace=file pogo core build LibUv | grep unlink
-strace -f -e trace=file pogo core build LibUv &| grep unlink
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep unlink
-pogo core build LibUv | grep libncursesw
-pogo core build LibUv 2>&1 | grep libncursesw
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep libncursesw
-man grep
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep -B 10 libncursesw
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep -B 10 -e 'unlink.*libncursesw'
-strace -f -e trace=file pogo core build LibUv 2>&1 | grep -B 200 -e 'unlink.*libncursesw' | less
-find /Data/Compile/Build/Core/
-find /Data/Compile/Build/Core | grep libn
-find /Data/Compile/Build/Core
-find /Data/Compile/Build/Core -name "libn*"
-find /Data/Compile/Build/Core -name "libn*" -ls
-cd /Data/Variable/Store/Core/LibUv-1.20.3/
-less Bom 
-cd Logs/
-cd .
-tar tvf Files.tar.xz 
-cd Compile/Build/Core/LibUv-1.20.3/
-cd Changes/
-cd Data/Compile/Sources/libuv-v1.20.3/
-less Makefile
-cd /Data/Compile/Roots/Tools/
-find . -type L
-find . -type l
-find . -type l -name 'libn*'
-find -l . -type l -name 'libn*'
-find -L . -type l -name 'libn*'
-ll libss*
-find -L . -type l -name 'lib*'
-find -L . -type l -name 'lib*' -ls
-find -L . -type l -ls
-find -L . -type l -ls | grep tools
-find . -name "libn*"
-find . -name "libn*" -ls
-cd /lib
-cd lib
-cd usr/lib
-ln -svf ../../lib/libncursesw.so.6 libncursesw.so.6 
-ll libn*
-cd
-pogo tools build-upto 615
-pogo tools build-upto 616
-pogo core build LibExpat
-pogo core harvest LibExpat
-pogo tools build 623
-pogo tools harvest 623
-pogo tools rollout 623
-pogo tools build-all
-clear
-pogo core build
-cd /Data/Compile/Sources/libuv-v1.20.3/
-cd docs
-cd code
-cd tty
-less Makefile.am 
-less ChangeLog 
-pogo core build LibUv | less
-less README.md 
-pogo core build LibUv
-pogo core harvest LibUv
-cd /Data/Compile/Roots/
-cd usr/
-cd include/
-man touch
-pogo core rollout LibUv
-cat /Data/Variable/Store/Tools/LibFfi-3.2.1/Bom 
-help test
-pogo core build LibFfi
-pogo core harvest LibFfi
-pogo core rollout LibFfi
-LANG=en_US.UTF-8
-pogo core build Tree
-pogo core harvest Tree
-tree
-pogo core build Which
-pogo core harvest Which
-pogo core rollout Which
-pogo core rollout Tree
-pogo core build M4
-pogo core harvest M4
-pogo core rollout M4
-man strings
-cd -
-cd .rollout/
-strings M4-1.4.18 
-strings -f M4-1.4.18 
-cd Core/
-cd usr/bin/
-ll
-strings -f m4
-strings -f m4 | grep 64
-strings -f m4 | less
-strings -f m4 | less 
-pogo core build ManPages
-pogo core harvest ManPages
-pogo core rollout ManPages
-cd ..
-find
-find | less
-pogo core build LinuxHeaders
-pogo core harvest LinuxHeaders
-pogo core rollout LinuxHeaders
-du
-du -h
-pocore LibLZO
-pocore LibLZO done
-pocore LibArchive
-pocore LibArchive done
-pocore LibGMP
-pocore LibGMP done
-rm /Data/Variable/Archives/mpfr-4.0.1.tar.xz 
-pocore LibMPFR
-pocore LibMPFR done
-pocore LibMPC
-pocore LibMPC done
-pogo core shell
-find /Data/Variable/Store/Tools
-find /Data/Variable/Store/Tools -name Bom
-find /Data/Variable/Store/Tools -name Bom -exec grep lib64 {} \+
-find /Data/Variable/Store/Tools -name Bom
-find /Data/Variable/Store/Tools -name Bom -exec grep lib64 {} \+
-cat /Data/Variable/Store/Tools/GLibc-2.27/Bom 
-cat /Data/Variable/Store/Tools/GLibc-2.27/Bom  | less
-cat /Data/Variable/Store/Tools/GLibc-2.27/Bom  | grep ld-
-cd /Data/Compile/Roots/Tools/
-find
-find . type f
-find . type f | wc
-find . type f | wc -l
-find . type f -exec strings -f {} \+
-find . type f -exec strings -f {} \+ | grep lib64
-find . type f -exec strings -f {} \+ | grep '/lib64'
-find . type f -exec strings -f {} \+ | grep '/lib64/ld'
-find . type f -exec strings -f {} \+ | grep '/lib64/ld' | less
-find . type f -exec strings -f {} \+ 2>&1 | grep '/lib64/ld' | less
-rm /Data/Variable/Archives/glibc-2.27.tar.xz 
-ll
-cd ..
-cd
-pocore G
-pocore GLibc
-ping www.google.com
-ping www.google.com
-./configure --help
-grep misc *
-../configure --help
-./configure --help
-../configure --help
-find
-find . type f
-find . type f | wc
-find . type f | wc -l
-find . type f -exec strings -f {} \+
-find . type f -exec strings -f {} \+ | grep lib64
-find . type f -exec strings -f {} \+ | grep '/lib64'
-find . type f -exec strings -f {} \+ | grep '/lib64/ld'
-find . type f -exec strings -f {} \+ | grep '/lib64/ld' | less
-find . type f -exec strings -f {} \+ 2>&1 | grep '/lib64/ld' | less
-rm /Data/Variable/Archives/glibc-2.27.tar.xz 
-cd ..
-pocore G
-ping www.google.com
-pocore GLibc
-less glibc-2.27-fhs-1.patch 
-diff /Data/Variable/Store/Tools/File-5.32/Bom  /Data/Variable/Store/Core/File-5.33/Bom 
-pocore File
-pocore File done
-pocore LibArchive
-mtree
-pocore LibArchive done
-pocore LibExpat
-pocore LibExpat done
-pocore LibFFI
-pocore LibFFI done
-pocore LibGMP
-pocore LibGMP done
-pocore LibICU
-pocore LibICU done
-pocore LibLZO
-pocore LibLZO done
-pocore LibMPFR
-pocore LibMPFR done
-pocore LibMPC
-pocore LibMPC done
 pocore LibUV
 pocore LibUV done
 cd /Data/Variable/Archives/
@@ -498,3 +145,356 @@ cd include/
 less builddefs
 ll
 less builddefs.in 
+cd /usr/lib
+ls -l libreadline.so*
+Less Makefile
+less Makefile
+../configure --help
+../configure --help | less
+which sed
+../configure --help | less
+which sed
+cd /usr/lib/gcc/
+cd x86_64-pc-linux-gnu/
+cd 7.3.0/
+cd 7.3.0/
+cd /Data/Compile/Sources/gcc-7.3.0/
+cd contrib
+less download_prerequisites 
+nano
+./configure --help
+which sed
+env
+cd /usr/bin/
+ls -l sed
+..
+whcih sed
+which sed
+./configure --help
+./configure --help
+less config.status 
+grep docdir config.status 
+which sed
+./configure --help
+./configure --help
+less config.status 
+grep docdir config.status 
+cd doc
+cd -
+less Makefile 
+cd include/
+less builddefs
+less builddefs.in 
+ping www.google.com
+pogo core shell
+cd /Data/Variable/Store/Core/
+ls -la
+poco LibReadli
+rm -rv .rollout/
+cd /Data/Compile/Build/Core/LibCap-2.25/Changes/
+find
+find -ls
+cd /Data/Compile/Roots/Tools/usr/lib
+ll libre*
+cd lib
+ls -l libre*
+cd Core/
+find . -name '*.old'
+cd usr/lib/
+rm *.old
+cd Variable/Store/
+poco LibReadline
+poco LibReeadline done
+cd Compile/Roots/Core/
+poco LibReadline done
+less /Data/Variable/Store/Core/LibReadline-7.0/Bom 
+find ../..
+find ../.. -name '*.old'
+poco LibCap
+poco LibCap done
+man test
+help test
+cd .rl
+cd .rollout/
+ll
+rm *
+cd..
+cd ..
+poco loop
+cd ..
+poco loop
+which
+loacale -a
+locale -a
+locale -a | less
+man locale
+env
+export LC_ALL=en_US.utf8
+locale -v -a | less
+tree
+export LC_ALL=en_US.utf8
+locale -v -a | less
+env
+clear
+LC_ALL=en_US.utf8
+tree
+man tree
+locale
+locale -a
+locale -a | grep utf8
+locale -a | grep utf8 | less
+env
+tree
+locale
+env
+locale
+locale
+locale -a
+locale -a | grep utf8
+locale -a | grep utf8 | less
+env
+tree
+locale
+env
+locale
+less Makefile 
+less Make.Rules 
+cd libcap/
+cd include/
+cd uapi/
+cd linux/
+less capability.h 
+cd ..
+ll
+make
+ll
+rm *
+cd..
+cd ..
+poco loop
+poco LibICU
+poco LibISL
+poco LibGMP
+poco LibGMP done
+pogo core empty
+help if
+poco shell
+poco Tree
+poco Tree done
+poco Which
+poco Which done
+poco Ed
+poco Ed done
+poco Nano
+poco Nano done
+poco ManPages
+poco ManPages done
+poco LibReadline
+poco LibReadline done
+poco NCurses
+poco NCurses done
+poco BC
+poco BC done
+poco M4
+poco M4 done
+poco Sed
+poco Sed done
+poco Xz
+poco XzUtils
+poco XzUtils done
+poco LibZLib
+poco LibZLib done
+poco GZip
+poco BZip
+poco GZip done
+poco BZip done
+poco BZip2 done
+poco LibLZO
+poco LibLZO done
+clean
+clear
+poco LibCap
+locale
+locale -a | less
+less /etc/locale.gen 
+locale -a
+locale
+tree
+locale -a
+locale
+env
+cd
+cd /
+tree
+env
+tree
+env
+cd /bin
+ll
+ll | less
+ll
+cd usr/bin/
+cd ..
+cd bin
+ll | less
+env
+cd /bin
+ll | less
+cd usr/bin/
+cd bin
+ll | less
+cd debian/
+cd source/
+less format 
+less rules 
+cd ..
+less etc-protocols 
+ll
+less etc-rpc 
+less etc-services 
+ll
+less Makefile 
+less protocols.gawk 
+less port-numbers.dist 
+less Make.Rules 
+cd libcap/
+cd include/
+cd uapi/
+cd linux/
+less capability.h 
+cd ..
+make
+rm *
+cd..
+cd ..
+poco loop
+poco LibICU
+pogo core empty
+help if
+poco NCurses
+poco NCurses done
+poco BC
+poco BC done
+poco M4
+poco M4 done
+poco Sed
+poco Sed done
+poco Xz
+poco XzUtils
+poco XzUtils done
+poco GZip
+poco BZip
+poco GZip done
+poco BZip done
+poco BZip2 done
+clean
+poco LibCap
+locale
+locale -a | less
+less /etc/locale.gen 
+locale -a
+locale
+tree
+man env
+clear
+pogo boots shell
+poco Which new
+poco Which done
+poco Which
+
+poco LibZLib
+poco LibZLib done
+poco LibLZO
+poco LibLZO new
+poco LibLZO done
+poco Ed
+poco Ed done
+man rnano
+man nano
+poco Nano
+poco Nano done
+man magic
+poco ManPages doen
+poco ManPages done
+poco ManPages
+pogo tools shell
+pogo tools build-all
+poco Tree
+poco Tree done
+poco clean
+man bash
+manb ln
+man ln
+poco LibReadline
+poco LibReadline done
+poco Bash
+poco Bash done
+poco shell
+poco Bison
+poco Bison done
+poco Flex
+poco Flex done
+poco Grep
+poco Grep done
+cd /Data/Compile/Sources/iana-etc-2.30/
+ll
+less README 
+date
+man date
+cd
+poco IanaEtc new
+poco IanaEtc
+poco IanaEtc done
+poco PsMisc
+poco PsMisc done
+poco Libtool
+poco Libtool done
+poco Acl
+poco Acl done
+poco Attr
+poco Attr done
+poco File
+poco File done
+poco LibGMP
+poco LibGMP done
+poco LibMPFR
+poco LibMPFR done
+poco LibMPC
+poco LibMPC done
+poco LibISL
+poco LibISL done
+poco GCC
+poco GCC done
+poco BinUtils
+poco BinUtils done
+poco GDBM
+poco GDBM done
+poco GPerf
+poco GPerf done
+poco LibExpat
+poco LibExpat done
+poco InetUtils
+poco InetUtils done
+poco LibFFI
+poco LibFFI done
+poco IntlTool
+strace
+poco AutoConf
+poco AutoConf done
+poco AutoMake
+poco AutoMake done
+poco PkgConfig
+poco PkgConfig done
+poco GetText
+poco GetText done
+poco LibElf
+poco LibElf done
+poco LibElf done
+less Makefile
+ll
+poco LibUV
+poco LibUV done
+poco OpenSSL
+poco OpenSSL done
+poco Less
+poco Less done

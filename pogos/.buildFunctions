@@ -3,16 +3,46 @@
 [[ -z ${_buildFunctionsIncluded:-} ]] || exit
 _buildFunctionsIncluded=true
 
+Build_Make () # collection recipe-token
+{
+    NeverInChroot
+
+    _build_Enter "$1" "$2"
+
+    local marks="$Current_Root/.marks"
+    local buildMarker="$marks/build-$Recipe_Name-$Recipe_Version"
+    local harvestMarker="$marks/harvest-$Recipe_Name-$Recipe_Version"
+    local rolloutMarker="$marks/rollout-$Recipe_Name-$Recipe_Version"
+
+    if [[ "new" == "${3-}" ]]; then
+        RemoveDir $marks
+    fi
+
+    if [[ ! -f $buildMarker || "$Recipe_File" -nt "$buildMarker" ]]; then
+        RemoveFile $buildMarker $harvestMarker $rolloutMarker
+        _build_Build
+        Touch $buildMarker
+    fi
+
+    if [[ ! -f $harvestMarker ]]; then
+        _build_Harvest
+        Touch $harvestMarker
+    fi
+
+    if [[ "done" == "${3-}" ]]; then
+        if [[ ! -f $rolloutMarker || $harvestMarker -nt $rolloutMarker ]]; then
+            _harvest_Rollout
+            Touch $rolloutMarker
+        fi
+    fi
+}
+
 Build_Build () # collection recipe
 {
     NeverInChroot
 
     _build_Enter "$@"
-    _build_CleanBuild
-    _build_EnsureBuild
-    _build_ProvideSupplies
-    _build_MakeRootFs
-    _build_ExecInChroot "pogo compile $*"
+    _build_Build
 }
 
 Build_Setup () # collection recipe
@@ -31,7 +61,7 @@ Build_Shell () # collection recipe
     _build_CleanBuild
     _build_EnsureBuild
     _build_MakeRootFs
-    _build_ExecInChroot "bash"
+    _build_ExecInChroot
 }
 
 Build_Compile ()
@@ -43,9 +73,18 @@ Build_Compile ()
 
     Header "BUILD $Current_Collection / $Recipe_Title"
 
-    BuildEnterMain    && Recipe_Prepare
-    BuildEnterBuildIn && Recipe_Build
-    BuildEnterBuildIn && Recipe_Trim
+    _build_RecipePrepare
+    _build_RecipeBuild
+}
+
+_build_Build ()
+{
+    _build_CleanBuild
+    _build_EnsureBuild
+    _build_ProvideSupplies
+    _build_MakeRootFs
+    _build_ExecInChroot "pogo compile $Current_Collection $Recipe_Token"
+    _build_RecipeCleanup
 }
 
 _build_Enter () # build name
@@ -76,8 +115,8 @@ _build_Enter () # build name
 
     if [[ -n "${2-}" ]]; then
         RecipeSource "${2}"
-        Box_Top="$Current_Build/$Recipe_Name-$Recipe_Version"
-        Store_Top="$Current_Store/$Recipe_Name-$Recipe_Version"
+        Box_Top="$Current_Build/$Recipe_Tag"
+        Store_Top="$Current_Store/$Recipe_Tag"
     else
         Box_Top="$Current_Build/SHELL"
         Store_Top="$Current_Store/SHELL"
@@ -193,7 +232,7 @@ _build_ProvideSupply ()
             echo ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $Box_Build/$stem
             ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $Box_Build/$stem
         ;;
-        *.patch)
+        *.patch | *.xml)
             cp $verbose --force $PogoArchives/$basename $PogoSources/$basename
         ;;
         *)
@@ -217,9 +256,9 @@ _buildExtractSupply ()
 
     mkdir $verbose --parents $tmpExtract
 
-    pushd $tmpExtract >/dev/null
+    Pushd $tmpExtract
     tar xvf $archive
-    popd >/dev/null
+    Popd
 
     if [[ $(ls -1 $tmpExtract | wc -l) == 1 ]]; then
         mv $verbose $tmpExtract/* $extract
@@ -229,7 +268,28 @@ _buildExtractSupply ()
     fi
 }
 
-BuildEnterMain ()
+_build_RecipePrepare ()
+{
+    Pushd "$Box_Build"
+    _build_EnterTop && Recipe_ExecIfExists "Prepare"
+    Popd
+}
+
+_build_RecipeBuild ()
+{
+    Pushd "$Box_Build"
+    _build_EnterBuildIn && Recipe_ExecIfExists "Build"
+    Popd
+}
+
+_build_RecipeCleanup ()
+{
+    Pushd "$Box_Changes"
+    Recipe_ExecIfExists "Cleanup"
+    Popd
+}
+
+_build_EnterTop ()
 {
     if [[ "${Recipe_Supplies[0]}" == "none" ]]; then
         cd $Box_Build
@@ -239,19 +299,22 @@ BuildEnterMain ()
         local stem="$basename"
         local stem=${stem%.tar.*}
         local stem=${stem%.tgz}
+
+        #echo "=================================>>>"
+        #declare -p supply
+        #declare -p basename
+        #declare -p stem
+        #echo "<<<================================="
         cd $Box_Build/$stem
     fi
 }
 
-BuildEnterBuildIn ()
+_build_EnterBuildIn ()
 {
-    BuildEnterMain
-    #echo "PWD: $(pwd)"
+    _build_EnterTop
     if [[ -n "$Recipe_BuildIn" ]]; then
-        #echo "Recipe_BuildIn: $Recipe_BuildIn"
         MakeDir ./$Recipe_BuildIn
         cd $Recipe_BuildIn
-        #echo "PWD: $(pwd)"
     fi
 }
 
@@ -284,18 +347,111 @@ RootSymLink ()
     ln "$verbose" --symbolic "$target" "$link"
 }
 
+_chroot_MountOverlay ()
+{
+    local lowerdir="$1"
+    local options="lowerdir=$lowerdir,upperdir=$Box_Changes,workdir=$Box_Work"
+    mount $verbose --types overlay overlay --options "$options" "$Box_Merged"
+}
+
+_chroot_MountCommons ()
+{
+    local merged="$Box_Merged"
+
+    mount $verbose --bind /LiFo $merged/LiFo
+    mount $verbose --bind /root $merged/root
+    mount $verbose --rbind /dev $merged/dev
+    mount $verbose --rbind /sys $merged/sys
+    mount $verbose --rbind /proc $merged/proc
+    mount $verbose --bind /etc/hostname $merged/etc/hostname
+    mount $verbose --bind /etc/hosts $merged/etc/hosts
+    mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
+}
+
+_chroot_exec ()
+{
+    if [[ -z "${2-}" ]]; then
+        env $1 chroot $Box_Merged /bin/bash -l
+    else
+        env $1 chroot $Box_Merged /bin/bash -l -c "$2"
+    fi
+}
+
+_chroot_exec2 ()
+(   # execute in subshell
+
+    local lowerdir="$1"
+    local env="$2"
+    local command="${3-}"
+
+    trap 'BuildUnmount || true' EXIT
+
+    _chroot_MountOverlay "$lowerdir"
+    _chroot_MountCommons
+
+    if [[ -z "$command" ]]; then
+        env $env chroot $Box_Merged /bin/bash -l
+    else
+        env $env chroot $Box_Merged /bin/bash -l -c "$command"
+    fi
+
+    BuildUnmount || true
+
+    trap EXIT
+)
+
+ExecInCoreChroot ()
+(   # execute in subshell
+
+    local environment="
+    POGO_CHROOT=Core
+    FORCE_UNSAFE_CONFIGURE=1
+    MAKEFLAGS='-j8'
+    LC_ALL=en_US.UTF-8
+    LANG=en_US.UTF-8
+    LANGUAGE=en_US.UTF-8"
+
+    _chroot_exec2 "$Core_Root:$Tools_Root:$PogoVolume:$Box_Root" "$environment" "${1-}"
+)
+
+ExecInToolsChroot ()
+(   # execute in subshell
+
+    local environment="
+    POGO_CHROOT=Tools
+    FORCE_UNSAFE_CONFIGURE=1
+    MAKEFLAGS=-j8
+    LC_ALL=POSIX"
+
+    _chroot_exec2 "$Tools_Root:$Boots_Root:$PogoVolume:$Box_Root" "$environment" "${1-}"
+)
+
+ExecInBootsChroot ()
+(   # execute in subshell
+
+    local environment="
+    POGO_CHROOT=Boots
+    FORCE_UNSAFE_CONFIGURE=1
+    MAKEFLAGS=-j8
+    LC_ALL=POSIX
+    LFS=$Current_Root
+    LFS_TGT=x86_64-lfs-linux-gnu"
+
+    _chroot_exec2 "$Box_Root:$PogoVolume:/" "$environment" "${1-}"
+)
+
 MakeCoreRootfs ()
 {
     local rootfs=$Box_Root
 
     RootMakeDir 0775 LiFo
     RootMakeDir 0775 root
-    RootMakeDir 1777 bin
-    RootMakeDir 1777 etc
+    RootMakeDir 0775 bin
+    RootMakeDir 0775 etc
     RootMakeDir 1777 tmp
-    RootMakeDir 1777 dev
-    RootMakeDir 1777 proc
-    RootMakeDir 1777 sys
+    RootMakeDir 0775 dev
+    RootMakeDir 0775 proc
+    RootMakeDir 0775 sys
 
     RootMakeDir 0775 run
     RootMakeDir 0775 run/lock
@@ -315,7 +471,7 @@ MakeCoreRootfs ()
     cat > $rootfs/etc/passwd << "EOF"
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/dev/null:/bin/false
-nobody:x:99:99:Unprivileged User:/dev/null:/bin/false
+nobody:x:999:999:Unprivileged User:/dev/null:/bin/false
 EOF
 
     cat > $rootfs/etc/group << "EOF"
@@ -342,42 +498,6 @@ nogroup:x:99:
 users:x:999:
 EOF
 }
-
-ExecInCoreChroot ()
-(   # execute in subshell
-
-    local command="$1"
-
-    local lowerdir="/Data/Compile/Roots/Core:/Data/Compile/Roots/Tools:$PogoVolume:$Box_Root"
-    local upperdir="$Box_Changes"
-    local workdir="$Box_Work"
-    local merged="$Box_Merged"
-
-    local options=lowerdir=$lowerdir,upperdir=$upperdir,workdir=$workdir
-
-    trap 'BuildUnmount || true' EXIT
-
-    mount $verbose --types overlay overlay --options $options $merged
-    
-    mount $verbose --bind /LiFo $merged/LiFo
-    mount $verbose --bind /root $merged/root
-    mount $verbose --rbind /dev $merged/dev
-    mount $verbose --rbind /sys $merged/sys
-    mount $verbose --rbind /proc $merged/proc
-    mount $verbose --bind /etc/hostname $merged/etc/hostname
-    mount $verbose --bind /etc/hosts $merged/etc/hosts
-    mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
-
-    POGO_CHROOT=Core            \
-    LC_ALL=POSIX                \
-    FORCE_UNSAFE_CONFIGURE=1    \
-    MAKEFLAGS="-j8"             \
-    chroot $merged /bin/bash -l -c "$command"
-
-    BuildUnmount || true
-
-    trap EXIT
-)
 
 MakeToolsRootfs ()
 {
@@ -478,42 +598,6 @@ users:x:999:
 EOF
 }
 
-ExecInToolsChroot ()
-(   # execute in subshell
-
-    local command="$1"
-
-    local lowerdir="/Pogo/Data/Compile/Roots/Tools:/Pogo/Data/Compile/Roots/Boots:$PogoVolume:$Box_Root"
-    local upperdir="$Box_Changes"
-    local workdir="$Box_Work"
-    local merged="$Box_Merged"
-
-    local options=lowerdir=$lowerdir,upperdir=$upperdir,workdir=$workdir
-
-    trap 'BuildUnmount || true' EXIT
-
-    mount $verbose --types overlay overlay --options $options $merged
-    
-    mount $verbose --bind /LiFo $merged/LiFo
-    mount $verbose --bind /root $merged/root
-    mount $verbose --rbind /dev $merged/dev
-    mount $verbose --rbind /sys $merged/sys
-    mount $verbose --rbind /proc $merged/proc
-    mount $verbose --bind /etc/hostname $merged/etc/hostname
-    mount $verbose --bind /etc/hosts $merged/etc/hosts
-    mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
-
-    POGO_CHROOT=Tools           \
-    LC_ALL=POSIX                \
-    FORCE_UNSAFE_CONFIGURE=1    \
-    MAKEFLAGS="-j2"             \
-    chroot $merged /bin/bash -l -c "$command"
-
-    BuildUnmount || true
-
-    trap EXIT
-)
-
 MakeBootsRootfs ()
 {
     local rootfs=$Box_Root
@@ -524,40 +608,6 @@ MakeBootsRootfs ()
     RootSymLink bin/sh      bash
     RootSymLink tools       $Current_Root/tools
 }
-
-ExecInBootsChroot ()
-(   # execute in subshell
-
-    local command="$1"
-
-    local lowerdir="$Box_Root:$PogoVolume:/"
-    local upperdir="$Box_Changes"
-    local workdir="$Box_Work"
-    local merged="$Box_Merged"
-
-    local options=lowerdir=$lowerdir,upperdir=$upperdir,workdir=$workdir
-
-    trap 'BuildUnmount || true' EXIT
-
-    mount $verbose --types overlay overlay --options $options $merged
-    
-    mount $verbose --bind /LiFo $merged/LiFo
-    mount $verbose --bind /root $merged/root
-    mount $verbose --rbind /dev $merged/dev
-    mount $verbose --rbind /sys $merged/sys
-    mount $verbose --rbind /proc $merged/proc
-    mount $verbose --bind /etc/hostname $merged/etc/hostname
-    mount $verbose --bind /etc/hosts $merged/etc/hosts
-    mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
-
-    POGO_CHROOT=Boots               \
-    LC_ALL=POSIX                    \
-    LFS=$Current_Root               \
-    LFS_TGT=x86_64-lfs-linux-gnu    \
-    FORCE_UNSAFE_CONFIGURE=1        \
-    MAKEFLAGS="-j4"                 \
-    chroot $merged /bin/bash -l -c "$command"
-)
 
 BuildUnmount ()
 {
@@ -574,20 +624,6 @@ BuildUnmount ()
     done
 
     true
-}
-
-_harvest_Bom () # bomFile topDir awkScript
-{
-    local bomFile="$1"
-    local topDir="$2"
-    local script="$3"
-
-    (
-        cd $topDir
-        find . -mindepth 1 \( \
-            -type l -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\t%l\n' \
-            -o      -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\n' \)
-    ) | gawk -- "$script" >"$bomFile"
 }
 
 _harvest_ListFiles () # bomFile
@@ -663,46 +699,23 @@ _harvest_Archive ()
     )
 }
 
-_harvest_Install ()
+_harvest_Rollout ()
 {
-    local topDir="$1"
-    local archiveFile="$2"
-
-    (
-        cd $topDir
-        tar $verbose --extract --file=$archiveFile
-    )
+    Pushd "$Current_Root"
+    tar $verbose --extract --file="$Store_FilesFiles"
+    Popd
 }
 
-Build_Harvest ()
+CleanupLocale()
 {
-    NeverInChroot
+    :
+}
 
-    _build_Enter "$@"
-    _build_EnsureBuild
-
-    Header "HARVEST $Current_Collection / $Recipe_Title"
-
-    local topDir
-    if [[ "$Current_Collection" == "Boots" ]]; then
-        topDir="$Box_Changes$Current_Root"
-    else
-        topDir="$Box_Changes"
-    fi
-    local bomFile="$Store_FilesBom"
-    local archiveFile="$Store_FilesFiles"
-
-    declare -p topDir
-
-    [[ -d "$topDir" ]] || InfoExit "nothing to harvest"
-
-    if [[ -d "$topDir/usr/share/locale" ]]; then
-        (cd "$topDir/usr/share/locale"; find . -type f -path '*/LC_MESSAGES/*' -delete)
-        (cd "$topDir/usr/share/locale"; find . -type d -empty -delete)
-        rm -f "$topDir/usr/share/locale/locale.alias"
-    fi        
-
-    blackoutScript='
+_harvest_Bom () # bomFile topDir
+{
+    local bomFile="$1"
+    local topDir="$2"
+    local blackoutScript='
         $6 ~ /^tools\/share\/(info|man|doc)\// { next; }
         $6 ~ /^Data/ { next; }
         $6 ~ /^tmp/ { next; }
@@ -734,13 +747,48 @@ Build_Harvest ()
         $6 ~ /^etc\/ld.so.cache$/ { next; }
         $6 ~ /^var\/cache\// { next; }
         { print $0 }'
+
+    (
+        cd $topDir
+        find . -mindepth 1 \( \
+            -type l -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\t%l\n' \
+            -o      -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\n' \)
+    ) | gawk -- "$blackoutScript" >"$bomFile"
+}
+
+_build_Harvest ()
+{
+    Header "HARVEST $Current_Collection / $Recipe_Title"
+
+    local topDir
+    if [[ "$Current_Collection" == "Boots" ]]; then
+        topDir="$Box_Changes$Current_Root"
+    else
+        topDir="$Box_Changes"
+    fi
+    local bomFile="$Store_FilesBom"
+    local archiveFile="$Store_FilesFiles"
+
+    declare -p topDir
+
+    [[ -d "$topDir" ]] || InfoExit "nothing to harvest"
     
-    _harvest_Bom "$bomFile" "$topDir" "$blackoutScript"
+    _harvest_Bom "$bomFile" "$topDir"
     _harvest_Validate "$bomFile"
     _harvest_Strip "$bomFile" "$topDir"
-    _harvest_Bom "$bomFile" "$topDir" "$blackoutScript"
+    _harvest_Bom "$bomFile" "$topDir"
     _harvest_Archive "$bomFile" "$topDir" "$archiveFile"
     cat $bomFile
+}
+
+Build_Harvest ()
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_EnsureBuild
+
+    _build_Harvest
 }
 
 Build_Rollout ()
@@ -751,16 +799,5 @@ Build_Rollout ()
 
     Header "ROLLOUT $Current_Collection / $Recipe_Title"
 
-    local rolloutMarkers="$Current_Root/.rollout"
-    local rolloutMarker="$rolloutMarkers/$Recipe_Name-$Recipe_Version"
-    local bomFile="$Store_FilesBom"
-    local archiveFile="$Store_FilesFiles"
-
-    if [[ ! -f $rolloutMarker || $bomFile -nt $rolloutMarker ]]; then
-        
-        _harvest_Install "$Current_Root" "$archiveFile"
-
-        MakeDir "$rolloutMarkers"
-        touch "$rolloutMarker"
-    fi
+    _harvest_Rollout
 }

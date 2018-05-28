@@ -1,9 +1,11 @@
 #!/bin/bash (source-only)
+set -euo pipefail
+#IFS=$'\n\t'
 
 [[ -z ${_pogoConfigIncluded:-} ]] || exit
 _pogoConfigIncluded=true
 
-if [[ -n ${POGO_CHROOT:-} ]]; then
+if [[ -n "${POGO_CHROOT:-}" ]]; then
     InChroot() { return 0; }
 else
     InChroot() { return 1; }
@@ -75,6 +77,11 @@ Recipes_Collections=(
     "$Core_Collection"
 )
 
+#if [[ -n "${1-}" ]]; then
+#    echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#    echo "Selection: $1"
+#    echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#fi
 
 Fatal ()
 {
@@ -115,19 +122,16 @@ PogoExec ()
     $script "$@"
 }
 
-Import ()
+EnterWorldOfPogo ()
 {
-    source $Pogos/$1
+    source "$Pogos/PogoConfig" "${1-}"
 }
 
-# export Import function for convenience
-declare -F -x Import
-
-declare -a PogoVars
-PogoVars=$(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//')
+# export function for convenience
+declare -F -x EnterWorldOfPogo
 
 verbose=--verbose
 
-Import PogoFunctions
-Import RecipeFunctions
-Import BuildFunctions
+source $Pogos/.pogoFunctions
+source $Pogos/.recipeFunctions
+source $Pogos/.buildFunctions

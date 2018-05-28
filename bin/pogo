@@ -1,5 +1,5 @@
 #!/bin/bash -eu
 
-source "$Pogos/PogoConfig"
+source "$Pogos/PogoConfig" ""
 
 PogoExec "$@"

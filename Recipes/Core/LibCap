@@ -1,0 +1,26 @@
+#!/bin/bash
+
+Title="LibCap"
+Home=(https://www.kernel.org/)
+Name=LibCap
+Version=2.25
+Supplies=(https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-$Version.tar.xz)
+
+Build ()
+{
+
+    # Prevent a static library from being installed: 
+    sed -i '/install.*STALIBNAME/d' libcap/Makefile
+    sed 's@^BUILD_GPERF@#\0@' -i Make.Rules 
+
+    make
+
+    make RAISE_SETFCAP=no lib=lib prefix=/usr install
+    chmod -v 755 /usr/lib/libcap.so
+}
+
+Cleanup ()
+{
+    true
+    #RemoveFile usr/lib/libreadline.so.7 usr/lib/libhistory.so.7
+}

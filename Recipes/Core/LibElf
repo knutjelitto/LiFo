@@ -1,0 +1,15 @@
+#!/bin/bash
+
+Title="Lib ELF"
+Home=(https://sourceware.org/elfutils/)
+Name=LibElf
+Version=0.170
+Supplies=(https://sourceware.org/ftp/elfutils/$Version/elfutils-$Version.tar.bz2)
+
+Build()
+{
+    ./configure --prefix=/usr --disable-nls
+    make
+    make -C libelf install
+    install -vm644 config/libelf.pc /usr/lib/pkgconfig
+}

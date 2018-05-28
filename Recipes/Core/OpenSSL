@@ -1,0 +1,27 @@
+#!/bin/bash
+
+Title="OpenSSL"
+Home=(https://www.openssl.org/)
+Name=OpenSSL
+Version=1.1.0h
+Supplies=(https://openssl.org/source/openssl-$Version.tar.gz)
+
+Build()
+{
+    # Prepare OpenSSL for compilation: 
+    ./config --prefix=/usr          \
+             --openssldir=/etc/ssl   \
+             --libdir=lib            \
+             shared                  \
+             zlib-dynamic
+
+    # Compile the package: 
+    make
+
+    # Install the package: 
+    sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
+    make MANSUFFIX=ssl install
+
+    # If desired, install the documentation: 
+    cp -vfr doc/* /usr/share/doc/openssl
+}

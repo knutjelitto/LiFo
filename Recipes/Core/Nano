@@ -22,3 +22,15 @@ Build()
     make install
     install -v -m644 doc/{nano.html,sample.nanorc} /usr/share/doc/nano
 }
+
+Cleanup ()
+{
+    # NO restricted nano
+    RemoveFile usr/bin/rnano
+
+    # NO restricted nano man page
+    RemoveFile usr/share/man/man1/rnano.1
+
+    # NO nano styles
+    RemoveDir usr/share/nano
+}

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+Title="AutoMake"
+Home=(https://www.gnu.org/software/automake/)
+Name=AutoMake
+Version=1.15.1
+Supplies=(https://ftpmirror.gnu.org/gnu/automake/automake-$Version.tar.xz)
+
+Build()
+{
+    ./configure --prefix=/usr --disable-nls
+    make
+    make install
+}

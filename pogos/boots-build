@@ -1,5 +1,4 @@
 #!/bin/bash -eu
-
-Import PogoConfig
+EnterWorldOfPogo Boots
 
 Build_Build Boots "$@"

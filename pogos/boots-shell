@@ -1,6 +1,4 @@
-#!/bin/bash -eu
-
-Import PogoConfig
-NeverInChroot
+#!/bin/bash
+EnterWorldOfPogo Boots
 
 Build_Shell Boots

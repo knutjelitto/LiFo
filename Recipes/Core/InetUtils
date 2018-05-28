@@ -1,0 +1,25 @@
+#!/bin/bash
+
+Title="InetUtils"
+Home=(https://www.gnu.org/software/inetutils/)
+Name=InetUtils
+Version=1.9.4
+ToolDeps=()
+BuildDeps=()
+Supplies=(https://ftpmirror.gnu.org/gnu/inetutils/inetutils-$Version.tar.xz)
+
+Build()
+{
+    ./configure --prefix=/usr        \
+                --localstatedir=/var \
+                --disable-logger     \
+                --disable-whois      \
+                --disable-rcp        \
+                --disable-rexec      \
+                --disable-rlogin     \
+                --disable-rsh        \
+                --disable-servers
+
+    make
+    make install
+}
