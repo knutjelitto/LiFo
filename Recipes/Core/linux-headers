@@ -2,7 +2,7 @@
 
 Title="Linux headers"
 Home=(https://www.kernel.org/)
-Name=LinuxHeaders
+Name=linux-headers
 Version=4.15.3
 Supplies=(https://www.kernel.org/pub/linux/kernel/v${Version:0:1}.x/linux-$Version.tar.xz)
 

@@ -1,244 +1,3 @@
-locale -a
-locale -a | less
-man locale
-env
-export LC_ALL=en_US.utf8
-locale -v -a | less
-tree
-export LC_ALL=en_US.utf8
-locale -v -a | less
-env
-clear
-LC_ALL=en_US.utf8
-tree
-man tree
-locale
-locale -a
-locale -a | grep utf8
-locale -a | grep utf8 | less
-env
-tree
-locale
-env
-locale
-locale
-locale -a
-locale -a | grep utf8
-locale -a | grep utf8 | less
-env
-tree
-locale
-env
-locale
-less Makefile 
-less Make.Rules 
-cd libcap/
-cd include/
-cd uapi/
-cd linux/
-less capability.h 
-cd ..
-ll
-make
-ll
-rm *
-cd..
-cd ..
-poco loop
-poco LibICU
-poco LibISL
-poco LibGMP
-poco LibGMP done
-pogo core empty
-help if
-poco shell
-poco Tree
-poco Tree done
-poco Which
-poco Which done
-poco Ed
-poco Ed done
-poco Nano
-poco Nano done
-poco ManPages
-poco ManPages done
-poco LibReadline
-poco LibReadline done
-poco NCurses
-poco NCurses done
-poco BC
-poco BC done
-poco M4
-poco M4 done
-poco Sed
-poco Sed done
-poco Xz
-poco XzUtils
-poco XzUtils done
-poco LibZLib
-poco LibZLib done
-poco GZip
-poco BZip
-poco GZip done
-poco BZip done
-poco BZip2 done
-poco LibLZO
-poco LibLZO done
-clean
-clear
-poco LibCap
-locale
-locale -a | less
-less /etc/locale.gen 
-locale -a
-locale
-tree
-locale -a
-locale
-env
-cd
-cd /
-tree
-env
-tree
-env
-cd /bin
-ll
-ll | less
-ll
-cd usr/bin/
-cd ..
-cd bin
-ll | less
-env
-cd /bin
-ll | less
-cd usr/bin/
-cd bin
-ll | less
-cd debian/
-cd source/
-less format 
-less rules 
-cd ..
-less etc-protocols 
-ll
-less etc-rpc 
-less etc-services 
-ll
-less Makefile 
-less protocols.gawk 
-less port-numbers.dist 
-less Make.Rules 
-cd libcap/
-cd include/
-cd uapi/
-cd linux/
-less capability.h 
-cd ..
-make
-rm *
-cd..
-cd ..
-poco loop
-poco LibICU
-pogo core empty
-help if
-poco NCurses
-poco NCurses done
-poco BC
-poco BC done
-poco M4
-poco M4 done
-poco Sed
-poco Sed done
-poco Xz
-poco XzUtils
-poco XzUtils done
-poco GZip
-poco BZip
-poco GZip done
-poco BZip done
-poco BZip2 done
-clean
-poco LibCap
-locale
-locale -a | less
-less /etc/locale.gen 
-locale -a
-locale
-tree
-man env
-clear
-pogo boots shell
-poco Which new
-poco Which done
-poco Which
-
-poco LibZLib
-poco LibZLib done
-poco LibLZO
-poco LibLZO new
-poco LibLZO done
-poco Ed
-poco Ed done
-man rnano
-man nano
-poco Nano
-poco Nano done
-man magic
-poco ManPages doen
-poco ManPages done
-poco ManPages
-pogo tools shell
-pogo tools build-all
-poco Tree
-poco Tree done
-poco clean
-man bash
-manb ln
-man ln
-poco LibReadline
-poco LibReadline done
-poco Bash
-poco Bash done
-poco shell
-poco Bison
-poco Bison done
-poco Flex
-poco Flex done
-poco Grep
-poco Grep done
-cd /Data/Compile/Sources/iana-etc-2.30/
-ll
-less README 
-date
-man date
-cd
-poco IanaEtc new
-poco IanaEtc
-poco IanaEtc done
-poco PsMisc
-poco PsMisc done
-poco Libtool
-poco Libtool done
-poco Acl
-poco Acl done
-poco Attr
-poco Attr done
-poco File
-poco File done
-poco LibGMP
-poco LibGMP done
-poco LibMPFR
-poco LibMPFR done
-poco LibMPC
-poco LibMPC done
-poco LibISL
-poco LibISL done
-poco GCC
-poco GCC done
-poco BinUtils
 poco BinUtils done
 poco GDBM
 poco GDBM done
@@ -498,3 +257,244 @@ poco icu done
 poco curl
 poco curl done
 poco cmake
+ping www.google.de
+ping www.google.com
+poco lsed
+ping www.google.de
+poco tree
+poco tree done
+poco which
+poco which done
+poco xz
+poco xz done
+poco sed
+poco sed done
+poco tzdata
+poco tzdata done
+poco ninja
+poco ninja done
+poco meson
+poco meson done
+poco strace
+poco strace done
+poco icu
+poco icu done
+poco curl
+poco curl done
+poco cmake
+ping www.google.de
+ping www.google.com
+lfspider 
+cd /tmp/
+cd crux
+cd crux.nu/ports/crux-3.4/
+ls -1
+ls -1 | wc
+cd core.1 
+cd crux-3.4/
+less core.1
+rm core.?
+find .
+find
+find | less
+cd core
+cd groff
+cd bash
+les sP
+zless bash-4.4.19.patch.gz 
+less Pkgfile 
+less profile 
+man less
+cd ..
+tar cvaf crux-3.4.tar.xz crux
+mv crux-3.4.tar.xz /LiFo/
+rm -rv crux
+ll
+cd groff
+cd bash
+les sP
+zless bash-4.4.19.patch.gz 
+less Pkgfile 
+less profile 
+man less
+tar cvaf crux-3.4.tar.xz crux
+mv crux-3.4.tar.xz /LiFo/
+rm -rv crux
+cd iconv
+less Versions 
+grep enable-kernel *
+less configure
+grep minimum_kernel *
+cd locale
+cd localedata/
+locale
+locale --help
+locale -v en_IE
+locale -v en_IE.utf8
+less SUPPORTED 
+locale -v en_IE.UTF-8
+cd ..
+ll
+autoconf
+ll | more
+less configure.ac 
+grep AC_CHECK configure.ac 
+less INSTALL 
+ll | more
+less configure.ac 
+less INSTALL 
+grep AC_CHECK configure.ac 
+autoconf -fv | less
+man autoconf
+autoconf -f -v | less
+autoconf -f -v
+less INSTALL/
+xs INSTALL/
+cd INSTALL/
+ll
+less README 
+less README 
+cd /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include
+cd /lib64/
+ll
+cd /lib64/
+./configure --help
+ll
+./configure --help | less
+cd ../linux-4.15.3/
+ll
+./configure --help | less
+ll
+./configure --help | less
+./configure --prefix=/usr --help | less
+cd
+cd
+cd lib
+ll
+cd lib
+owd
+pwd
+cd /GLIBC/
+cd usr/
+ll
+ll
+EnterWorldOfPogo Core
+set
+./configure --help | less
+./configure --prefix=/usr --help | less
+cd
+cd
+owd
+pwd
+cd /GLIBC/
+EnterWorldOfPogo Core
+set
+ldd
+ldd ld-2.27.so 
+ldd ld-linux-x86-64.so.2 
+ldd libanl-2.27.so 
+rm lib64
+mkdir lib64
+ln -sfv ../lib/ld-linux-x86-64.so.2 /GLIBC/lib64
+cd lib64/
+cd ..
+cd usr/
+cd lib
+ll
+cd lib
+cd /GLIBC/
+cd lib64
+ll
+cd ..
+ldd ld-linux-x86-64.so.2 
+ldd libanl-2.27.so 
+rm lib64
+mkdir lib64
+ln -sfv ../lib/ld-linux-x86-64.so.2 /GLIBC/lib64
+cd lib64/
+cd /GLIBC/
+cd lib64
+cd ..
+cd usr/
+cd lib
+ll
+poco which
+poco which done
+poco xz
+poco xz done
+poco sed
+poco sed done
+poco tzdata
+poco tzdata done
+poco ninja
+poco ninja done
+poco meson
+poco meson done
+poco strace
+poco strace done
+poco icu
+poco icu done
+poco curl
+poco curl done
+poco cmake
+ping www.google.de
+ping www.google.com
+lfspider 
+cd crux
+cd crux.nu/ports/crux-3.4/
+ls -1
+ls -1 | wc
+cd core.1 
+cd crux-3.4/
+less core.1
+rm core.?
+find .
+find
+cd core
+cd groff
+cd bash
+les sP
+zless bash-4.4.19.patch.gz 
+less profile 
+man less
+tar cvaf crux-3.4.tar.xz crux
+mv crux-3.4.tar.xz /LiFo/
+rm -rv crux
+poco gcc break
+cd /Data/Compile/Sources/
+less glibc-2.27-fhs-1.patch 
+cd /tmp/
+tar xvf /LiFo/crux-3.4.tar.xz 
+cd crux/crux.nu/ports/crux-3.4/co
+cd crux/crux.nu/ports/crux-3.4/core/
+less glibc
+cd glibc
+less Pkgfile 
+echo $?
+poco readline
+poco readline done
+cd Data/Compile/Sources/
+cd linux-4.15.3/
+cd cleaned/
+cd include/
+cd linux/
+
+poco glibc 
+cd /Data/Compile/Build/Core/glibc-2.27/Changes/
+cd usr/include/
+cd scsi/
+ls -l ../../../../Data/Compile/Sources/linux-4.15.3/cleaned/include/scsi/
+man cp
+cd etc/
+cd GLIBC/
+cd lib64/
+less /Data/Variable/Store/Tools/GLibc-2.27/Bom 
+cd ..
+ll
+find | less
+cd
+cd -
+poco glibc break
+poco clean
+poco glibc
+which ldconfig

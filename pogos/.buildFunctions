@@ -436,7 +436,7 @@ ExecInCoreChroot ()
     local environment="
     POGO_CHROOT=Core
     FORCE_UNSAFE_CONFIGURE=1
-    MAKEFLAGS='-j8'
+    MAKEFLAGS=-j8
     LC_ALL=en_US.UTF-8
     LANG=en_US.UTF-8
     LANGUAGE=en_US.UTF-8"

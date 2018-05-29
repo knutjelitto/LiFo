@@ -4,8 +4,8 @@ Title="CMake"
 Home="https://cmake.org/"
 Name=cmake
 Version=3.11.2
-BuildDeps=(libuv expat)
-Supplies=(https://cmake.org/files/v3.11/cmake-$Version.tar.gz)
+BuildDeps=(libuv expat curl libarchive)
+Supplies=(https://cmake.org/files/v${Version:0:4}/cmake-$Version.tar.gz)
 
 Build()
 {

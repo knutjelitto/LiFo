@@ -2,11 +2,11 @@
 
 Title="BinUtils"
 Home=(https://www.gnu.org/software/binutils/)
-Name=BinUtils
+Name=binutils
 Version=2.30
 BuildIn=build
 BuildDeps=()
-Supplies=(https://ftpmirror.gnu.org/gnu/binutils/binutils-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build()
 {

@@ -4,7 +4,7 @@ Title="The GNU Bourne-Again SHell"
 Home=(https://www.gnu.org/software/bash/ https://tiswww.case.edu/php/chet/bash/bashtop.html)
 Name=bash
 Version=4.4.18
-BuildDeps=(readline libiconv gettext)
+BuildDeps=(readline libiconv gettext ncurses)
 Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
 
 Build()
