@@ -1,0 +1,21 @@
+#!/bin/bash
+
+Title="ICU"
+Home="http://site.icu-project.org/"
+Name=icu
+Version=61.1
+BuildIn=source
+Supplies=("http://download.icu-project.org/files/icu4c/$Version/icu4c-${Version/./_}-src.tgz")
+
+Build()
+{
+    ./configure \
+        --prefix=/usr \
+        --sbindir=/usr/bin
+
+    make
+    make doc
+
+    make install
+    make install-doc
+}

@@ -1,12 +1,12 @@
 #!/bin/bash
 
-Title="Lib-MPFR"
+Title="The GNU MPFR Library"
 Home="http://www.mpfr.org/"
-Name=LibMPFR
+Name=mpfr
 Version=4.0.1
 BuildDeps=()
 RunDeps=()
-Supplies=(https://ftpmirror.gnu.org/gnu/mpfr/mpfr-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build()
 {
@@ -18,7 +18,6 @@ Build()
 
     make
     make html
-    #make check
     make install
     make install-html
 }

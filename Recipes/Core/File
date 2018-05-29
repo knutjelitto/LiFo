@@ -2,7 +2,7 @@
 
 Title="File"
 Home=(http://www.darwinsys.com/file/ http://directory.fsf.org/file.html)
-Name=File
+Name=file
 Version=5.33
 Supplies=(ftp://ftp.astron.com/pub/file/file-$Version.tar.gz)
 
@@ -13,6 +13,5 @@ Build()
         --disable-nls
 
     make
-    #make check
     make install
 }

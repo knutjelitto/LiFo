@@ -2,11 +2,9 @@
 
 Title="GPerf"
 Home=(https://www.gnu.org/software/gperf/ http://savannah.gnu.org/projects/gperf/)
-Name=GPerf
+Name=gperf
 Version=3.1
-ToolDeps=()
-BuildDeps=()
-Supplies=(https://ftpmirror.gnu.org/gnu/gperf/gperf-$Version.tar.gz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
 
 Build()
 {

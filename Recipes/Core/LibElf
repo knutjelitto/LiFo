@@ -1,8 +1,8 @@
 #!/bin/bash
 
-Title="Lib ELF"
+Title="ElfUtils (libelf)"
 Home=(https://sourceware.org/elfutils/)
-Name=LibElf
+Name=libelf
 Version=0.170
 Supplies=(https://sourceware.org/ftp/elfutils/$Version/elfutils-$Version.tar.bz2)
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-Title="XZUtils"
+Title="XZ Utils"
 Home=(https://tukaani.org/xz/)
-Name=XZUtils
+Name=xz
 Version=5.2.4
-Supplies=(https://tukaani.org/xz/xz-5.2.4.tar.xz)
+Supplies=(https://tukaani.org/$Name/$Name-$Version.tar.xz)
 
 Build()
 {
@@ -13,6 +13,5 @@ Build()
                 --disable-static
 
     make
-    #make check
     make install
 }

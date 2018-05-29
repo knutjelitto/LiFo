@@ -1,0 +1,13 @@
+#!/bin/bash
+
+Title="Meson"
+Home=(https://mesonbuild.com/)
+Name=Meson
+Version=0.46.1
+Supplies=(https://github.com/mesonbuild/meson/releases/download/$Version/meson-$Version.tar.gz)
+
+Build ()
+{
+    python3 setup.py build
+    python3 setup.py install
+}

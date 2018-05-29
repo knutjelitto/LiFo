@@ -2,9 +2,9 @@
 
 Title="AutoConf"
 Home=(https://www.gnu.org/software/autoconf/)
-Name=AutoConf
+Name=autoconf
 Version=2.69
-Supplies=(https://ftpmirror.gnu.org/gnu/autoconf/autoconf-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build()
 {

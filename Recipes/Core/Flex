@@ -1,8 +1,8 @@
 #!/bin/bash
 
 Title="Flex"
-Home=(https://github.com/westes/flex)
-Name=Flex
+Home=(https://github.com/westes/flex/)
+Name=flex
 Version=2.6.4
 Supplies=(https://github.com/westes/flex/releases/download/v$Version/flex-$Version.tar.gz)
 

@@ -2,14 +2,15 @@
 
 Title="Grep"
 Home=(https://www.gnu.org/software/grep/)
-Name=Grep
+Name=grep
 Version=3.1
-Supplies=(https://ftpmirror.gnu.org/gnu/grep/grep-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build()
 {
-    ./configure --prefix=/usr   \
-                --disable-nls
+    ./configure \
+        --prefix=/usr   \
+        --disable-nls
 
     make
     make install

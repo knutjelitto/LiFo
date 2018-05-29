@@ -2,7 +2,7 @@
 
 Title="Timezone Data"
 Home=(https://www.iana.org/time-zones/)
-Name=TimezoneData
+Name=tzdata
 Version=2018e
 BuildDeps=(GLibc)
 Supplies=(http://www.iana.org/time-zones/repository/releases/tzdata$Version.tar.gz)

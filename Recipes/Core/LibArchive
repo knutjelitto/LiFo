@@ -2,11 +2,9 @@
 
 Title="LibArchive"
 Home=" http://www.libarchive.org/"
-Name=LibArchive
+Name=libarchive
 Version=3.3.2
-ToolDeps=()
-BuildDeps=(LibLZO)
-RunDeps=()
+BuildDeps=(lzo)
 Supplies=(http://www.libarchive.org/downloads/libarchive-$Version.tar.gz)
 
 Build()
@@ -14,6 +12,5 @@ Build()
     ./configure --prefix=/usr --disable-static
 
     make
-    #make check
     make install
 }

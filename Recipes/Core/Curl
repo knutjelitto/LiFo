@@ -2,11 +2,8 @@
 
 Title="Curl"
 Home="https://curl.haxx.se/"
-Name=Curl
+Name=curl
 Version=7.60.0
-ToolDeps=()
-BuildDeps=()
-RunDeps=()
 Supplies=(https://curl.haxx.se/download/curl-$Version.tar.xz)
 
 Build()

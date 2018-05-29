@@ -2,9 +2,9 @@
 
 Title="AutoMake"
 Home=(https://www.gnu.org/software/automake/)
-Name=AutoMake
+Name=automake
 Version=1.15.1
-Supplies=(https://ftpmirror.gnu.org/gnu/automake/automake-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build()
 {

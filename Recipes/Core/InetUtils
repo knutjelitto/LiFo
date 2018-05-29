@@ -1,12 +1,10 @@
 #!/bin/bash
 
-Title="InetUtils"
+Title="Inetutils - GNU network utilities"
 Home=(https://www.gnu.org/software/inetutils/)
-Name=InetUtils
+Name=inetutils
 Version=1.9.4
-ToolDeps=()
-BuildDeps=()
-Supplies=(https://ftpmirror.gnu.org/gnu/inetutils/inetutils-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build()
 {

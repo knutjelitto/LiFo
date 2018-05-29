@@ -1,0 +1,16 @@
+#!/bin/bash (source-only)
+
+Title="Ninja"
+Home=(https://ninja-build.org/)
+Name=Ninja
+Version=1.8.2
+Supplies=(https://github.com/ninja-build/ninja/archive/v1.8.2/ninja-1.8.2.tar.gz)
+
+Build ()
+{
+    python3 configure.py --bootstrap
+
+    install -vm755 ninja /usr/bin/
+    install -vDm644 misc/bash-completion /usr/share/bash-completion/completions/ninja
+    install -vDm644 misc/zsh-completion  /usr/share/zsh/site-functions/_ninja
+}

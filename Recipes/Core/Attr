@@ -2,10 +2,8 @@
 
 Title="Attr"
 Home=(https://savannah.nongnu.org/projects/attr/)
-Name=Attr
+Name=attr
 Version=2.4.47
-ToolDeps=()
-BuildDeps=()
 Supplies=(http://download.savannah.nongnu.org/releases/attr/attr-$Version.src.tar.gz)
 
 Build ()

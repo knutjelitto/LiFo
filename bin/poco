@@ -4,52 +4,59 @@ source "$Pogos/PogoConfig" "Core"
 
 TODO=(
     #--#607-linux-headers
-    ManPages        #608-man-pages          #X
     #--#609-glibc
     #--#610-adjusting
-    zlib            #611-zlib               #!
-    File            #612-file               #X
-    readline        #613-readline           #!
-    M4              #614-m4                 #X
-    BC              #615-bc                 #X
-    BinUtils        #616-binutils           #X
-    LibGMP          #617-gmp                #X
-    LibMPFR         #618-mpfr               #X
-    LibMPC          #619-mpc                #X
-    GCC             #620-gcc                #X
-    bzip2           #621-bzip2              #!
-    PkgConfig       #622-pkg-config         #X
-    NCurses         #623-ncurses            #X
-    Attr            #624-attr               #X
-    Acl             #625-acl                #X
-    LibCap          #626-libcap             #X
-    Sed             #627-sed                #X
     #--#628-shadow
-    PsMisc          #629-psmisc             #X
-    IanaEtc         #630-iana-etc           #X
-    Bison           #631-bison              #X
-    Flex            #632-flex               #X
-    Grep            #633-grep               #X
-    bash            #634-bash               #!
+    #--#646-kmod
+    #--#662-grub
+    #--#665-iproute
+    #--#666-kbd
+    #--#670-sysklogd
+    #--#671-sysvinit
+    #--#672-eudev
+    #--#677-vim
+    man-pages       #608-man-pages          #!
+    zlib            #611-zlib               #!
+    file            #612-file               #!
+    readline        #613-readline           #!
+    m4              #614-m4                 #!
+    bc              #615-bc                 #!
+    binutils        #616-binutils           #!
+    gmp             #617-gmp                #!
+    mpfr            #618-mpfr               #!
+    mpc             #619-mpc                #!
+    gcc             #620-gcc                #todo
+    bzip2           #621-bzip2              #!
+    pkg-config      #622-pkg-config         #!
+    ncurses         #623-ncurses            #!
+    attr            #624-attr               #!
+    acl             #625-acl                #!
+    libcap          #626-libcap             #!
+    sed             #627-sed                #!
+    psmisc          #629-psmisc             #!
+    iana-etc        #630-iana-etc           #!
+    bison           #631-bison              #!
+    flex            #632-flex               #!
+    grep            #633-grep               #!
+    bash            #634-bash               #multi
     libtool         #635-libtool            #!
     gdbm            #636-gdbm               #!
-    GPerf           #637-gperf              #X
+    gperf           #637-gperf              #!
     expat           #638-expat              #!
-    InetUtils       #639-inetutils          #X
+    inetutils       #639-inetutils          #!
     perl            #640-perl               #!
     perl-xml-parser #641-xml-parser         #!
-    ###642-intltool
-    AutoConf        #643-autoconf           #X
-    AutoMake        #644-automake           #X
-    XzUtils         #645-xz                 #X
-    ###646-kmod
+    intltool        #642-intltool           #!
+    autoconf        #643-autoconf           #!
+    automake        #644-automake           #multi
+    xz              #645-xz                 #!
     gettext         #647-gettext            #!
-    LibElf          #648-libelf             #X
-    LibFFI          #649-libffi             #X
-    OpenSSL         #650-openssl            #X
+    libelf          #648-libelf             #!
+    libffi          #649-libffi             #!
+    openssl         #650-openssl            #!
     python3         #651-python             #!
-    #--#652-ninja
-    #--#653-meson
+    ninja           #652-ninja              #!
+    meson           #653-meson              #!
     procps-ng       #654-procps-ng          #!
     e2fsprogs       #655-e2fsprogs          #!
     coreutils       #656-coreutils          #!
@@ -58,29 +65,30 @@ TODO=(
     gawk            #659-gawk               #!
     findutils       #660-findutils          #!
     groff           #661-groff              #!
-    #--#662-grub
     less            #663-less               #!
     gzip            #664-gzip               #!
-    #665-iproute
-    #666-kbd
     libpipeline     #667-libpipeline        #!
     make            #668-make               #!
     patch           #669-patch              #!
-    #--#670-sysklogd
-    #--#671-sysvinit
-    #--#672-eudev
-    util-linux      #673-utillinux          #?
+    util-linux      #673-utillinux          #multi
     man-db          #674-man-db             #!
     tar             #675-tar                #!
     texinfo         #676-texinfo            #!
-    #--#677-vim
-    LibLZO                                  #X
-    LibUV                                   #X
+    lzo                                     #!
+    less                                    #!
+    libuv                                   #!
     isl                                     #!
     tree                                    #!
     which                                   #!
     ed                                      #!
+    libarchive                              #!
+    icu                                     #!
+    lzip                                    #!
     nano                                    #!
+    python2                                 #!
+    strace                                  #!
+    curl                                    #!
+    cmake                                   #....
 )
 
 if [[ "${1}" == "clean" ]]; then

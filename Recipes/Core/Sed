@@ -2,24 +2,18 @@
 
 Title="Sed"
 Home=(http://sed.sourceforge.net/ https://www.gnu.org/software/sed/)
-Name=Sed
+Name=sed
 Version=4.5
-ToolDeps=()
-BuildDeps=()
-Supplies=(https://ftpmirror.gnu.org/gnu/sed/sed-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build()
 {
-    #sed -i 's/usr/tools/'                 build-aux/help2man
-    #sed -i 's/testsuite.panic-tests.sh//' Makefile.in
-
     ./configure \
         --prefix=/usr   \
         --disable-nls
 
     make
     make html
-    #make check
     make install
     install -v -d -m755           /usr/share/doc/sed
     install -v -m644 doc/sed.html /usr/share/doc/sed

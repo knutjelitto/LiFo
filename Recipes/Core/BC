@@ -1,11 +1,11 @@
 #!/bin/bash
 
-Title="BC"
+Title="GNU bc"
 Home=(https://www.gnu.org/software/bc/)
-Name=BC
+Name=bc
 Version=1.07.1
-ToolDeps=(Flex Ed)
-BuildDeps=(LibReadline)
+ToolDeps=(flex ed)
+BuildDeps=(readline)
 Supplies=(https://ftpmirror.gnu.org/gnu/bc/bc-$Version.tar.gz)
 
 Build()

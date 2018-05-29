@@ -4,6 +4,7 @@ Title="Procps-NG"
 Home=(https://sourceforge.net/projects/procps-ng/ https://gitlab.com/procps-ng/procps)
 Name=procps-ng
 Version=3.3.15
+BuildDeps=(ncurses)
 Supplies=(http://sourceforge.net/projects/$Name/files/Production/$Name-$Version.tar.xz)
 
 Build()

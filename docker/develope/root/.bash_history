@@ -1,78 +1,3 @@
-../configure --help | less
-which sed
-../configure --help | less
-which sed
-cd /usr/lib/gcc/
-cd x86_64-pc-linux-gnu/
-cd 7.3.0/
-cd 7.3.0/
-cd /Data/Compile/Sources/gcc-7.3.0/
-cd contrib
-less download_prerequisites 
-nano
-./configure --help
-which sed
-env
-cd /usr/bin/
-ls -l sed
-..
-whcih sed
-which sed
-./configure --help
-./configure --help
-less config.status 
-grep docdir config.status 
-which sed
-./configure --help
-./configure --help
-less config.status 
-grep docdir config.status 
-cd doc
-cd -
-less Makefile 
-cd include/
-less builddefs
-less builddefs.in 
-ping www.google.com
-pogo core shell
-cd /Data/Variable/Store/Core/
-ls -la
-poco LibReadli
-rm -rv .rollout/
-cd /Data/Compile/Build/Core/LibCap-2.25/Changes/
-find
-find -ls
-cd /Data/Compile/Roots/Tools/usr/lib
-ll libre*
-cd lib
-ls -l libre*
-cd Core/
-find . -name '*.old'
-cd usr/lib/
-rm *.old
-cd Variable/Store/
-poco LibReadline
-poco LibReeadline done
-cd Compile/Roots/Core/
-poco LibReadline done
-less /Data/Variable/Store/Core/LibReadline-7.0/Bom 
-find ../..
-find ../.. -name '*.old'
-poco LibCap
-poco LibCap done
-man test
-help test
-cd .rl
-cd .rollout/
-ll
-rm *
-cd..
-cd ..
-poco loop
-cd ..
-poco loop
-which
-loacale -a
 locale -a
 locale -a | less
 man locale
@@ -498,3 +423,78 @@ less Makefile-libbz2_so
 grep rmt *
 ../configure --help
 ./configure --help
+cd lib/
+cd /usr/lib
+ll
+ls -l libnc*
+ll
+less INSTALL
+ll
+less Makefile-libbz2_so 
+grep rmt *
+../configure --help
+./configure --help
+poco m4
+poco flex
+poco flex done
+poco ed
+poco ed done
+poco readline new
+poco readline new done
+poco bc
+poco bc done
+poco gmp
+poco man-pages
+poco man-pages done
+poco zlib
+poco zlib done
+poco file
+poco file done
+poco readline
+poco readline done
+poco m4 done
+poco gmp done
+poco mpfr
+poco mpfr done
+poco mpc
+poco bzip2
+poco bzip2 done
+poco pkg-config
+poco pkg-config done
+poco ncurses
+poco ncurses done
+poco attr
+poco attr done
+poco acl
+poco acl done
+poco libcap
+poco libcap done
+poco lsed
+poco sed
+poco acl
+poco acl done
+poco libcap
+poco libcap done
+poco lsed
+ping www.google.de
+poco tree
+poco tree done
+poco which
+poco which done
+poco xz
+poco xz done
+poco sed
+poco sed done
+poco tzdata
+poco tzdata done
+poco ninja
+poco ninja done
+poco meson
+poco meson done
+poco strace
+poco strace done
+poco icu
+poco icu done
+poco curl
+poco curl done
+poco cmake

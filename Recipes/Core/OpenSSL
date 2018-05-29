@@ -2,7 +2,7 @@
 
 Title="OpenSSL"
 Home=(https://www.openssl.org/)
-Name=OpenSSL
+Name=openssl
 Version=1.1.0h
 Supplies=(https://openssl.org/source/openssl-$Version.tar.gz)
 

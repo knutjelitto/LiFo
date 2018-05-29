@@ -2,16 +2,14 @@
 
 Title="GCC"
 Home=(https://www.gnu.org/software/gcc/)
-Name=GCC
+Name=gcc
 Version=7.3.0
 BuildIn=build
 BuildDeps=(LibISL LibGMP LibMPFR LibMPC LibZLib)
-Supplies=(https://ftpmirror.gnu.org/gnu/gcc/gcc-$Version/gcc-$Version.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version/$Name-$Version.tar.xz)
 
 Build()
 {
-    #bash -l; exit
-
     sed -e '/m64=/s/lib64/lib/' -i.orig ../gcc/config/i386/t-linux64
 
     # optional: --disable-bootstrap

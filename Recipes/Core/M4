@@ -2,14 +2,13 @@
 
 Title="M4"
 Home="https://www.gnu.org/software/m4/"
-Name=M4
+Name=m4
 Version=1.4.18
-Supplies=(https://ftpmirror.gnu.org/gnu/m4/m4-1.4.18.tar.xz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 
 Build() 
 {
     ./configure --prefix=/usr
     make
-    #make check
     make install
 }

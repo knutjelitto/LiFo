@@ -2,7 +2,7 @@
 
 Title="Acl"
 Home=(https://savannah.nongnu.org/projects/acl/)
-Name=Acl
+Name=acl
 Version=2.2.52
 Supplies=(http://download.savannah.gnu.org/releases/acl/acl-$Version.src.tar.gz)
 

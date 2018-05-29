@@ -1,10 +1,10 @@
 #!/bin/bash
 
-Title="LibLZO"
+Title="LZO"
 Home=(http://www.oberhumer.com/opensource/lzo/)
-Name=LibLZO
+Name=luo
 Version=2.10
-Supplies=(http://www.oberhumer.com/opensource/lzo/download/lzo-2.10.tar.gz)
+Supplies=(http://www.oberhumer.com/opensource/lzo/download/lzo-$Version.tar.gz)
 
 Build()
 {
@@ -14,6 +14,5 @@ Build()
                 --disable-static
 
     make
-    #make check
     make install
 }

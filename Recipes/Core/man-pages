@@ -2,11 +2,9 @@
 
 Title="Man pages"
 Home=https://www.kernel.org/doc/man-pages/
-Name=ManPages
+Name=man-pages
 Version=4.16
-Supplies=(
-    https://www.kernel.org/pub/linux/docs/man-pages/man-pages-$Version.tar.xz
-)
+Supplies=(https://www.kernel.org/pub/linux/docs/man-pages/man-pages-$Version.tar.xz)
 
 Build() 
 {
