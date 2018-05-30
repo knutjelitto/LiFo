@@ -1,6 +1,4 @@
 #!/bin/bash -eu
 EnterWorldOfPogo
 
-EnsurePogoEnvironment
-
 tree --noreport -a -d -L 12 $PogoVolume

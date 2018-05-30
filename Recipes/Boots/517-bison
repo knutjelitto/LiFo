@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="5.17. Bison-3.0.4"
-Name=Bison
+Name=bison
 Version=3.0.4
 Supplies=(http://ftp.gnu.org/gnu/bison/bison-3.0.4.tar.xz)
 

@@ -1,9 +1,12 @@
-#!/bin/bash -eu
+#!/bin/bash
 EnterWorldOfPogo Boots
 NeverInChroot
 
-pogo boots empty
+pogo boots clean
 
+for recipe in {504..534}; do
+    pogo boots download $recipe
+done
 for recipe in {504..534}; do
     pogo boots build $recipe
     pogo boots harvest $recipe

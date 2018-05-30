@@ -1,13 +1,15 @@
 #!/bin/bash
 
 Title="5.11. Tcl-core-8.6.8"
-Name=TclCore
+Name=tcl-core
 Version=8.6.8
 Supplies=(https://downloads.sourceforge.net/tcl/tcl8.6.8-src.tar.gz)
 BuildIn=unix
 
 Build() 
 {
+    return 0
+    
     ./configure --prefix=/tools
 
     make

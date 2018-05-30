@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title='5.4. Binutils-2.30 - Pass 1'
-Name=Binutils1
+Name=binutils-1
 Version=2.30
 Supplies=(http://ftp.gnu.org/gnu/binutils/binutils-2.30.tar.xz)
 BuildIn=build

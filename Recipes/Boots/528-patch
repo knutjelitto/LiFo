@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="5.28. Patch-2.7.6"
-Name=Patch
+Name=patch
 Version=2.7.6
 Supplies=(http://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz)
 

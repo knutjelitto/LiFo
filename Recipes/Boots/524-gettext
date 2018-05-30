@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="5.24. Gettext-0.19.8.1"
-Name=Gettext
+Name=gettext
 Version=0.19.8.1
 Supplies=(http://ftp.gnu.org/gnu/gettext/gettext-0.19.8.1.tar.xz)
 BuildIn=gettext-tools

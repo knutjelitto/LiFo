@@ -72,6 +72,36 @@ ListContains ()
     return 1
 }
 
+Fatal ()
+{
+    local prefix
+    case $0 in
+        */pogo) prefix='' ;;
+        *) prefix="pogo " ;;
+    esac
+        
+    echo "${prefix}${0##*/}:" "$@" 1>&2
+    exit 127
+}
+
+InfoExit ()
+{
+    local prefix
+    case $0 in
+        */pogo) ;;
+        *) prefix="pogo " ;;
+    esac
+        
+    echo "${prefix}${0##*/}: $1"
+
+    exit
+}
+
+Trace ()
+{
+    echo "$1" >/dev/console
+}
+
 #
 # (Re-)Create then Pogo tree
 #

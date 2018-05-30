@@ -1,12 +1,14 @@
 #!/bin/bash
 
 Title="5.12. Expect-5.45.4"
-Name=Expect
+Name=expect
 Version=5.45.4
 Supplies=(http://prdownloads.sourceforge.net/expect/expect5.45.4.tar.gz)
 
 Build() 
 {
+    return 0
+    
     cp -v configure{,.orig}
     sed 's:/usr/local/bin:/bin:' configure.orig > configure
 

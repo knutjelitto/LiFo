@@ -1,6 +1,5 @@
-#!/bin/bash -eu
-
-source "$Pogos/PogoConfig" "Core"
+#!/bin/bash
+EnterWorldOfPogo Core
 
 TODO=(
     #--#607-linux-headers
@@ -89,6 +88,7 @@ TODO=(
     strace                                  #!
     curl                                    #!
     cmake                                   #....
+    lua
 )
 
 if [[ "${1}" == "clean" ]]; then

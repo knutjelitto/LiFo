@@ -1,9 +1,16 @@
-#!/bin/bash -eu
+#!/bin/bash
 EnterWorldOfPogo Tools
 NeverInChroot
 
-pogo tools empty
+set
 
+exit
+
+pogo tools clean
+
+for recipe in {607..677}; do
+    pogo tools download $recipe
+done
 for recipe in {607..677}; do
     pogo tools build $recipe
     pogo tools harvest $recipe

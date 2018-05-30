@@ -60,10 +60,10 @@ Core_Root="$PogoRoots/$Core_Collection"
 Core_Store="$PogoStore/$Core_Collection"
 Core_Build="$PogoBuild/$Core_Collection"
 
-declare Current_Collection
-declare Current_Root
-declare Current_Store
-declare Current_Build
+declare Current_Pool
+declare Pool_Root
+declare Pool_Store
+declare Pool_Build
 
 Build_Collections=(
     "$Boots_Collection"
@@ -77,61 +77,29 @@ Recipes_Collections=(
     "$Core_Collection"
 )
 
-#if [[ -n "${1-}" ]]; then
-#    echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-#    echo "Selection: $1"
-#    echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-#fi
-
-Fatal ()
-{
-    local prefix
-    case $0 in
-        */pogo) prefix='' ;;
-        *) prefix="pogo " ;;
-    esac
-        
-    echo "${prefix}${0##*/}:" "$@" 1>&2
-    exit 127
-}
-
-InfoExit ()
-{
-    local prefix
-    case $0 in
-        */pogo) ;;
-        *) prefix="pogo " ;;
-    esac
-        
-    echo "${prefix}${0##*/}: $1"
-
-    exit
-}
-
-Trace ()
-{
-    echo "$1" >/dev/console
-}
-
 PogoExec ()
 {
-    [[ -n "$1" ]] || Fatal "no argument given"
+    [[ -n "${1:-}" ]] || Fatal "no argument given"
     script="$Pogos/$1"
     [[ -e "$script" ]] || Fatal "unknown function '$1'"
     shift
     $script "$@"
 }
 
-EnterWorldOfPogo ()
-{
-    source "$Pogos/PogoConfig" "${1-}"
-}
-
-# export function for convenience
-declare -F -x EnterWorldOfPogo
-
 verbose=--verbose
 
 source $Pogos/.pogoFunctions
 source $Pogos/.recipeFunctions
 source $Pogos/.buildFunctions
+
+echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+if [[ -n "${1-}" ]]; then
+    echo "Selection: $1"
+else
+    echo "Selection: NO SELECTION GIVEN"
+    Fatal "that's a problem"
+fi
+echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+EnsurePogoEnvironment
+

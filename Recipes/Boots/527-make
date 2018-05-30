@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="5.27. Make-4.2.1"
-Name=Make
+Name=make
 Version=4.2.1
 Supplies=(http://ftp.gnu.org/gnu/make/make-4.2.1.tar.bz2)
 

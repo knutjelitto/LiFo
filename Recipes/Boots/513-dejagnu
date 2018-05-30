@@ -1,12 +1,14 @@
 #!/bin/bash
 
 Title="5.13. DejaGNU-1.6.1"
-Name=DejaGNU
+Name=dejagnu
 Version=1.6.1
 Supplies=(http://ftp.gnu.org/gnu/dejagnu/dejagnu-1.6.1.tar.gz)
 
 Build()
 {
+    return 0
+    
     ./configure --prefix=/tools
 
     make install

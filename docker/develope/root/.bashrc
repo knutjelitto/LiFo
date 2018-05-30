@@ -1,4 +1,4 @@
-echo "sourcing ~/.bashrc"
+#!/bin/bash
 
 shopt -s checkwinsize
 umask 022
@@ -35,8 +35,17 @@ esac
 
 export Pogos="/LiFo/pogos"
 
+EnterWorldOfPogo ()
+{
+    source "$Pogos/PogoConfig" "${1:-}"
+}
+# export function for convenience
+declare -F -x EnterWorldOfPogo
+
+
 export PS1="($POGO_ENV) [\u]: \w\\$ "
 export PROMPT_COMMAND='echo -ne "\033]0;($POGO_ENV) [${USER}]: ${PWD}\007"'
 
 alias l='ls -lA'
 alias ll='ls -lA'
+alias lll='ls -lA | less'
