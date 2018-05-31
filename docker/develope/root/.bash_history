@@ -1,58 +1,3 @@
-ll
-ll | less
-./configure --help
-ll
-./configure --help
-ll
-grep usrsbin *
-less configure
-mandb
-grep usrsbin *
-less configure
-mandb
-cd /Data/Compile/Build/Core/texinfo-6.5/Changes/
-cd usr/
-ldd
-cd bin/
-ldd info
-cd ..
-cd bib
-cd lib/
-cd /usr/lib
-ll
-ls -l libnc*
-ll
-less INSTALL
-ll
-less Makefile-libbz2_so 
-grep rmt *
-../configure --help
-./configure --help
-cd lib/
-cd /usr/lib
-ll
-ls -l libnc*
-ll
-less INSTALL
-ll
-less Makefile-libbz2_so 
-grep rmt *
-../configure --help
-./configure --help
-poco m4
-poco flex
-poco flex done
-poco ed
-poco ed done
-poco readline new
-poco readline new done
-poco bc
-poco bc done
-poco gmp
-poco man-pages
-poco man-pages done
-poco zlib
-poco zlib done
 poco file
 poco file done
 poco readline
@@ -498,3 +443,58 @@ set
 pid
 help declare
 pocox lua
+ll
+pocox lua | less
+set
+pid
+help declare
+pocox lua
+clear
+ll
+poco tree break
+poco tree
+poco tree new
+poco tree done
+poco file
+poco tree break
+poco tree
+poco tree new
+poco tree done
+poco file done
+poco file
+poco ed
+poco ed done
+poco bc
+poco bc done
+poco hello done
+poco hello
+poco hello new
+poco file done
+poco file
+poco ed
+poco ed done
+poco bc
+poco bc done
+poco hello new
+poco hello
+poco hello done
+poco --download
+cd /LiFo/Recipes/Tools/
+ls -l
+ls -1
+ls -1 >../xxx.txt
+rm xxx.txt 
+cd -
+ls -1 >../../xxx.txt
+poto --download
+cd Boots/
+ls -1 >../../xxx.txt 
+pobo --download
+cd
+cd lfs
+cd ..
+rm -rv lfs/
+ll
+man sed
+pobo --build-all
+time poto --build-all

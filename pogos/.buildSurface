@@ -1,51 +1,11 @@
 #!/bin/bash (source-only)
 
-Build_Make () # collection recipe-token
+Build_Make () # recipe-token
 {
     NeverInChroot
-
-    _build_Enter "$1" "$2"
-
-    local marks="$Pool_Root/.marks"
-    local buildMarker="$marks/build-$Recipe_Name-$Recipe_Version"
-    local harvestMarker="$marks/harvest-$Recipe_Name-$Recipe_Version"
-    local rolloutMarker="$marks/rollout-$Recipe_Name-$Recipe_Version"
-
-    if [[ "new" == "${3-}" ]]; then
-        RemoveDir $marks
-    fi
-
-    if [[ "break" == "${3-}" ]]; then
-        _build_Break
-        return
-    fi
-
-    if [[ ! -f $buildMarker || "$Recipe_File" -nt "$buildMarker" ]]; then
-        RemoveFile $buildMarker $harvestMarker $rolloutMarker
-        _build_Build
-        Touch $buildMarker
-    fi
-
-    if [[ ! -f $harvestMarker ]]; then
-        _build_Harvest
-        Touch $harvestMarker
-    fi
-
-    if [[ "done" == "${3-}" ]]; then
-        if [[ ! -f $rolloutMarker || $harvestMarker -nt $rolloutMarker ]]; then
-            _harvest_Rollout
-            Touch $rolloutMarker
-        fi
-    fi
-}
-
-Build_Make2 () # recipe-token
-{
-    NeverInChroot
-
     Pool_Checker
 
-    _build_ENTER "${1-}"
+    _build_ENTER "${1:-}"
 
     local marks="$Pool_Root/.marks"
     local buildMarker="$marks/build-$Recipe_Name-$Recipe_Version"
@@ -62,22 +22,14 @@ Build_Make2 () # recipe-token
     if [[ "build" == "$command" ]]; then
         if [[ ! -f $buildMarker || "$Recipe_File" -nt "$buildMarker" ]]; then
             RemoveFile $buildMarker $harvestMarker $rolloutMarker
-            _build_Build2
+            _build_Build
             Touch $buildMarker
         fi
     fi
 
-    return 0
-
-    if [[ "break" == "${2-}" ]]; then
+    if [[ "break" == "$command" ]]; then
         _build_Break
         return
-    fi
-
-    if [[ ! -f $buildMarker || "$Recipe_File" -nt "$buildMarker" ]]; then
-        RemoveFile $buildMarker $harvestMarker $rolloutMarker
-        _build_Build
-        Touch $buildMarker
     fi
 
     if [[ ! -f $harvestMarker ]]; then
@@ -85,7 +37,7 @@ Build_Make2 () # recipe-token
         Touch $harvestMarker
     fi
 
-    if [[ "done" == "${3-}" ]]; then
+    if [[ "done" == "$command" ]]; then
         if [[ ! -f $rolloutMarker || $harvestMarker -nt $rolloutMarker ]]; then
             _harvest_Rollout
             Touch $rolloutMarker
@@ -93,14 +45,6 @@ Build_Make2 () # recipe-token
     fi
 }
 
-
-Build_Build2 () # recipe.token
-{
-    NeverInChroot
-
-    _build_ENTER "$1"
-    _build_Build
-}
 
 Build_Build () # collection recipe
 {
@@ -110,13 +54,12 @@ Build_Build () # collection recipe
     _build_Build
 }
 
-Build_Download () # collection recipe
+Build_Download () # recipe
 {
     NeverInChroot
 
-    _build_Enter "$@"
-    _build_EnsureBuild
-    _build_ProvideSupplies
+    _build_ENTER "$1"
+    _build_DownloadSupplies
 }
 
 Build_Setup () # collection recipe
@@ -138,11 +81,11 @@ Build_Shell () # collection recipe
     _build_ExecInChroot
 }
 
-Build_Break ()
+Build_Break () # recipe-token
 {
     OnlyInChroot
 
-    _build_Enter "$@"
+    _build_ENTER "$1"
     _build_EnsureBuild
 
     Header "BREAK $Current_Pool / $Recipe_Title"
@@ -182,9 +125,8 @@ Build_CleanAll ()
 {
     NeverInChroot
 
-    RemoveDir $Pool_Root
-    RemoveDir $Pool_Build
-    RemoveDir $Pool_Store
+    _build_CleanPool
+    _build_EnsurePool
 }
 
 RootMakeDir ()
@@ -210,7 +152,16 @@ _chroot_MountOverlay ()
 {
     local lowerdir="$1"
     local options="lowerdir=$lowerdir,upperdir=$Box_Changes,workdir=$Box_Work"
-    mount $verbose --types overlay overlay --options "$options" "$Box_Merged"
+    
+    declare -p lowerdir
+    declare -p Box_Changes
+    declare -p Box_Merged
+    declare -p Box_Work
+    declare -p options
+
+    Assert_Box
+
+    mount "$verbose" --types overlay overlay --options "$options" "$Box_Merged"
 }
 
 _chroot_MountCommons ()
@@ -235,6 +186,7 @@ _chroot_exec ()
     local command="${3-}"
 
     trap '_build_Unmount || true' EXIT
+
 
     _chroot_MountOverlay "$lowerdir"
     _chroot_MountCommons

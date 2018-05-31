@@ -6,7 +6,7 @@ Name=bc
 Version=1.07.1
 ToolDeps=(flex ed)
 BuildDeps=(readline)
-Supplies=(https://ftpmirror.gnu.org/gnu/bc/bc-$Version.tar.gz)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
 
 Build()
 {

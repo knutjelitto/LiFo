@@ -1,7 +1,7 @@
 #!/bin/bash (source-only)
 
 RecipeRequiredVars=(Title Name Version Supplies)
-RecipeOptionalVars=(Home BuildIn)
+RecipeOptionalVars=(Home BuildIn BuildDeps RunDeps ToolDeps)
 RecipeRequiredFuncs=()
 RecipeOptionalFuncs=(Prepare Build Cleanup)
 
@@ -116,10 +116,11 @@ _recipeSource ()
     declare -p Recipe_File | sed 's/ -- / -g /'
     declare -p Recipe_Tag | sed 's/ -- / -g /'
     declare -p Title | sed 's/-- Title=/-g Recipe_Title=/'
+    declare -p Home | sed 's/-- Home=/-g Recipe_Home=/'
     declare -p Name | sed 's/-- Name=/-g Recipe_Name=/'
     declare -p Version | sed 's/-- Version=/-g Recipe_Version=/'
-    declare -p Supplies | sed 's/-a Supplies=/-ga Recipe_Supplies=/'
     declare -p BuildIn | sed 's/-- BuildIn=/-g Recipe_BuildIn=/'
+    declare -p Supplies | sed 's/-a Supplies=/-ga Recipe_Supplies=/'
 }
 
 Recipe_Dump ()
@@ -130,6 +131,7 @@ Recipe_Dump ()
     declare -p Recipe_Tag
 
     declare -p Recipe_Title
+    declare -p Recipe_Home
     declare -p Recipe_Name
     declare -p Recipe_Version
     declare -p Recipe_Supplies

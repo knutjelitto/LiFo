@@ -76,7 +76,7 @@ _harvest_Archive ()
 _harvest_Rollout ()
 {
     Pushd "$Pool_Root"
-    tar $verbose --extract --file="$Store_FilesFiles"
+    tar $verbose --extract --file="$Store_FilesFiles" | sed -u -e 's/^/ROLLOUT: /'
     Popd
 }
 

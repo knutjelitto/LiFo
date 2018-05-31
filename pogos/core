@@ -1,6 +1,0 @@
-#!/bin/bash -eu
-EnterWorldOfPogo Core
-
-action="${1:-undefined}"
-shift || true
-PogoExec "core-$action" "$@"

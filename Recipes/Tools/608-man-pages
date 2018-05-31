@@ -1,4 +1,4 @@
 #!/bin/bash (source only)
 
 Title="6.8. Man-pages-4.15"
-Redirect=Core/ManPages
+Redirect=Core/man-pages

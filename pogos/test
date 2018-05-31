@@ -1,6 +1,2 @@
 #!/bin/bash -e
 EnterWorldOfPogo Boots
-
-Build_Build Boots 504
-
-tree --noreport -a -d -L 12 /Data

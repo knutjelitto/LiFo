@@ -1,0 +1,15 @@
+#!/bin/bash (source-only)
+
+Title="GNU hello"
+Home=(https://www.gnu.org/software/hello/)
+Name=hello
+Version=2.10
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
+
+Build()
+{
+    ./configure --prefix=/usr --disable-nls
+
+    make
+    make install
+}

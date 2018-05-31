@@ -1,7 +1,0 @@
-#!/bin/bash -eu
-EnterWorldOfPogo Core
-NeverInChroot
-
-RemoveDir $Core_Root
-RemoveDir $Core_Build
-RemoveDir $Core_Store

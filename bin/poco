@@ -1,8 +1,8 @@
 #!/bin/bash
-EnterWorldOfPogo Core
+source "$Pogos/.config" Core
+Pool_Checker
 
 TODO=(
-    #--#607-linux-headers
     #--#609-glibc
     #--#610-adjusting
     #--#628-shadow
@@ -14,6 +14,7 @@ TODO=(
     #--#671-sysvinit
     #--#672-eudev
     #--#677-vim
+    linux-headers
     man-pages       #608-man-pages          #!
     zlib            #611-zlib               #!
     file            #612-file               #!
@@ -91,16 +92,15 @@ TODO=(
     lua                                     #....
 )
 
-if [[ "${1}" == "clean" ]]; then
-    pogo core empty
-elif [[ "${1}" == "shell" ]]; then
-    pogo core shell
-elif [[ "${2-}" == "done" ]]; then
-    pogo core make "$1" 'done'
-elif [[ "${2-}" == "break" ]]; then
-    pogo core make "$1" 'break'
-elif [[ "${2-}" == "new" ]]; then
-    pogo core make "$1" 'new'
+if [[ "${1:-}" == "--cleanall" ]]; then
+    Build_CleanAll
+elif [[ "${1:-}" == "--shell" ]]; then
+    true
+elif [[ "${1:-}" == "--download" ]]; then
+    for recipe in "${TODO[@]}"; do
+        Build_Download "$recipe"
+    done
 else
-    pogo core make "$1"
+    # $1 must be recipe-token
+    Build_Make "$1" "${2:-}"
 fi

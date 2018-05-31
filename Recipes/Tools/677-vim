@@ -3,7 +3,7 @@
 Title="6.77. Vim-8.0.586"
 Name=Vim
 Version=8.0.586
-Supplies=(ftp://ftp.vim.org/pub/vim/unix/vim-8.0.586.tar.bz2)
+Supplies=(http://ftp.vim.org/pub/vim/unix/vim-8.0.586.tar.bz2)
 
 Build ()
 {

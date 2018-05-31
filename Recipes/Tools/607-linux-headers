@@ -1,4 +1,4 @@
 #!/bin/bash (source only)
 
 Title="6.7. Linux-4.15.3 API Headers"
-Redirect=Core/LinuxHeaders
+Redirect=Core/linux-headers

@@ -1,4 +1,0 @@
-#!/bin/bash -eu
-EnterWorldOfPogo Tools
-
-Build_Build Tools "$@"

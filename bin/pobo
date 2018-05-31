@@ -1,0 +1,59 @@
+#!/bin/bash
+source "$Pogos/.config" Boots
+Pool_Checker
+
+TODO=(
+    504-binutils-1
+    505-gcc-1
+    506-linux-headers
+    507-glibc
+    508-libcpp
+    509-binutils-2
+    510-gcc-2
+    #511-tcl-core
+    #512-expect
+    #513-dejagnu
+    514-m4
+    515-ncurses
+    516-bash
+    517-bison
+    518-bzip2
+    519-coreutils
+    520-diffutils
+    521-file
+    522-findutils
+    523-gawk
+    524-gettext
+    525-grep
+    526-gzip
+    527-make
+    528-patch
+    529-perl
+    530-sed
+    531-tar
+    532-texinfo
+    533-util-linux
+    534-xz
+)
+
+if [[ "${1:-}" == "--cleanall" ]]; then
+    Build_CleanAll
+elif [[ "${1:-}" == "--shell" ]]; then
+    true
+elif [[ "${1:-}" == "--download" ]]; then
+    for recipe in "${TODO[@]}"; do
+        Build_Download "$recipe"
+    done
+elif [[ "${1:-}" == "--build-all" ]]; then
+    Build_CleanAll
+    for recipe in "${TODO[@]}"; do
+        Build_Download "$recipe"
+    done
+    for recipe in "${TODO[@]}"; do
+        Build_Make "$recipe" build
+        Build_Make "$recipe" done
+    done
+else
+    # $1 must be recipe-token
+    Build_Make "$1" "${2:-}"
+fi
