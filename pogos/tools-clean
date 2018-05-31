@@ -1,7 +1,0 @@
-#!/bin/bash -eu
-EnterWorldOfPogo Tools
-NeverInChroot
-
-RemoveDir $Tools_Root
-RemoveDir $Tools_Build
-RemoveDir $Tools_Store

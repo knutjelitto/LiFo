@@ -1,5 +1,5 @@
 #!/bin/bash -eu
-source "$Pogos/.config" "$1"
+source "$Pogos/.pogoConfig" "$1"
 
 Build_Break "$2"
 

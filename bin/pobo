@@ -1,5 +1,5 @@
 #!/bin/bash
-source "$Pogos/.config" Boots
+source "$Pogos/.pogoConfig" Boots
 Pool_Checker
 
 TODO=(

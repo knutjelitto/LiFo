@@ -46,28 +46,12 @@ Build_Make () # recipe-token
 }
 
 
-Build_Build () # collection recipe
-{
-    NeverInChroot
-
-    _build_Enter "$@"
-    _build_Build
-}
-
 Build_Download () # recipe
 {
     NeverInChroot
 
     _build_ENTER "$1"
     _build_DownloadSupplies
-}
-
-Build_Setup () # collection recipe
-{
-    NeverInChroot
-
-    _build_Enter "$@"
-    _build_EnsureBuild
 }
 
 Build_Shell () # collection recipe
@@ -93,19 +77,6 @@ Build_Break () # recipe-token
     Pushd "$Box_Build"
     _build_EnterTop && bash -l
     Popd
-}
-
-Build_Compile ()
-{
-    OnlyInChroot
-
-    _build_Enter "$@"
-    _build_EnsureBuild
-
-    Header "BUILD $Current_Pool / $Recipe_Title"
-
-    _build_RecipePrepare
-    _build_RecipeBuild
 }
 
 Build_Compile2 () # recipe-token
@@ -427,25 +398,4 @@ _build_Unmount ()
     done
 
     true
-}
-
-Build_Harvest ()
-{
-    NeverInChroot
-
-    _build_Enter "$@"
-    _build_EnsureBuild
-
-    _build_Harvest
-}
-
-Build_Rollout ()
-{
-    NeverInChroot
-
-    _build_Enter "$@"
-
-    Header "ROLLOUT $Current_Pool / $Recipe_Title"
-
-    _harvest_Rollout
 }

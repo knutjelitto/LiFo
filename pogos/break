@@ -1,5 +1,0 @@
-#!/bin/bash -eu
-EnterWorldOfPogo
-
-Build_Break "$@"
-

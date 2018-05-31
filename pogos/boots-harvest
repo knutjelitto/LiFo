@@ -1,3 +1,0 @@
-#!/bin/bash
-EnterWorldOfPogo Boots
-Build_Harvest Boots "$@"

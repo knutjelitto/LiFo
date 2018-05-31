@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 echo "COMPILE2"
-source "$Pogos/.config" "$1"
+source "$Pogos/.pogoConfig" "$1"
 
 Build_Compile2 "$2"
 

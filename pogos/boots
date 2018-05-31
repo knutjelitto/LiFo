@@ -1,6 +1,0 @@
-#!/bin/bash
-EnterWorldOfPogo Boots
-
-action="${1:-undefined}"
-shift || true
-PogoExec "boots-$action" "$@"

@@ -1,5 +1,5 @@
 #!/bin/bash
-source "$Pogos/.config" Tools
+source "$Pogos/.pogoConfig" Tools
 Pool_Checker
 
 TODO=\

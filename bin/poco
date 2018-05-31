@@ -1,5 +1,5 @@
 #!/bin/bash
-source "$Pogos/.config" Core
+source "$Pogos/.pogoConfig" Core
 Pool_Checker
 
 TODO=(
@@ -14,7 +14,7 @@ TODO=(
     #--#671-sysvinit
     #--#672-eudev
     #--#677-vim
-    linux-headers
+    #linux-headers
     man-pages       #608-man-pages          #!
     zlib            #611-zlib               #!
     file            #612-file               #!
@@ -99,6 +99,15 @@ elif [[ "${1:-}" == "--shell" ]]; then
 elif [[ "${1:-}" == "--download" ]]; then
     for recipe in "${TODO[@]}"; do
         Build_Download "$recipe"
+    done
+elif [[ "${1:-}" == "--build-all" ]]; then
+    Build_CleanAll
+    for recipe in "${TODO[@]}"; do
+        Build_Download "$recipe"
+    done
+    for recipe in "${TODO[@]}"; do
+        Build_Make "$recipe" build
+        Build_Make "$recipe" done
     done
 else
     # $1 must be recipe-token

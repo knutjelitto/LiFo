@@ -1,6 +1,0 @@
-#!/bin/bash -ue
-EnterWorldOfPogo Tools
-
-action="${1:-undefined}"
-shift || true
-PogoExec "tools-$action" "$@"

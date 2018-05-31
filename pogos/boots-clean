@@ -1,7 +1,0 @@
-#!/bin/bash
-EnterWorldOfPogo Boots
-NeverInChroot
-
-RemoveDir $Boots_Root
-RemoveDir $Boots_Build
-RemoveDir $Boots_Store

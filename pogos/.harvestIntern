@@ -85,7 +85,7 @@ _harvest_Bom () # bomFile topDir
     local bomFile="$1"
     local topDir="$2"
     local blackoutScript='
-        $6 ~ /^tools\/share\/(info|man|doc)\// { next; }
+        $6 ~ /^tools\/share\/(info|man|doc|locale)\// { next; }
         $6 ~ /^Data/ { next; }
         $6 ~ /^tmp/ { next; }
         $6 ~ /^bin$/ { next; }

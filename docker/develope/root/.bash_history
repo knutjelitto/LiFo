@@ -1,4 +1,3 @@
-poco file
 poco file done
 poco readline
 poco readline done
@@ -498,3 +497,4 @@ ll
 man sed
 pobo --build-all
 time poto --build-all
+time poco --build-all
