@@ -1,6 +1,0 @@
-#!/bin/bash -eu
-
-source "$Pogos/PogoConfig" "${1:-}"
-
-shift
-PogoExec "$@"

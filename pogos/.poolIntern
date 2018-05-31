@@ -1,0 +1,36 @@
+#!/bin/bash (source-only)
+
+_pool_ENTER () # pool-name
+{
+    [[ -n "${1-}" ]] || Fatal "no pool name given"
+
+    local pool_name="${1}"
+
+    case "${pool_name^^}" in
+        BOOTS)  Current_Pool=Boots ;;
+        TOOLS)  Current_Pool=Tools ;;
+        CORE)   Current_Pool=Core ;;
+        *)      Fatal "unknown pool: '$1'"
+                ;;
+    esac
+    Pool_Root="$PogoRoots/$Current_Pool"
+    Pool_Store="$PogoStore/$Current_Pool"
+    Pool_Build="$PogoBuild/$Current_Pool"
+
+    MakeDir $Pool_Root $Pool_Store $Pool_Build
+
+    #if [[ -n "{verbose}" ]]; then
+    #    declare -p Current_Pool
+    #    declare -p Pool_Root
+    #    declare -p Pool_Store
+    #    declare -p Pool_Build
+    #fi
+}
+
+Pool_Checker ()
+{
+    [[ -n "${Current_Pool:-}" ]] || Fatal '$Current_Pool not set'
+    [[ -n "${Pool_Root:-}" ]] || Fatal '$Pool_Root not set'
+    [[ -n "${Pool_Store:-}" ]] || Fatal '$Pool_Store not set'
+    [[ -n "${Pool_Build:-}" ]] || Fatal '$Pool_Build not set'
+}

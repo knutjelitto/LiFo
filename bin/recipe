@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 
-source "$Pogos/PogoConfig" ""
+source "$Pogos/.config" ""
 
 what=recipe-"$1"; shift
 PogoExec "$what" "$@"

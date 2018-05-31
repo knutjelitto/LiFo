@@ -1,31 +1,3 @@
-cd Archives/
-cd Sources/
-cd Store/
-cd System/Kernel/
-cd Config/
-cd Settings/
-cd Environment/
-cd Cache 
-less Cache 
-cd ll
-cd Index/
-cd bin
-cd ..
-cd ../../usr/
-cd libexec/
-ll
-cd
-cd bin
-cd ..
-cd ../../usr/
-cd libexec/
-cd
-autoconf
-find . -name '*.log'
-autoreconf 
-man autoconf
-autoconf -v
-less configure.ac
 ll
 ll | less
 ./configure --help
@@ -498,3 +470,31 @@ EnterWorldOfPogo Core
 env
 set
 set | less
+EnterWorldOfPogo
+EnterWorldOfPogo Core
+env
+set
+set | less
+poco lua
+cd /Data/Compile/Roots/
+tar cvaf Boots.tar.xz Boots/
+tar cvaf Tools.tar.xz Tools/
+du - Core
+tar cvaf Core.tar.xz Core/
+ll
+cd
+pocox lua´
+pocox lua
+clear
+pocox lua
+pocox lua | less
+pocox lua
+ll
+cd
+pocox lua´
+clear
+pocox lua | less
+set
+pid
+help declare
+pocox lua

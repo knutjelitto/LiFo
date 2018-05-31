@@ -35,14 +35,6 @@ esac
 
 export Pogos="/LiFo/pogos"
 
-EnterWorldOfPogo ()
-{
-    source "$Pogos/PogoConfig" "${1:-}"
-}
-# export function for convenience
-declare -F -x EnterWorldOfPogo
-
-
 export PS1="($POGO_ENV) [\u]: \w\\$ "
 export PROMPT_COMMAND='echo -ne "\033]0;($POGO_ENV) [${USER}]: ${PWD}\007"'
 

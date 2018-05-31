@@ -1,4 +1,4 @@
-#!/bin/bash -ue
+#!/bin/bash
 EnterWorldOfPogo Boots
 
 action="${1:-undefined}"

@@ -1,5 +1,6 @@
 #!/bin/bash
-EnterWorldOfPogo Core
+source "$Pogos/.config" Core
+Pool_Checker
 
 TODO=(
     #--#607-linux-headers
@@ -91,6 +92,17 @@ TODO=(
     lua                                     #....
 )
 
+if [[ "${1:-}" == "--clean" ]]; then
+    Build_CleanAll
+elif [[ "${1:-}" == "--shell" ]]; then
+    true
+else
+    # $1 must be recipe-token
+    Build_Make2 "$1" "${2:-}"
+fi
+
+exit 0
+
 if [[ "${1}" == "clean" ]]; then
     pogo core empty
 elif [[ "${1}" == "shell" ]]; then
@@ -102,5 +114,12 @@ elif [[ "${2-}" == "break" ]]; then
 elif [[ "${2-}" == "new" ]]; then
     pogo core make "$1" 'new'
 else
+    Pool_Checker
+    if [[ -z "$Current_Pool" ]]; then
+        Fatal "no pool set"
+    else
+        declare -p "$Current_Pool"
+    fi
+    declare -pf Build_Make
     pogo core make "$1"
 fi

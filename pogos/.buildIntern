@@ -1,0 +1,337 @@
+#!/bin/bash (source-only)
+
+_build_Break ()
+{
+    _build_CleanBuild
+    _build_EnsureBuild
+    _build_ProvideSupplies
+    _build_MakeRootFs
+    _build_ExecInChroot "pogo break $Current_Pool $Recipe_Token"
+}
+
+_build_Build ()
+{
+    _build_CleanBuild
+    _build_EnsureBuild
+    _build_ProvideSupplies
+    _build_MakeRootFs
+    _build_ExecInChroot "pogo compile2 $Current_Pool $Recipe_Token"
+    _build_RecipeCleanup
+}
+
+_build_Build2 ()
+{
+    _build_CleanBuild
+    _build_EnsureBuild
+    _build_ProvideSupplies
+    _build_MakeRootFs
+    _build_ExecInChroot "pogo-chroot-compile $Current_Pool $Recipe_Token"
+    _build_RecipeCleanup
+}
+
+_build_Enter () # build name
+{
+    _pool_Enter "${1:-}"
+
+    if [[ -n "${2-}" ]]; then
+        RecipeSource "${2}"
+        Box_Top="$Pool_Build/$Recipe_Tag"
+        Store_Top="$Pool_Store/$Recipe_Tag"
+    else
+        Box_Top="$Pool_Build/SHELL"
+        Store_Top="$Pool_Store/SHELL"
+    fi
+
+    Box_Root=$Box_Top/Root
+    Box_Changes=$Box_Top/Changes
+    Box_Work=$Box_Top/Work
+    Box_Merged=$Box_Top/Merged
+    Box_Build=$Box_Top/Build
+    Store_Logs=$Store_Top/Logs
+    Store_FilesBom="$Store_Top/Bom"
+    Store_FilesFiles="$Store_Top/Files.tar.xz"
+    Store_Files=("$Store_FilesBom" "$Store_FilesFiles")
+
+    #if [[ -n "{verbose}" ]]; then
+    #    declare -p Box_Top
+    #    declare -p Box_Root
+    #    declare -p Box_Changes
+    #    declare -p Box_Work
+    #    declare -p Box_Merged
+    #    declare -p Box_Build
+    #    declare -p Store_Top
+    #    declare -p Store_Logs
+    #fi
+}
+
+_build_Enter2 () # build name
+{
+    [[ -n "${1-}" ]] || Fatal "build name must be given"
+    local collection="${1^}"
+    local name
+    if ! ListContains "$collection" "${Build_Collections[@]}"; then
+        Fatal "build name '$collection' is not in (${Build_Collections[@]})"
+    fi
+    
+    Current_Pool=$collection
+    name="${collection}_Root"
+    Pool_Root=${!name}
+    name="${collection}_Store"
+    Pool_Store=${!name}
+    name="${collection}_Build"
+    Pool_Build=${!name}
+
+    #if [[ -n "{verbose}" ]]; then
+    #    declare -p Current_Pool
+    #    declare -p Pool_Root
+    #    declare -p Pool_Store
+    #    declare -p Pool_Build
+    #fi
+
+    if [[ -n "${2-}" ]]; then
+        RecipeSource "${2}"
+        Box_Top="$Pool_Build/$Recipe_Tag"
+        Store_Top="$Pool_Store/$Recipe_Tag"
+    else
+        Box_Top="$Pool_Build/SHELL"
+        Store_Top="$Pool_Store/SHELL"
+    fi
+
+    Box_Root=$Box_Top/Root
+    Box_Changes=$Box_Top/Changes
+    Box_Work=$Box_Top/Work
+    Box_Merged=$Box_Top/Merged
+    Box_Build=$Box_Top/Build
+    Store_Logs=$Store_Top/Logs
+    Store_FilesBom="$Store_Top/Bom"
+    Store_FilesFiles="$Store_Top/Files.tar.xz"
+    Store_Files=("$Store_FilesBom" "$Store_FilesFiles")
+
+    _build_EnsureCollection
+
+    #if [[ -n "{verbose}" ]]; then
+    #    declare -p Box_Top
+    #    declare -p Box_Root
+    #    declare -p Box_Changes
+    #    declare -p Box_Work
+    #    declare -p Box_Merged
+    #    declare -p Box_Build
+    #    declare -p Store_Top
+    #    declare -p Store_Logs
+    #fi
+}
+
+_build_EnsureCollection ()
+{
+    local directories=(
+        "$Pool_Root"
+        "$Pool_Store"
+        "$Pool_Build"
+    )
+    MakeDir "${directories[@]}"
+}
+
+_build_CleanCollection ()
+{
+    RemoveDir "$Pool_Root"
+    RemoveDir "$Pool_Store"
+    RemoveDir "$Pool_Build"
+}
+
+_build_EnsureBuild ()
+{
+    local directories=(
+        "$Box_Top"
+        "$Box_Root"
+        "$Box_Changes"
+        "$Box_Work"
+        "$Box_Merged"
+        "$Box_Build"
+        "$Store_Top"
+        "$Store_Logs"
+    )
+    MakeDir "${directories[@]}"
+}
+
+_build_CleanBuild ()
+{
+    RemoveDir "$Box_Top"
+    rm ${verbose} --force "${Store_Files[@]}"
+}
+
+_build_ProvideSupplies ()
+{
+    local supply
+    if [[ "${Recipe_Supplies[0]}" != "none" ]]; then
+        for supply in "${Recipe_Supplies[@]}"; do
+            _build_ProvideSupply $supply
+        done
+    fi
+}
+
+_build_wget ()
+{
+    local supply="$1"
+
+    already=$(basename $supply)
+    [[ -f $PogoArchives/$already ]] && return 0
+    if ! wget ${supply} --continue --directory-prefix=$PogoDownloads; then
+        if ! wget ${supply} --no-check-certificate --continue --directory-prefix=$PogoDownloads; then
+            Fatal "download of '$supply' failed"
+        fi
+    fi
+    mv ${verbose} --force $PogoDownloads/$already $PogoArchives/$already
+}
+
+_build_ProvideSupply ()
+{
+    local supply="$1"
+    local basename=$(basename "$supply")
+
+    if [[ ! -f $PogoArchives/$basename ]]; then
+        echo "must download '$supply'"
+        _build_wget $supply
+    fi
+
+    [[ -f $PogoArchives/$basename ]] || Fatal "local archive '$basename' for supply '$supply' missing"
+
+    local stem
+
+    case $basename in
+        *.tar.?? | *.tar.???)
+            stem=${basename%.tar.*}
+            _buildExtractSupply $basename $stem
+            ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $Box_Build/$stem
+        ;;
+        *.tgz)
+            stem=${basename%.tgz}
+            _buildExtractSupply $basename $stem
+            echo ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $Box_Build/$stem
+            ln $verbose --symbolic --relative --force --no-target-directory $PogoSources/$stem $Box_Build/$stem
+        ;;
+        *.patch | *.xml)
+            cp $verbose --force $PogoArchives/$basename $PogoSources/$basename
+        ;;
+        *)
+            Fatal "can't provide supply '$supply'"
+        ;;
+    esac
+}
+
+_buildExtractSupply ()
+{
+    local basename=$1
+    local stem=$2
+    local archive=$PogoArchives/$basename
+    local extract=$PogoSources/$stem
+
+    local tmpExtract=$extract.tmp
+
+    RemoveDir $tmpExtract
+
+    [[ -d $extract ]] && return
+
+    mkdir $verbose --parents $tmpExtract
+
+    Pushd $tmpExtract
+    tar xvf $archive
+    Popd
+
+    if [[ $(ls -1 $tmpExtract | wc -l) == 1 ]]; then
+        mv $verbose $tmpExtract/* $extract
+        rmdir $verbose $tmpExtract
+    else
+        mv $verbose $tmpExtract $extract
+    fi
+}
+
+_build_RecipePrepare ()
+{
+    Pushd "$Box_Build"
+    _build_EnterTop && Recipe_ExecIfExists "Prepare"
+    Popd
+}
+
+_build_RecipeBuild ()
+{
+    Pushd "$Box_Build"
+    _build_EnterBuildIn && Recipe_ExecIfExists "Build"
+    Popd
+}
+
+_build_RecipeCleanup ()
+{
+    Pushd "$Box_Changes"
+    Recipe_ExecIfExists "Cleanup"
+    Popd
+}
+
+_build_EnterTop ()
+{
+    if [[ "${Recipe_Supplies[0]}" == "none" ]]; then
+        cd $Box_Build
+    else
+        local supply=${Recipe_Supplies[0]}
+        local basename=$(basename $supply)
+        local stem="$basename"
+        local stem=${stem%.tar.*}
+        local stem=${stem%.tgz}
+
+        cd $Box_Build/$stem
+    fi
+}
+
+_build_EnterBuildIn ()
+{
+    _build_EnterTop
+    if [[ -n "$Recipe_BuildIn" ]]; then
+        MakeDir ./$Recipe_BuildIn
+        cd $Recipe_BuildIn
+    fi
+}
+
+_build_MakeRootFs ()
+{
+    Make${Current_Pool}Rootfs
+}
+
+_build_ExecInChroot ()
+{
+    ExecIn${Current_Pool}Chroot "$@"
+}
+
+_build_ENTER () # recipe-name
+{
+    Pool_Checker
+
+    if [[ -n "${1-}" ]]; then
+        RecipeSource "${1}"
+        Box_Top="$Pool_Build/$Recipe_Tag"
+        Store_Top="$Pool_Store/$Recipe_Tag"
+    else
+        Box_Top="$Pool_Build/SHELL"
+        Store_Top="$Pool_Store/SHELL"
+    fi
+
+    Box_Root=$Box_Top/Root
+    Box_Changes=$Box_Top/Changes
+    Box_Work=$Box_Top/Work
+    Box_Merged=$Box_Top/Merged
+    Box_Build=$Box_Top/Build
+    Store_Logs=$Store_Top/Logs
+    Store_FilesBom="$Store_Top/Bom"
+    Store_FilesFiles="$Store_Top/Files.tar.xz"
+    Store_Files=("$Store_FilesBom" "$Store_FilesFiles")
+
+    if [[ -n "{verbose}" ]]; then
+        declare -p Box_Top
+        declare -p Box_Root
+        declare -p Box_Changes
+        declare -p Box_Work
+        declare -p Box_Merged
+        declare -p Box_Build
+        declare -p Store_Top
+        declare -p Store_Logs
+    fi
+}
+

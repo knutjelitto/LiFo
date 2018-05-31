@@ -1,0 +1,499 @@
+#!/bin/bash (source-only)
+
+Build_Make () # collection recipe-token
+{
+    NeverInChroot
+
+    _build_Enter "$1" "$2"
+
+    local marks="$Pool_Root/.marks"
+    local buildMarker="$marks/build-$Recipe_Name-$Recipe_Version"
+    local harvestMarker="$marks/harvest-$Recipe_Name-$Recipe_Version"
+    local rolloutMarker="$marks/rollout-$Recipe_Name-$Recipe_Version"
+
+    if [[ "new" == "${3-}" ]]; then
+        RemoveDir $marks
+    fi
+
+    if [[ "break" == "${3-}" ]]; then
+        _build_Break
+        return
+    fi
+
+    if [[ ! -f $buildMarker || "$Recipe_File" -nt "$buildMarker" ]]; then
+        RemoveFile $buildMarker $harvestMarker $rolloutMarker
+        _build_Build
+        Touch $buildMarker
+    fi
+
+    if [[ ! -f $harvestMarker ]]; then
+        _build_Harvest
+        Touch $harvestMarker
+    fi
+
+    if [[ "done" == "${3-}" ]]; then
+        if [[ ! -f $rolloutMarker || $harvestMarker -nt $rolloutMarker ]]; then
+            _harvest_Rollout
+            Touch $rolloutMarker
+        fi
+    fi
+}
+
+Build_Make2 () # recipe-token
+{
+    NeverInChroot
+
+    Pool_Checker
+
+    _build_ENTER "${1-}"
+
+    local marks="$Pool_Root/.marks"
+    local buildMarker="$marks/build-$Recipe_Name-$Recipe_Version"
+    local harvestMarker="$marks/harvest-$Recipe_Name-$Recipe_Version"
+    local rolloutMarker="$marks/rollout-$Recipe_Name-$Recipe_Version"
+
+    local command="${2:-build}"
+
+    if [[ "new" == "$command" ]]; then
+        RemoveDir $marks
+        command=build
+    fi
+
+    if [[ "build" == "$command" ]]; then
+        if [[ ! -f $buildMarker || "$Recipe_File" -nt "$buildMarker" ]]; then
+            RemoveFile $buildMarker $harvestMarker $rolloutMarker
+            _build_Build2
+            Touch $buildMarker
+        fi
+    fi
+
+    return 0
+
+    if [[ "break" == "${2-}" ]]; then
+        _build_Break
+        return
+    fi
+
+    if [[ ! -f $buildMarker || "$Recipe_File" -nt "$buildMarker" ]]; then
+        RemoveFile $buildMarker $harvestMarker $rolloutMarker
+        _build_Build
+        Touch $buildMarker
+    fi
+
+    if [[ ! -f $harvestMarker ]]; then
+        _build_Harvest
+        Touch $harvestMarker
+    fi
+
+    if [[ "done" == "${3-}" ]]; then
+        if [[ ! -f $rolloutMarker || $harvestMarker -nt $rolloutMarker ]]; then
+            _harvest_Rollout
+            Touch $rolloutMarker
+        fi
+    fi
+}
+
+
+Build_Build2 () # recipe.token
+{
+    NeverInChroot
+
+    _build_ENTER "$1"
+    _build_Build
+}
+
+Build_Build () # collection recipe
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_Build
+}
+
+Build_Download () # collection recipe
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_EnsureBuild
+    _build_ProvideSupplies
+}
+
+Build_Setup () # collection recipe
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_EnsureBuild
+}
+
+Build_Shell () # collection recipe
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_CleanBuild
+    _build_EnsureBuild
+    _build_MakeRootFs
+    _build_ExecInChroot
+}
+
+Build_Break ()
+{
+    OnlyInChroot
+
+    _build_Enter "$@"
+    _build_EnsureBuild
+
+    Header "BREAK $Current_Pool / $Recipe_Title"
+
+    Pushd "$Box_Build"
+    _build_EnterTop && bash -l
+    Popd
+}
+
+Build_Compile ()
+{
+    OnlyInChroot
+
+    _build_Enter "$@"
+    _build_EnsureBuild
+
+    Header "BUILD $Current_Pool / $Recipe_Title"
+
+    _build_RecipePrepare
+    _build_RecipeBuild
+}
+
+Build_Compile2 () # recipe-token
+{
+    OnlyInChroot
+
+    _build_ENTER "$1"
+    _build_EnsureBuild
+
+    Header "BUILD $Current_Pool / $Recipe_Title"
+
+    _build_RecipePrepare
+    _build_RecipeBuild
+}
+
+Build_CleanAll ()
+{
+    NeverInChroot
+
+    RemoveDir $Pool_Root
+    RemoveDir $Pool_Build
+    RemoveDir $Pool_Store
+}
+
+RootMakeDir ()
+{
+    local mode="--mode=$1"
+    shift 1
+    while (( $# > 0 )); do
+        local dir="$Box_Root/$1"
+        shift
+        mkdir "$verbose" --parents "$mode" "$dir"
+    done
+}
+
+RootSymLink ()
+{
+    local link="$Box_Root/$1"
+    local target="$2"
+    
+    ln "$verbose" --symbolic "$target" "$link"
+}
+
+_chroot_MountOverlay ()
+{
+    local lowerdir="$1"
+    local options="lowerdir=$lowerdir,upperdir=$Box_Changes,workdir=$Box_Work"
+    mount $verbose --types overlay overlay --options "$options" "$Box_Merged"
+}
+
+_chroot_MountCommons ()
+{
+    local merged="$Box_Merged"
+
+    mount $verbose --bind /LiFo $merged/LiFo
+    mount $verbose --bind /root $merged/root
+    mount $verbose --rbind /dev $merged/dev
+    mount $verbose --rbind /sys $merged/sys
+    mount $verbose --rbind /proc $merged/proc
+    mount $verbose --bind /etc/hostname $merged/etc/hostname
+    mount $verbose --bind /etc/hosts $merged/etc/hosts
+    mount $verbose --bind /etc/resolv.conf $merged/etc/resolv.conf
+}
+
+_chroot_exec ()
+(   # execute in subshell
+
+    local lowerdir="$1"
+    local env="$2"
+    local command="${3-}"
+
+    trap '_build_Unmount || true' EXIT
+
+    _chroot_MountOverlay "$lowerdir"
+    _chroot_MountCommons
+
+    if [[ -z "$command" ]]; then
+        env $env chroot $Box_Merged /bin/bash -l
+    else
+    echo "XXX: $command"
+        env $env chroot $Box_Merged /bin/bash -l -c "$command"
+    fi
+
+    _build_Unmount || true
+
+    trap EXIT
+)
+
+ExecInCoreChroot ()
+(   # execute in subshell
+
+    local environment="
+    POGO_CHROOT=Core
+    FORCE_UNSAFE_CONFIGURE=1
+    MAKEFLAGS=-j8
+    LC_ALL=en_US.UTF-8
+    LANG=en_US.UTF-8
+    LANGUAGE=en_US.UTF-8"
+
+    _chroot_exec "$Core_Root:$Tools_Root:$PogoVolume:$Box_Root" "$environment" "${1-}"
+)
+
+ExecInToolsChroot ()
+(   # execute in subshell
+
+    local environment="
+    POGO_CHROOT=Tools
+    FORCE_UNSAFE_CONFIGURE=1
+    MAKEFLAGS=-j8
+    LC_ALL=POSIX"
+
+    _chroot_exec "$Tools_Root:$Boots_Root:$PogoVolume:$Box_Root" "$environment" "${1-}"
+)
+
+ExecInBootsChroot ()
+(   # execute in subshell
+
+    local environment="
+    POGO_CHROOT=Boots
+    FORCE_UNSAFE_CONFIGURE=1
+    MAKEFLAGS=-j8
+    LC_ALL=POSIX
+    LFS=$Pool_Root
+    LFS_TGT=x86_64-lfs-linux-gnu"
+
+    _chroot_exec "$Box_Root:$PogoVolume:/" "$environment" "${1-}"
+)
+
+MakeCoreRootfs ()
+{
+    local rootfs=$Box_Root
+
+    RootMakeDir 0775 LiFo
+    RootMakeDir 0775 root
+    RootMakeDir 0775 bin
+    RootMakeDir 0775 etc
+    RootMakeDir 1777 tmp
+    RootMakeDir 0775 dev
+    RootMakeDir 0775 proc
+    RootMakeDir 0775 sys
+
+    RootMakeDir 0775 run
+    RootMakeDir 0775 run/lock
+
+    RootMakeDir 0775 var
+    RootMakeDir 0775 var/cache
+    RootMakeDir 0775 var/lib
+    RootMakeDir 0775 var/log
+    RootMakeDir 1777 var/tmp
+
+    RootSymLink bin/sh                  bash
+
+    touch $rootfs/etc/hostname
+    touch $rootfs/etc/hosts
+    touch $rootfs/etc/resolv.conf
+
+    cat > $rootfs/etc/passwd << "EOF"
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/dev/null:/bin/false
+nobody:x:999:999:Unprivileged User:/dev/null:/bin/false
+EOF
+
+    cat > $rootfs/etc/group << "EOF"
+root:x:0:
+bin:x:1:daemon
+sys:x:2:
+kmem:x:3:
+tape:x:4:
+tty:x:5:
+daemon:x:6:
+floppy:x:7:
+disk:x:8:
+lp:x:9:
+dialout:x:10:
+audio:x:11:
+video:x:12:
+utmp:x:13:
+usb:x:14:
+cdrom:x:15:
+adm:x:16:
+input:x:24:
+mail:x:34:
+nogroup:x:99:
+users:x:999:
+EOF
+}
+
+MakeToolsRootfs ()
+{
+    local rootfs=$Box_Root
+
+    RootMakeDir 0775 LiFo
+    RootMakeDir 0775 root
+    RootMakeDir 0775 bin
+    RootMakeDir 0775 sbin
+    RootMakeDir 0775 etc
+    RootMakeDir 0775 lib
+    RootMakeDir 0775 lib64
+    RootMakeDir 1777 tmp
+    RootMakeDir 1777 dev
+    RootMakeDir 1777 proc
+    RootMakeDir 1777 sys
+
+    RootMakeDir 0775 run
+    RootMakeDir 0775 run/lock
+
+    RootMakeDir 0775 var
+    RootMakeDir 0775 var/cache
+    RootMakeDir 0775 var/lib
+    RootMakeDir 0775 var/log
+    RootMakeDir 1777 var/tmp
+
+    RootMakeDir 0775 usr/bin
+    RootMakeDir 0775 usr/sbin
+    RootMakeDir 0775 usr/include
+    RootMakeDir 0775 usr/lib
+    RootMakeDir 0775 usr/lib/pkgconfig
+    RootMakeDir 0775 usr/libexec
+    RootMakeDir 0775 usr/share
+    RootMakeDir 0775 usr/share/color
+    RootMakeDir 0775 usr/share/dict
+    RootMakeDir 0775 usr/share/doc
+    RootMakeDir 0775 usr/share/info
+    RootMakeDir 0775 usr/share/locale
+    RootMakeDir 0775 usr/share/man
+    RootMakeDir 0775 usr/share/misc
+    RootMakeDir 0775 usr/share/terminfo
+    RootMakeDir 0775 usr/share/zoneinfo
+    RootMakeDir 0775 usr/share/man/man{1..8}
+
+    RootSymLink bin/bash                /tools/bin/bash
+    RootSymLink bin/sh                  bash
+    RootSymLink bin/cat                 /tools/bin/cat
+    RootSymLink bin/dd                  /tools/bin/dd
+    RootSymLink bin/echo                /tools/bin/echo
+    RootSymLink bin/ln                  /tools/bin/ln
+    RootSymLink bin/pwd                 /tools/bin/pwd
+    RootSymLink bin/rm                  /tools/bin/rm
+    RootSymLink bin/stty                /tools/bin/stty
+
+    RootSymLink usr/bin/install         /tools/bin/install
+    RootSymLink usr/bin/perl            /tools/bin/perl
+    RootSymLink usr/bin/env             /tools/bin/env
+
+    RootSymLink usr/lib/libgcc_s.so     /tools/lib/libgcc_s.so
+    RootSymLink usr/lib/libgcc_s.so.1   /tools/lib/libgcc_s.so.1
+
+    RootSymLink usr/lib/libstdc++.a     /tools/lib/libstdc++.a
+    RootSymLink usr/lib/libstdc++.so    /tools/lib/libstdc++.so
+    RootSymLink usr/lib/libstdc++.so.6  /tools/lib/libstdc++.so.6
+
+    touch $rootfs/etc/hostname
+    touch $rootfs/etc/hosts
+    touch $rootfs/etc/resolv.conf
+
+    cat > $rootfs/etc/passwd << "EOF"
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/dev/null:/bin/false
+nobody:x:99:99:Unprivileged User:/dev/null:/bin/false
+EOF
+
+    cat > $rootfs/etc/group << "EOF"
+root:x:0:
+bin:x:1:daemon
+sys:x:2:
+kmem:x:3:
+tape:x:4:
+tty:x:5:
+daemon:x:6:
+floppy:x:7:
+disk:x:8:
+lp:x:9:
+dialout:x:10:
+audio:x:11:
+video:x:12:
+utmp:x:13:
+usb:x:14:
+cdrom:x:15:
+adm:x:16:
+input:x:24:
+mail:x:34:
+nogroup:x:99:
+users:x:999:
+EOF
+}
+
+MakeBootsRootfs ()
+{
+    local rootfs=$Box_Root
+
+    MakeDir $Pool_Root/tools
+
+    RootMakeDir 0775 bin
+    RootSymLink bin/sh      bash
+    RootSymLink tools       $Pool_Root/tools
+}
+
+_build_Unmount ()
+{
+    local match=$Box_Top
+    local mountpoint
+    while mount | grep -q "${match}"; do
+        mount | grep "${match}" | cut -f3 -d" " | sort | while read mountpoint; do
+            if [[ -z $verbose ]]; then
+                mountpoint --quiet ${mountpoint} &>/dev/null && umount --recursive ${mountpoint} &>/dev/null
+            else
+                mountpoint --quiet ${mountpoint} &>/dev/null && umount --verbose --recursive ${mountpoint} 2>&1
+            fi
+        done
+    done
+
+    true
+}
+
+Build_Harvest ()
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+    _build_EnsureBuild
+
+    _build_Harvest
+}
+
+Build_Rollout ()
+{
+    NeverInChroot
+
+    _build_Enter "$@"
+
+    Header "ROLLOUT $Current_Pool / $Recipe_Title"
+
+    _harvest_Rollout
+}

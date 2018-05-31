@@ -1,0 +1,156 @@
+#!/bin/bash (source-only)
+
+_harvest_ListFiles () # bomFile
+{
+    local bomFile="$1"
+    gawk -F'\t' -- '/^f/ { print $6 }' $bomFile 
+}
+
+_harvest_ListKnown () # bomFile
+{ 
+    local bomFile="$1"
+    gawk -F'\t' -- '/^[dfl]/ { print $6 }' "$bomFile"
+}
+
+_harvest_ListUnknown () # bomFile
+{ 
+    local bomFile="$1"
+    gawk -F'\t' -- '/^[dfl]/ { next } { print $0 }' "$bomFile"
+}
+
+
+_harvest_Validate () # bomFile
+{
+    local bomFile="$1"
+    gawk -F'\t' -- '/^[dfl]\t/ { next } { print "=>"; print $0; exit 1; }' $bomFile || echo "unkown entry in bill of material"
+}
+
+_harvest_Strip () # bomFile topDir
+{
+    local bomFile="$1"
+    local topDir="$2"
+    cd $topDir
+
+    _stripUnneeded ()
+    {
+        [[ -z $verbose ]] || echo strip --strip-unneeded $1
+        strip --strip-unneeded $1
+    }
+
+    _stripDebug ()
+    {
+        [[ -z $verbose ]] || echo strip --strip-debug $1
+        strip --strip-debug $1
+    }
+
+    local name type
+    _harvest_ListFiles "$bomFile" | file --mime --files-from - | while IFS=$':' read name type; do
+        case $type in
+            *application/x-executable*)  _stripUnneeded $name ;;
+            *application/x-sharedlib*)   _stripDebug $name ;;
+            *application/x-object*)      _stripDebug $name ;;
+            *application/x-archive*)     _stripDebug $name ;;
+        esac
+    done
+}
+
+_harvest_Archive ()
+{
+    local bomFile="$1"
+    local topDir="$2"
+    local archiveFile="$3"
+
+    (
+        cd $topDir
+        _harvest_ListKnown "$bomFile" | \
+        tar $verbose \
+            --create \
+            --no-recursion \
+            --verbatim-files-from \
+            --files-from=- \
+            --auto-compress \
+            --file "$archiveFile"
+    )
+}
+
+_harvest_Rollout ()
+{
+    Pushd "$Pool_Root"
+    tar $verbose --extract --file="$Store_FilesFiles"
+    Popd
+}
+
+_harvest_Bom () # bomFile topDir
+{
+    local bomFile="$1"
+    local topDir="$2"
+    local blackoutScript='
+        $6 ~ /^tools\/share\/(info|man|doc)\// { next; }
+        $6 ~ /^Data/ { next; }
+        $6 ~ /^tmp/ { next; }
+        $6 ~ /^bin$/ { next; }
+        $6 ~ /^sbin$/ { next; }
+        $6 ~ /^etc$/ { next; }
+        $6 ~ /^lib$/ { next; }
+        $6 ~ /^lib64$/ { next; }
+        $6 ~ /^usr$/ { next; }
+        $6 ~ /^usr\/bin$/ { next; }
+        $6 ~ /^usr\/sbin$/ { next; }
+        $6 ~ /^usr\/lib$/ { next; }
+        $6 ~ /^usr\/libexec$/ { next; }
+        $6 ~ /^usr\/lib\/charset.alias$/ { next; }
+        $6 ~ /^usr\/lib\/pkgconfig$/ { next; }
+        $6 ~ /^usr\/include$/ { next; }
+        $6 ~ /^usr\/share$/ { next; }
+        $6 ~ /^usr\/share\/locale$/ { next; }
+        $6 ~ /^usr\/share\/doc$/ { next; }
+        $6 ~ /^usr\/share\/info$/ { next; }
+        $6 ~ /^usr\/share\/info\/dir$/ { next; }
+        $6 ~ /^usr\/share\/man$/ { next; }
+        $6 ~ /^usr\/share\/man\/man[1-8]$/ { next; }
+        $6 ~ /^usr\/share\/misc$/ { next; }
+        $6 ~ /^usr\/share\/aclocal$/ { next; }
+        $6 ~ /^var$/ { next; }
+        $6 ~ /^var\/cache$/ { next; }
+        $6 ~ /^var\/lib$/ { next; }
+        $6 ~ /^var\/tmp$/ { next; }
+        $6 ~ /^etc\/ld.so.cache$/ { next; }
+        $6 ~ /^var\/cache\// { next; }
+        { print $0 }'
+
+    (
+        cd $topDir
+        find . -mindepth 1 \( \
+            -type l -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\t%l\n' \
+            -o      -printf '%y\t%M\t%4m\t%3n\t%10s\t%P\n' \)
+    ) | gawk -- "$blackoutScript" >"$bomFile"
+}
+
+_build_Harvest ()
+{
+    Header "HARVEST $Current_Pool / $Recipe_Title"
+
+    local topDir
+    if [[ "$Current_Pool" == "Boots" ]]; then
+        topDir="$Box_Changes$Pool_Root"
+    else
+        topDir="$Box_Changes"
+    fi
+    local bomFile="$Store_FilesBom"
+    local archiveFile="$Store_FilesFiles"
+
+    declare -p topDir
+
+    [[ -d "$topDir" ]] || MakeDir $topDir
+
+    if [[ -d $topDir/usr/lib ]]; then
+        find $topDir/usr/lib -type f -name '*.la' -delete
+    fi
+    
+    _harvest_Bom "$bomFile" "$topDir"
+    _harvest_Validate "$bomFile"
+    _harvest_Strip "$bomFile" "$topDir"
+    _harvest_Bom "$bomFile" "$topDir"
+    _harvest_Archive "$bomFile" "$topDir" "$archiveFile"
+    cat $bomFile
+}

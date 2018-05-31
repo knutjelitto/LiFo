@@ -2,8 +2,6 @@
 EnterWorldOfPogo Tools
 NeverInChroot
 
-set
-
 exit
 
 pogo tools clean

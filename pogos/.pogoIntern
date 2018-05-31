@@ -1,0 +1,28 @@
+#!/bin/bash (source-only)
+
+_pogo_ENTER ()
+{
+    local directories=(
+        /Data/Compile
+        /Data/Compile/Sources
+        /Data/Compile/Build
+        /Data/Compile/Roots
+        #/Data/Compile/Lfs
+        #/Data/Compile/Lfs/tools
+        /Data/Variable/Archives
+        /Data/Variable/Downloads
+        /Data/Variable/Store
+        /System/Index
+        /Programs
+    )
+
+    MakeDir "${directories[@]}"
+
+    local pogoDir
+    for pogoDir in $(declare -p | grep -e 'declare -- Pogo' | cut --characters=12- | sed 's/=.*//'); do
+        if [[ ! -d ${!pogoDir} ]]; then
+            [[ "$pogoDir" == "PogoVolume" ]] || Fatal "no directory found for $pogoDir (${!pogoDir})"
+        fi
+    done
+
+}
