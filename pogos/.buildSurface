@@ -158,7 +158,6 @@ _chroot_exec ()
 
     trap '_build_Unmount || true' EXIT
 
-
     _chroot_MountOverlay "$lowerdir"
     _chroot_MountCommons
 

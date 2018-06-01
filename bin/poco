@@ -20,6 +20,7 @@ TODO=(
     file            #612-file               #!
     readline        #613-readline           #!
     m4              #614-m4                 #!
+    ed                                      #!
     bc              #615-bc                 #!
     binutils        #616-binutils           #!
     gmp             #617-gmp                #!
@@ -80,7 +81,6 @@ TODO=(
     isl                                     #!
     tree                                    #!
     which                                   #!
-    ed                                      #!
     libarchive                              #!
     icu                                     #!
     lzip                                    #!
@@ -98,9 +98,17 @@ elif [[ "${1:-}" == "--shell" ]]; then
     true
 elif [[ "${1:-}" == "--download" ]]; then
     for recipe in "${TODO[@]}"; do
-        Build_Download "$recipe"
+     readline   Build_Download "$recipe"
     done
 elif [[ "${1:-}" == "--build-all" ]]; then
+    for recipe in "${TODO[@]}"; do
+        Build_Download "$recipe"
+    done
+    for recipe in "${TODO[@]}"; do
+        Build_Make "$recipe" build
+        Build_Make "$recipe" done
+    done
+elif [[ "${1:-}" == "--rebuild-all" ]]; then
     Build_CleanAll
     for recipe in "${TODO[@]}"; do
         Build_Download "$recipe"

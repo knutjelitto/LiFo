@@ -1,28 +1,3 @@
-poco file done
-poco readline
-poco readline done
-poco m4 done
-poco gmp done
-poco mpfr
-poco mpfr done
-poco mpc
-poco bzip2
-poco bzip2 done
-poco pkg-config
-poco pkg-config done
-poco ncurses
-poco ncurses done
-poco attr
-poco attr done
-poco acl
-poco acl done
-poco libcap
-poco libcap done
-poco lsed
-poco sed
-poco acl
-poco acl done
-poco libcap
 poco libcap done
 poco lsed
 ping www.google.de
@@ -498,3 +473,28 @@ man sed
 pobo --build-all
 time poto --build-all
 time poco --build-all
+ls -1 >../../xxx.txt
+poto --download
+cd Boots/
+ls -1 >../../xxx.txt 
+pobo --download
+cd lfs
+rm -rv lfs/
+man sed
+pobo --build-all
+time poto --build-all
+time poco --build-all
+poco --build-all | less
+cd /Data/Compile/Roots/
+cd Build/
+do Tools/
+du Tools/
+find Tools -ls
+cd ..
+cd Roots/
+rm *.tar.xz
+cd /Data/Variable/Archives/
+ll
+poto --build-all
+cd
+poco --build-all
