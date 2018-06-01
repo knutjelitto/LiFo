@@ -3,7 +3,7 @@
 Build_Make () # recipe-token
 {
     NeverInChroot
-    Pool_Checker
+    Assert_Pool
 
     _build_ENTER "${1:-}"
 
@@ -164,7 +164,6 @@ _chroot_exec ()
     if [[ -z "$command" ]]; then
         env $env chroot $Box_Merged /bin/bash -l
     else
-    echo "XXX: $command"
         env $env chroot $Box_Merged /bin/bash -l -c "$command"
     fi
 

@@ -27,7 +27,7 @@ _pool_ENTER () # pool-name
     #fi
 }
 
-Pool_Checker ()
+Assert_Pool ()
 {
     [[ -n "${Current_Pool:-}" ]] || Fatal '$Current_Pool not set'
     [[ -n "${Pool_Root:-}" ]] || Fatal '$Pool_Root not set'

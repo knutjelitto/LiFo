@@ -1,8 +1,9 @@
 #!/bin/bash
 source "$Pogos/.pogoConfig" Core
-Pool_Checker
+Assert_Pool
 
-TODO=(
+TODO=\
+(
     #--#609-glibc
     #--#610-adjusting
     #--#628-shadow
@@ -18,6 +19,7 @@ TODO=(
     man-pages       #608-man-pages          #!
     zlib            #611-zlib               #!
     file            #612-file               #!
+    ncurses         #623-ncurses            #!
     readline        #613-readline           #!
     m4              #614-m4                 #!
     ed                                      #!
@@ -29,7 +31,6 @@ TODO=(
     gcc             #620-gcc                #todo
     bzip2           #621-bzip2              #!
     pkg-config      #622-pkg-config         #!
-    ncurses         #623-ncurses            #!
     attr            #624-attr               #!
     acl             #625-acl                #!
     libcap          #626-libcap             #!
@@ -89,7 +90,6 @@ TODO=(
     strace                                  #!
     curl                                    #!
     cmake                                   #....
-    lua                                     #....
 )
 
 if [[ "${1:-}" == "--cleanall" ]]; then

@@ -1,6 +1,6 @@
 #!/bin/bash
 source "$Pogos/.pogoConfig" Tools
-Pool_Checker
+Assert_Pool
 
 TODO=\
 (

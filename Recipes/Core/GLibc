@@ -4,11 +4,10 @@ Title="The GNU C Library (glibc)"
 Home="https://www.gnu.org/software/libc/"
 Name=glibc
 Version=2.27
-BuildIn=build
 BuildDeps=(linux-headers)
-Supplies=()
+Supplies=(none)
 
 Build() 
 {
-    /Data/Variable/Store/Tools/GLibc-2.27/Files.tar.xz
+    tar --verbose --extract --exclude=usr/lib/gcc --directory=/ --file /Data/Variable/Store/Tools/GLibc-2.27/Files.tar.xz
 }    

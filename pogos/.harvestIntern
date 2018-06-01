@@ -153,4 +153,5 @@ _build_Harvest ()
     _harvest_Bom "$bomFile" "$topDir"
     _harvest_Archive "$bomFile" "$topDir" "$archiveFile"
     cat $bomFile
+    echo "AAAAAAAAAAAAAAAAAAAA"
 }

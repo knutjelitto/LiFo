@@ -1,6 +1,6 @@
 #!/bin/bash
 source "$Pogos/.pogoConfig" Boots
-Pool_Checker
+Assert_Pool
 
 TODO=(
     504-binutils-1

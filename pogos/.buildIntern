@@ -255,7 +255,7 @@ _build_ExecInChroot ()
 
 _build_ENTER () # recipe-name
 {
-    Pool_Checker
+    Assert_Pool
 
     if [[ -n "${1-}" ]]; then
         RecipeSource "${1}"

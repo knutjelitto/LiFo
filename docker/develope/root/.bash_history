@@ -1,73 +1,3 @@
-poco libcap done
-poco lsed
-ping www.google.de
-poco tree
-poco tree done
-poco which
-poco which done
-poco xz
-poco xz done
-poco sed
-poco sed done
-poco tzdata
-poco tzdata done
-poco ninja
-poco ninja done
-poco meson
-poco meson done
-poco strace
-poco strace done
-poco icu
-poco icu done
-poco curl
-poco curl done
-poco cmake
-ping www.google.de
-ping www.google.com
-poco lsed
-ping www.google.de
-poco tree
-poco tree done
-poco which
-poco which done
-poco xz
-poco xz done
-poco sed
-poco sed done
-poco tzdata
-poco tzdata done
-poco ninja
-poco ninja done
-poco meson
-poco meson done
-poco strace
-poco strace done
-poco icu
-poco icu done
-poco curl
-poco curl done
-poco cmake
-ping www.google.de
-ping www.google.com
-lfspider 
-cd /tmp/
-cd crux
-cd crux.nu/ports/crux-3.4/
-ls -1
-ls -1 | wc
-cd core.1 
-cd crux-3.4/
-less core.1
-rm core.?
-find .
-find
-find | less
-cd core
-cd groff
-cd bash
-les sP
-zless bash-4.4.19.patch.gz 
-less Pkgfile 
 less profile 
 man less
 cd ..
@@ -498,3 +428,73 @@ ll
 poto --build-all
 cd
 poco --build-all
+cd /Data/Variable/Archives/
+poto --build-all
+cd
+poco --rebuild-all
+poco --build-all
+poco readline new
+poco gettext new
+poco gettext donw
+poco gettext done
+cd /Data/Compile/Roots/Core/
+cd etc
+cd ssl
+less openssl.cnf.dist 
+cd /etc/ssl/
+ll
+less openssl.cnf 
+cd -
+diff openssl.cnf.dist /etc/ssl/openssl.cnf 
+poco --shell
+poto --build-all
+poco --build-all
+cd /Data/Variable/Archives/
+poto --build-all
+poco --rebuild-all
+poco --build-all
+poco readline new
+poco gettext new
+poco gettext donw
+poco gettext done
+cd /Data/Compile/Roots/Core/
+cd etc
+cd ssl
+less openssl.cnf.dist 
+cd /etc/ssl/
+less openssl.cnf 
+cd -
+diff openssl.cnf.dist /etc/ssl/openssl.cnf 
+poco --shell
+cd /Data/Compile/Roots/
+rm Boots.tar.xz 
+du -h core
+du -h Core/
+du -h Core/ | less
+cd bin
+cd Core/
+cd bin/
+tar cvaf Core.tar.xz Core
+tar caf Core.tar.xz Core &
+cd Variable/Store/Tools/ll
+cd Variable/
+cd Store/
+cd Tools/ll
+cd Tools
+cd GLibc-2.27/
+less Bom 
+grep gcc Bom
+man tar
+cd ..
+cd ../Core/
+öes glibc-2.27/
+cd glibc-2.27/
+poco glibc build
+poco glibc new
+poco glibc
+poco glibc done
+cd /Data/Variable/Store/Tools/
+ll
+cd
+poco linux-headers
+poco linux-headers done
