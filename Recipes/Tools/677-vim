@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.77. Vim-8.0.586"
-Name=Vim
+Name=vim
 Version=8.0.586
 Supplies=(http://ftp.vim.org/pub/vim/unix/vim-8.0.586.tar.bz2)
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.34. Bash-4.4.18"
-Name=Bash
+Name=bash
 Version=4.4.18
 Supplies=(http://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz)
 

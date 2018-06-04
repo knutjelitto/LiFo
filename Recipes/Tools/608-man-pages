@@ -1,4 +1,12 @@
 #!/bin/bash (source only)
 
 Title="6.8. Man-pages-4.15"
-Redirect=Core/man-pages
+Home=https://www.kernel.org/doc/man-pages/
+Name=man-pages
+Version=4.16
+Supplies=(https://www.kernel.org/pub/linux/docs/man-pages/man-pages-$Version.tar.xz)
+
+Build() 
+{
+    make install
+}

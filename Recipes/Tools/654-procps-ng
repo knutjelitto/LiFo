@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.54. Procps-ng-3.3.12"
-Name=ProcpsNG
+Name=procps-ng
 Version=3.3.12
 Supplies=(http://sourceforge.net/projects/procps-ng/files/Production/procps-ng-3.3.12.tar.xz)
 

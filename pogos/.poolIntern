@@ -9,9 +9,8 @@ _pool_ENTER () # pool-name
     case "${pool_name^^}" in
         BOOTS)  Current_Pool=Boots ;;
         TOOLS)  Current_Pool=Tools ;;
-        CORE)   Current_Pool=Core ;;
-        *)      Fatal "unknown pool: '$1'"
-                ;;
+        CORE)   Current_Pool=Core  ;;
+        *)      Fatal "unknown pool: '$1'" ;;
     esac
     Pool_Root="$PogoRoots/$Current_Pool"
     Pool_Store="$PogoStore/$Current_Pool"
@@ -27,7 +26,7 @@ _pool_ENTER () # pool-name
     #fi
 }
 
-Pool_Checker ()
+Assert_Pool ()
 {
     [[ -n "${Current_Pool:-}" ]] || Fatal '$Current_Pool not set'
     [[ -n "${Pool_Root:-}" ]] || Fatal '$Pool_Root not set'

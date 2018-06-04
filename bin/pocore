@@ -1,0 +1,84 @@
+#!/bin/bash
+source "$Pogos/.pogoConfig" Core
+Assert_Pool
+
+Recipes_List=(
+    linux-headers
+    glibc
+    man-pages
+    zlib
+    file
+    readline
+    m4
+    ed
+    bc
+    binutils
+    gmp
+    mpfr
+    mpc
+    gcc
+    bzip2
+    pkg-config
+    ncurses
+    attr
+    acl
+    libcap
+    sed
+    psmisc
+    iana-etc
+    bison
+    flex
+    grep
+    bash
+    libtool
+    gdbm
+    gperf
+    expat
+    inetutils
+    perl
+    perl-xml-parser
+    intltool
+    autoconf
+    automake
+    xz
+    gettext
+    libelf
+    libffi
+    openssl
+    python3
+    ninja
+    meson
+    procps-ng
+    e2fsprogs
+    coreutils
+    check
+    diffutils
+    gawk
+    findutils
+    groff
+    less
+    gzip
+    libpipeline
+    make
+    patch
+    util-linux
+    man-db
+    tar
+    texinfo
+    lzo
+    less
+    libuv
+    isl
+    tree
+    which
+    libarchive
+    icu
+    lzip
+    nano
+    python2
+    strace
+    curl
+    cmake
+)
+
+Build_Master "$@"

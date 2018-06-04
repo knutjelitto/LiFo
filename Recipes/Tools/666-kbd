@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.66. Kbd-2.0.4"
-Name=Kbd
+Name=kbd
 Version=2.0.4
 Supplies=(
     https://www.kernel.org/pub/linux/utils/kbd/kbd-2.0.4.tar.xz

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.72. Eudev-3.2.5"
-Name=Eudev
+Name=eudev
 Version=3.2.5
 Supplies=(http://dev.gentoo.org/~blueness/eudev/eudev-3.2.5.tar.gz)
 

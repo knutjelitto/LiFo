@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.11. Zlib-1.2.11"
-Name=ZLib
+Name=zlib
 Version=1.2.11
 Supplies=(http://zlib.net/zlib-1.2.11.tar.xz)
 

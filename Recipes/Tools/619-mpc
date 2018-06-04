@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.19. MPC-1.1.0"
-Name=Mpc
+Name=mpc
 Version=1.1.0
 Supplies=(https://ftp.gnu.org/gnu/mpc/mpc-1.1.0.tar.gz)
 

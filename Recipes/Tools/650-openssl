@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.50. OpenSSL-1.1.0g"
-Name=OpenSSL
+Name=openssl
 Version=1.1.0g
 Supplies=(https://openssl.org/source/openssl-1.1.0g.tar.gz)
 

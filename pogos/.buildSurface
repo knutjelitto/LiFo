@@ -1,9 +1,46 @@
 #!/bin/bash (source-only)
 
+Build_Master () # arguments
+{
+    NeverInChroot
+    Assert_Pool
+
+    if [[ -z "${Recipes_List:-}" ]]; then
+        Fatal "array 'Recipes_List' must be given"
+    fi
+
+    if [[ "${1:-}" == "--clean-all" ]]; then
+        Build_CleanAll
+    elif [[ "${1:-}" == "--download-all" ]]; then
+        for recipe in "${Recipes_List[@]}"; do
+            Build_Download "$recipe"
+        done
+    elif [[ "${1:-}" == "--shell" ]]; then
+        Build_Shell
+    elif [[ "${1:-}" == "--build-all" ]]; then
+        for recipe in "${Recipes_List[@]}"; do
+            Build_Make "$recipe" build
+            Build_Make "$recipe" done
+        done
+    elif [[ "${1:-}" == "--rebuild-all" ]]; then
+        Build_CleanAll
+        for recipe in "${Recipes_List[@]}"; do
+            Build_Download "$recipe"
+        done
+        for recipe in "${Recipes_List[@]}"; do
+            Build_Make "$recipe" build
+            Build_Make "$recipe" done
+        done
+    else
+        # $1 must be recipe-token
+        Build_Make "$1" "${2:-}"
+    fi
+}
+
 Build_Make () # recipe-token
 {
     NeverInChroot
-    Pool_Checker
+    Assert_Pool
 
     _build_ENTER "${1:-}"
 
@@ -58,7 +95,7 @@ Build_Shell () # collection recipe
 {
     NeverInChroot
 
-    _build_Enter "$@"
+    _build_ENTER
     _build_CleanBuild
     _build_EnsureBuild
     _build_MakeRootFs
@@ -79,7 +116,7 @@ Build_Break () # recipe-token
     Popd
 }
 
-Build_Compile2 () # recipe-token
+Build_Compile () # recipe-token
 {
     OnlyInChroot
 
@@ -96,27 +133,13 @@ Build_CleanAll ()
 {
     NeverInChroot
 
-    _build_CleanPool
-    _build_EnsurePool
-}
-
-RootMakeDir ()
-{
-    local mode="--mode=$1"
-    shift 1
-    while (( $# > 0 )); do
-        local dir="$Box_Root/$1"
-        shift
-        mkdir "$verbose" --parents "$mode" "$dir"
-    done
-}
-
-RootSymLink ()
-{
-    local link="$Box_Root/$1"
-    local target="$2"
-    
-    ln "$verbose" --symbolic "$target" "$link"
+    local directories=(
+        "$Pool_Root"
+        "$Pool_Store"
+        "$Pool_Build"
+    )
+    RemoveDir  "${directories[@]}"
+    MakeDir "${directories[@]}"
 }
 
 _chroot_MountOverlay ()
@@ -212,6 +235,27 @@ ExecInBootsChroot ()
 
     _chroot_exec "$Box_Root:$PogoVolume:/" "$environment" "${1-}"
 )
+
+RootMakeDir ()
+{
+    local mode="--mode=$1"
+    shift 1
+    while (( $# > 0 )); do
+        local dir="$Box_Root/$1"
+        shift
+        mkdir "$verbose" --parents "$mode" "$dir"
+    done
+}
+
+RootSymLink ()
+{
+    local link="$Box_Root/$1"
+    local target="$2"
+    
+    if ! ln "$verbose" --symbolic "$target" "$link"; then
+        Fatal "can't symlink $link -> $target"
+    fi
+}
 
 MakeCoreRootfs ()
 {

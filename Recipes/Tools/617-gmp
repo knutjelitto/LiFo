@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.17. GMP-6.1.2"
-Name=Gmp
+Name=gmp
 Version=6.1.2
 Supplies=(http://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.xz)
 

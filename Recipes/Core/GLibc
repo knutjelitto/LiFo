@@ -6,9 +6,9 @@ Name=glibc
 Version=2.27
 BuildIn=build
 BuildDeps=(linux-headers)
-Supplies=()
+Supplies=(none)
 
 Build() 
 {
-    /Data/Variable/Store/Tools/GLibc-2.27/Files.tar.xz
+    tar --extract --verbose --exclude=usr/lib/gcc --directory=/ --file /Data/Variable/Store/Tools/glibc-2.27/Files.tar.xz
 }    

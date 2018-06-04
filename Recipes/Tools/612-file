@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.12. File-5.32"
-Name=File
+Name=file
 Version=5.32
 Supplies=(ftp://ftp.astron.com/pub/file/file-5.32.tar.gz)
 

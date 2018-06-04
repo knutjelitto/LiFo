@@ -7,8 +7,6 @@ _pogo_ENTER ()
         /Data/Compile/Sources
         /Data/Compile/Build
         /Data/Compile/Roots
-        #/Data/Compile/Lfs
-        #/Data/Compile/Lfs/tools
         /Data/Variable/Archives
         /Data/Variable/Downloads
         /Data/Variable/Store
