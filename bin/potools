@@ -42,13 +42,13 @@ TODO=\
     642-intltool
     643-autoconf
     644-automake
-    645-xz
+    645-xz-tools
     646-kmod
     647-gettext
     648-libelf
     649-libffi
     650-openssl
-    651-python
+    651-python3
     652-ninja
     653-meson
     654-procps-ng
@@ -83,9 +83,26 @@ elif [[ "${1:-}" == "--shell" ]]; then
     true
 elif [[ "${1:-}" == "--download" ]]; then
     for recipe in "${TODO[@]}"; do
-        Build_Download "$recipe"
+     readline   Build_Download "$recipe"
     done
 elif [[ "${1:-}" == "--build-all" ]]; then
+    for recipe in "${TODO[@]}"; do
+        Build_Download "$recipe"
+    done
+    for recipe in "${TODO[@]}"; do
+        Build_Make "$recipe" build
+        Build_Make "$recipe" done
+    done
+elif [[ "${1:-}" == "--rebuild-all" ]]; then
+    Build_CleanAll
+    for recipe in "${TODO[@]}"; do
+        Build_Download "$recipe"
+    done
+    for recipe in "${TODO[@]}"; do
+        Build_Make "$recipe" build
+        Build_Make "$recipe" done
+    done
+elif [[ "${1:-}" == "--rebuild-all" ]]; then
     Build_CleanAll
     for recipe in "${TODO[@]}"; do
         Build_Download "$recipe"

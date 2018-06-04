@@ -9,5 +9,9 @@ Supplies=(none)
 
 Build() 
 {
+<<<<<<< HEAD
     tar --verbose --extract --exclude=usr/lib/gcc --directory=/ --file /Data/Variable/Store/Tools/GLibc-2.27/Files.tar.xz
+=======
+    tar --extract --verbose --exclude=usr/lib/gcc --directory=/ --file /Data/Variable/Store/Tools/glibc-2.27/Files.tar.xz
+>>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8
 }    

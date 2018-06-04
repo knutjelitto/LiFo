@@ -2,5 +2,5 @@
 echo "COMPILE2"
 source "$Pogos/.pogoConfig" "$1"
 
-Build_Compile2 "$2"
+Build_Compile "$2"
 

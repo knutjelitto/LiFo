@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 less profile 
 man less
 cd ..
@@ -90,6 +91,8 @@ ldd ld-linux-x86-64.so.2
 ldd libanl-2.27.so 
 rm lib64
 mkdir lib64
+=======
+>>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8
 ln -sfv ../lib/ld-linux-x86-64.so.2 /GLIBC/lib64
 cd lib64/
 cd ..
@@ -428,6 +431,7 @@ ll
 poto --build-all
 cd
 poco --build-all
+<<<<<<< HEAD
 cd /Data/Variable/Archives/
 poto --build-all
 cd
@@ -498,3 +502,167 @@ ll
 cd
 poco linux-headers
 poco linux-headers done
+=======
+ls -1 >../../xxx.txt 
+pobo --download
+cd lfs
+rm -rv lfs/
+man sed
+pobo --build-all
+time poto --build-all
+time poco --build-all
+poco --build-all | less
+cd /Data/Compile/Roots/
+cd Build/
+do Tools/
+du Tools/
+find Tools -ls
+rm *.tar.xz
+cd /Data/Variable/Archives/
+poto --build-all
+poco --build-all
+cd /Data/Variable/Store/
+cd Tools/
+cd glibc-2.27/
+poco glibc
+poco shell
+poco --shell
+cd linux-headers-4.15.3/
+poco --cleanall
+poco --clean
+time poco --build
+cd /Data
+cd Variable/
+cd Store/
+du -hs *
+cd Core/
+cd ..
+cd Compile/
+du Lfs/
+cd Roots/
+du -sh *
+cd Core
+cd bin
+man wdctl
+wdctl
+cd /dev/
+cd
+ll
+poco linux-headers
+cleare
+clear
+poco linux-headers new
+poco
+poco --download
+lfspider 
+ping www.google.de
+tree
+poco linux-headers
+cleare
+clear
+poco linux-headers new
+poco
+poco --download
+lfspider 
+ping www.google.de
+tree
+ls
+ls -la
+cd .marks/
+cd
+cd /l
+cd /
+cd lib64
+cd tmp/
+cd ..
+cd var
+find
+cd lib/nss_db/
+make
+less passwd.db 
+less services.db 
+ll
+less Makefile 
+makedb 
+makedb --usage
+find Tools -ls
+rm *.tar.xz
+cd /Data/Variable/Archives/
+poto --build-all
+poco --build-all
+cd /Data/Variable/Store/
+cd Tools/
+poco glibc
+poco shell
+poco --shell
+cd linux-headers-4.15.3/
+poco --cleanall
+poco --clean
+time poco --build
+cd /Data
+cd Variable/
+cd Store/
+du -hs *
+cd Core/
+cd Compile/
+du Lfs/
+cd Roots/
+du -sh *
+cd Core
+cd bin
+man wdctl
+wdctl
+cd /dev/
+poco linux-headers
+cleare
+clear
+poco linux-headers new
+poco
+poco --download
+ping www.google.de
+lfspider 
+cd /tmp/
+cd crux/
+cd crux.nu/ports/crux-3.4/
+cd co
+cd core/
+less glibc
+cd glibc
+less ld.so.conf 
+less post-install 
+less Pkgfile 
+tar cvaf crux-3.4.tar.xz crux-3.4/
+mv crux-3.4.tar.xz /LiFo/
+rm -rv crux/
+pocore glibc new
+cd /Data/Variable/Store/Core/
+less gl*
+cd glibc-2.27/
+cd glibc-2.27/cd
+bom-diff 
+cd -
+bom-diff | less
+strings ldd
+strings ldd | less
+cd .
+cd glibcx-2.27/
+mkdir xxx
+cd xxx
+tar xvf ../Files.tar.xz 
+cd usr/bin/
+diff ldd /Data/Compile/Roots/Core/usr/bin/ldd
+ll | less
+cd lio
+cd lib
+string ld-2.27.so 
+strings ld-2.27.so 
+strings ld-2.27.so  | less
+cd ..
+ll
+rm -rv xxx
+cd
+pocore glibc
+pocore glibcx
+pocore glibcx done
+pocore --shell
+>>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8

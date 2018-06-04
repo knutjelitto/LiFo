@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.63. Less-530"
-Name=Less
+Name=less
 Version=530
 Supplies=(http://www.greenwoodsoftware.com/less/less-530.tar.gz)
 

@@ -1,12 +1,11 @@
 #!/bin/bash
 
 Title="6.28. Shadow-4.5"
-Name=Shadow
+Name=shadow
 Version=4.5
 Supplies=(https://github.com/shadow-maint/shadow/releases/download/4.5/shadow-4.5.tar.xz)
 
 Build ()
 {
-    # DISABLED
-    touch /tmp/shadow
+    return 0
 }

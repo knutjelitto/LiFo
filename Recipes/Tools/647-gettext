@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.47. Gettext-0.19.8.1"
-Name=GetText
+Name=gettext
 Version=0.19.8.1
 Supplies=(http://ftp.gnu.org/gnu/gettext/gettext-0.19.8.1.tar.xz)
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.24. Attr-2.4.47"
-Name=Attr
+Name=attr
 Version=2.4.47
 Supplies=(http://download.savannah.gnu.org/releases/attr/attr-2.4.47.src.tar.gz)
 

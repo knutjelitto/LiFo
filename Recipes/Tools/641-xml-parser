@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.41. XML::Parser-2.44"
-Name=XML_Parser
+Name=perl-xml-parser
 Version=2.44
 Supplies=(http://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.44.tar.gz)
 

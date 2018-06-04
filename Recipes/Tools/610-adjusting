@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.10. Adjusting the Toolchain"
-Name=Adjusting
+Name=adjusting
 Version=8.2
 Supplies=(none)
 

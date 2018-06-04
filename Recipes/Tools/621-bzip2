@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.21. Bzip2-1.0.6"
-Name=BZip2
+Name=bzip2
 Version=1.0.6
 Supplies=(
     http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz

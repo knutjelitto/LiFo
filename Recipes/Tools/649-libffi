@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.49. Libffi-3.2.1"
-Name=LibFfi
+Name=libffi
 Version=3.2.1
 Supplies=(ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz)
 

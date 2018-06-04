@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.36. GDBM-1.14.1"
-Name=Gdbm
+Name=gdbm
 Version=1.14.1
 Supplies=(http://ftp.gnu.org/gnu/gdbm/gdbm-1.14.1.tar.gz)
 

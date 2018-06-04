@@ -1,7 +1,7 @@
 #!/bin/bash
 
 Title="6.48. Libelf 0.170"
-Name=LibElf
+Name=libelf
 Version=0.170
 Supplies=(https://sourceware.org/ftp/elfutils/0.170/elfutils-0.170.tar.bz2)
 
