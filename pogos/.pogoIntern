@@ -3,15 +3,15 @@
 _pogo_ENTER ()
 {
     local directories=(
+        /Programs
         /Data/Compile
         /Data/Compile/Sources
         /Data/Compile/Build
         /Data/Compile/Roots
-        /Data/Variable/Archives
+        /Data/Compile/Archives
+        /Data/Compile/Store
         /Data/Variable/Downloads
-        /Data/Variable/Store
         /System/Index
-        /Programs
     )
 
     MakeDir "${directories[@]}"

@@ -2,7 +2,7 @@
 source "$Pogos/.pogoConfig" Boots
 Assert_Pool
 
-TODO=(
+Recipes_List=(
     504-binutils-1
     505-gcc-1
     506-linux-headers
@@ -36,24 +36,4 @@ TODO=(
     534-xz
 )
 
-if [[ "${1:-}" == "--cleanall" ]]; then
-    Build_CleanAll
-elif [[ "${1:-}" == "--shell" ]]; then
-    true
-elif [[ "${1:-}" == "--download" ]]; then
-    for recipe in "${TODO[@]}"; do
-        Build_Download "$recipe"
-    done
-elif [[ "${1:-}" == "--build-all" ]]; then
-    Build_CleanAll
-    for recipe in "${TODO[@]}"; do
-        Build_Download "$recipe"
-    done
-    for recipe in "${TODO[@]}"; do
-        Build_Make "$recipe" build
-        Build_Make "$recipe" done
-    done
-else
-    # $1 must be recipe-token
-    Build_Make "$1" "${2:-}"
-fi
+Build_Master "$@"

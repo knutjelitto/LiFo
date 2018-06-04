@@ -1,219 +1,3 @@
-<<<<<<< HEAD
-less profile 
-man less
-cd ..
-tar cvaf crux-3.4.tar.xz crux
-mv crux-3.4.tar.xz /LiFo/
-rm -rv crux
-ll
-cd groff
-cd bash
-les sP
-zless bash-4.4.19.patch.gz 
-less Pkgfile 
-less profile 
-man less
-tar cvaf crux-3.4.tar.xz crux
-mv crux-3.4.tar.xz /LiFo/
-rm -rv crux
-cd iconv
-less Versions 
-grep enable-kernel *
-less configure
-grep minimum_kernel *
-cd locale
-cd localedata/
-locale
-locale --help
-locale -v en_IE
-locale -v en_IE.utf8
-less SUPPORTED 
-locale -v en_IE.UTF-8
-cd ..
-ll
-autoconf
-ll | more
-less configure.ac 
-grep AC_CHECK configure.ac 
-less INSTALL 
-ll | more
-less configure.ac 
-less INSTALL 
-grep AC_CHECK configure.ac 
-autoconf -fv | less
-man autoconf
-autoconf -f -v | less
-autoconf -f -v
-less INSTALL/
-xs INSTALL/
-cd INSTALL/
-ll
-less README 
-less README 
-cd /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include
-cd /lib64/
-ll
-cd /lib64/
-./configure --help
-ll
-./configure --help | less
-cd ../linux-4.15.3/
-ll
-./configure --help | less
-ll
-./configure --help | less
-./configure --prefix=/usr --help | less
-cd
-cd
-cd lib
-ll
-cd lib
-owd
-pwd
-cd /GLIBC/
-cd usr/
-ll
-ll
-EnterWorldOfPogo Core
-set
-./configure --help | less
-./configure --prefix=/usr --help | less
-cd
-cd
-owd
-pwd
-cd /GLIBC/
-EnterWorldOfPogo Core
-set
-ldd
-ldd ld-2.27.so 
-ldd ld-linux-x86-64.so.2 
-ldd libanl-2.27.so 
-rm lib64
-mkdir lib64
-=======
->>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8
-ln -sfv ../lib/ld-linux-x86-64.so.2 /GLIBC/lib64
-cd lib64/
-cd ..
-cd usr/
-cd lib
-ll
-cd lib
-cd /GLIBC/
-cd lib64
-ll
-cd ..
-ldd ld-linux-x86-64.so.2 
-ldd libanl-2.27.so 
-rm lib64
-mkdir lib64
-ln -sfv ../lib/ld-linux-x86-64.so.2 /GLIBC/lib64
-cd lib64/
-cd /GLIBC/
-cd lib64
-cd ..
-cd usr/
-cd lib
-ll
-poco which
-poco which done
-poco xz
-poco xz done
-poco sed
-poco sed done
-poco tzdata
-poco tzdata done
-poco ninja
-poco ninja done
-poco meson
-poco meson done
-poco strace
-poco strace done
-poco icu
-poco icu done
-poco curl
-poco curl done
-poco cmake
-ping www.google.de
-ping www.google.com
-lfspider 
-cd crux
-cd crux.nu/ports/crux-3.4/
-ls -1
-ls -1 | wc
-cd core.1 
-cd crux-3.4/
-less core.1
-rm core.?
-find .
-find
-cd core
-cd groff
-cd bash
-les sP
-zless bash-4.4.19.patch.gz 
-less profile 
-man less
-tar cvaf crux-3.4.tar.xz crux
-mv crux-3.4.tar.xz /LiFo/
-rm -rv crux
-poco gcc break
-cd /Data/Compile/Sources/
-less glibc-2.27-fhs-1.patch 
-cd /tmp/
-tar xvf /LiFo/crux-3.4.tar.xz 
-cd crux/crux.nu/ports/crux-3.4/co
-cd crux/crux.nu/ports/crux-3.4/core/
-less glibc
-cd glibc
-less Pkgfile 
-echo $?
-poco readline
-poco readline done
-cd Data/Compile/Sources/
-cd linux-4.15.3/
-cd cleaned/
-cd include/
-cd linux/
-
-poco glibc 
-cd /Data/Compile/Build/Core/glibc-2.27/Changes/
-cd usr/include/
-cd scsi/
-ls -l ../../../../Data/Compile/Sources/linux-4.15.3/cleaned/include/scsi/
-man cp
-cd etc/
-cd GLIBC/
-cd lib64/
-less /Data/Variable/Store/Tools/GLibc-2.27/Bom 
-cd ..
-ll
-find | less
-cd
-cd -
-poco glibc break
-poco clean
-poco glibc
-which ldconfig
-find | less
-cd
-cd -
-poco glibc break
-poco clean
-poco glibc
-which ldconfig
-cd usr/lib
-man localedef 
-cd share/
-cd i18n/
-cd charmaps/
-cd ..
-cd locales/
-ll
-less en_GB 
-cd /usr/share/i18n/
-ll
 cd locales/
 ll | less
 cd crux/crux.nu/ports/crux-3.4/core/
@@ -666,3 +450,51 @@ pocore glibcx
 pocore glibcx done
 pocore --shell
 >>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8
+diff ldd /Data/Compile/Roots/Core/usr/bin/ldd
+ll | less
+cd lio
+cd lib
+string ld-2.27.so 
+strings ld-2.27.so 
+strings ld-2.27.so  | less
+rm -rv xxx
+cd
+pocore glibc
+pocore glibcx
+pocore glibcx done
+pocore --shell
+>>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8
+gcc -dumpspec
+gcc -dumpspecs | less
+gcc -dumpspecs | grep 64
+gcc -dumpspecs | grep 64 | less
+cd x86_64-pc-linux-gnu/
+cd 7.3.0/
+ldd cc1plus
+cd /lib
+ldd libc.so.6 
+cd /usr/libexec/
+cd gcc
+cd x86_64-pc-linux-gnu/7.3.0/
+ll
+ldd cc1
+gcc -dumpspecs
+gcc -dumpspecs | grep lib64
+gcc
+cd ..
+find . -name spec
+find . -name specs
+pocore glibc
+pocore glibcx
+pocore glibcx done
+>>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8
+pocore --shell
+cd /Data/Compile/Sources/gcc-7.3.0/
+find . -type f -exec grep lib64 {} \+
+find . -type f -exec grep lib64 {} \+ | less
+cd gcc/config/i386/
+less linux64.h
+ll
+less t-linux
+less t-linux64 
+grep lib64 *

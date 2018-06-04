@@ -54,7 +54,7 @@ _recipeFind ()
         fi
     fi
     
-    Fatal "can't resolve recipe token '$Recipe_Token'"
+    Fatal "can't resolve recipe '$Recipe_Token'"
 }
 
 _recipeUnset () 
@@ -75,17 +75,6 @@ _recipeSource ()
 
     source "$Recipe_File"
 
-    local savedRecipe_Collection="$Recipe_Collection"
-    local savedTitle="$Title"
-    while [[ -n "${Redirect:-}" ]]; do
-        Recipe_Token="$Redirect"
-        unset Redirect
-        _recipeUnset
-        _recipeFind
-        source "$Recipe_File"
-    done
-    Recipe_Collection="$savedRecipe_Collection"
-    Title="$savedTitle"
     Recipe_Tag=$Name-$Version
 
     local variable

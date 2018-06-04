@@ -2,8 +2,7 @@
 source "$Pogos/.pogoConfig" Tools
 Assert_Pool
 
-TODO=\
-(
+Recipes_List=(
     607-linux-headers
     608-man-pages
     609-glibc
@@ -77,41 +76,4 @@ TODO=\
     677-vim
 )
 
-if [[ "${1:-}" == "--cleanall" ]]; then
-    Build_CleanAll
-elif [[ "${1:-}" == "--shell" ]]; then
-    true
-elif [[ "${1:-}" == "--download" ]]; then
-    for recipe in "${TODO[@]}"; do
-     readline   Build_Download "$recipe"
-    done
-elif [[ "${1:-}" == "--build-all" ]]; then
-    for recipe in "${TODO[@]}"; do
-        Build_Download "$recipe"
-    done
-    for recipe in "${TODO[@]}"; do
-        Build_Make "$recipe" build
-        Build_Make "$recipe" done
-    done
-elif [[ "${1:-}" == "--rebuild-all" ]]; then
-    Build_CleanAll
-    for recipe in "${TODO[@]}"; do
-        Build_Download "$recipe"
-    done
-    for recipe in "${TODO[@]}"; do
-        Build_Make "$recipe" build
-        Build_Make "$recipe" done
-    done
-elif [[ "${1:-}" == "--rebuild-all" ]]; then
-    Build_CleanAll
-    for recipe in "${TODO[@]}"; do
-        Build_Download "$recipe"
-    done
-    for recipe in "${TODO[@]}"; do
-        Build_Make "$recipe" build
-        Build_Make "$recipe" done
-    done
-else
-    # $1 must be recipe-token
-    Build_Make "$1" "${2:-}"
-fi
+Build_Master "$@"

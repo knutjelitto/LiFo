@@ -5,18 +5,18 @@ Assert_Pool
 Recipes_List=(
     linux-headers
     glibc
-    man-pages
+    binutils
     zlib
+    gmp
+    mpfr
+    mpc
+    isl
+    gcc
     file
     readline
     m4
     ed
     bc
-    binutils
-    gmp
-    mpfr
-    mpc
-    gcc
     bzip2
     pkg-config
     ncurses
@@ -68,7 +68,6 @@ Recipes_List=(
     lzo
     less
     libuv
-    isl
     tree
     which
     libarchive
@@ -79,6 +78,7 @@ Recipes_List=(
     strace
     curl
     cmake
+    man-pages
 )
 
 Build_Master "$@"

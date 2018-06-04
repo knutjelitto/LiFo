@@ -20,15 +20,6 @@ OnlyInChroot ()
     true
 }
 
-PogoExec ()
-{
-    [[ -n "${1:-}" ]] || Fatal "no argument given"
-    script="$Pogos/$1"
-    [[ -e "$script" ]] || Fatal "unknown function '$1'"
-    shift
-    $script "$@"
-}
-
 verbose=--verbose
 
 declare Current_Pool
@@ -51,14 +42,14 @@ PogoPrograms=/Programs
 PogoSystem=/System
 
 PogoCompile=$PogoData/Compile
+PogoArchives=$PogoCompile/Archives
 PogoSources=$PogoCompile/Sources
+PogoStore=$PogoCompile/Store
 PogoBuild=$PogoCompile/Build
 PogoRoots=$PogoCompile/Roots
 
 PogoVariable=$PogoData/Variable
-PogoArchives=$PogoVariable/Archives
 PogoDownloads=$PogoVariable/Downloads
-PogoStore=$PogoVariable/Store
 
 PogoIndex=$PogoSystem/Index
 
@@ -78,12 +69,6 @@ Core_Collection=Core
 Core_Root="$PogoRoots/$Core_Collection"
 Core_Store="$PogoStore/$Core_Collection"
 Core_Build="$PogoBuild/$Core_Collection"
-
-Build_Collections=(
-    "$Boots_Collection"
-    "$Tools_Collection"
-    "$Core_Collection"
-)
 
 Recipes_Collections=(
     "$Boots_Collection"

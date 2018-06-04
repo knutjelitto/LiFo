@@ -8,9 +8,5 @@ Supplies=(none)
 
 Build()
 {
-<<<<<<< HEAD
-    tar --verbose --extract --directory=/ --file /Data/Variable/Store/Tools/linux-headers-4.15.3/Files.tar.xz
-=======
-    tar --extract --verbose --directory=/ --file /Data/Variable/Store/Tools/linux-headers-4.15.3/Files.tar.xz
->>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8
+    tar --extract --verbose --directory=/ --file /Data/Compile/Store/Tools/linux-headers-4.15.3/Files.tar.xz
 }

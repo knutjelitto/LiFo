@@ -9,14 +9,14 @@ Build_Master () # arguments
         Fatal "array 'Recipes_List' must be given"
     fi
 
-    if [[ "${1:-}" == "--clean-all" ]]; then
+    if [[ "${1:-}" == "--shell" ]]; then
+        Build_Shell
+    elif [[ "${1:-}" == "--clean-all" ]]; then
         Build_CleanAll
     elif [[ "${1:-}" == "--download-all" ]]; then
         for recipe in "${Recipes_List[@]}"; do
             Build_Download "$recipe"
         done
-    elif [[ "${1:-}" == "--shell" ]]; then
-        Build_Shell
     elif [[ "${1:-}" == "--build-all" ]]; then
         for recipe in "${Recipes_List[@]}"; do
             Build_Make "$recipe" build
@@ -30,6 +30,10 @@ Build_Master () # arguments
         for recipe in "${Recipes_List[@]}"; do
             Build_Make "$recipe" build
             Build_Make "$recipe" done
+        done
+    elif [[ "${1:-}" == "--rollout-all" ]]; then
+        for recipe in "${Recipes_List[@]}"; do
+            Build_Rollout "$recipe"
         done
     else
         # $1 must be recipe-token
@@ -45,9 +49,9 @@ Build_Make () # recipe-token
     _build_ENTER "${1:-}"
 
     local marks="$Pool_Root/.marks"
-    local buildMarker="$marks/build-$Recipe_Name-$Recipe_Version"
-    local harvestMarker="$marks/harvest-$Recipe_Name-$Recipe_Version"
-    local rolloutMarker="$marks/rollout-$Recipe_Name-$Recipe_Version"
+    local buildMarker="$marks/build-$Recipe_Tag"
+    local harvestMarker="$marks/harvest-$Recipe_Tag"
+    local rolloutMarker="$marks/rollout-$Recipe_Tag"
 
     local command="${2:-build}"
 
@@ -82,6 +86,10 @@ Build_Make () # recipe-token
     fi
 }
 
+Build_Done () # recipe
+{
+}
+
 
 Build_Download () # recipe
 {
@@ -102,7 +110,28 @@ Build_Shell () # collection recipe
     _build_ExecInChroot
 }
 
-Build_Break () # recipe-token
+Build_CleanAll ()
+{
+    NeverInChroot
+
+    local directories=(
+        "$Pool_Root"
+        "$Pool_Store"
+        "$Pool_Build"
+    )
+    RemoveDir  "${directories[@]}"
+    MakeDir "${directories[@]}"
+}
+
+Build_Rollout ()
+{
+    NeverInChroot
+
+    _build_ENTER "$1"
+    _harvest_Rollout
+}
+
+Build_Break () # recipe
 {
     OnlyInChroot
 
@@ -116,7 +145,7 @@ Build_Break () # recipe-token
     Popd
 }
 
-Build_Compile () # recipe-token
+Build_Compile () # recipe
 {
     OnlyInChroot
 
@@ -127,19 +156,6 @@ Build_Compile () # recipe-token
 
     _build_RecipePrepare
     _build_RecipeBuild
-}
-
-Build_CleanAll ()
-{
-    NeverInChroot
-
-    local directories=(
-        "$Pool_Root"
-        "$Pool_Store"
-        "$Pool_Build"
-    )
-    RemoveDir  "${directories[@]}"
-    MakeDir "${directories[@]}"
 }
 
 _chroot_MountOverlay ()
