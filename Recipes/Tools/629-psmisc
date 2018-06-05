@@ -7,12 +7,10 @@ Supplies=(https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-23.1.tar.x
 
 Build ()
 {
-    ./configure --prefix=/usr
+    ./configure \
+        --prefix=/usr \
+        --disable-nls
 
     make
-
     make install
-
-    mv -v /usr/bin/fuser   /bin
-    mv -v /usr/bin/killall /bin
 }

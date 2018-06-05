@@ -1,117 +1,3 @@
-cd locales/
-ll | less
-cd crux/crux.nu/ports/crux-3.4/core/
-less glibc
-cd glibc
-less Pkgfile 
-echo $?
-poco readline
-poco readline done
-cd Data/Compile/Sources/
-cd linux-4.15.3/
-cd cleaned/
-cd include/
-cd linux/
-poco glibc 
-cd /Data/Compile/Build/Core/glibc-2.27/Changes/
-cd usr/include/
-cd scsi/
-ls -l ../../../../Data/Compile/Sources/linux-4.15.3/cleaned/include/scsi/
-man cp
-cd etc/
-cd GLIBC/
-cd lib64/
-less /Data/Variable/Store/Tools/GLibc-2.27/Bom 
-find | less
-cd -
-poco glibc break
-poco clean
-poco glibc
-which ldconfig
-ls -l /Data/Variable/Store/Tools/GLibc-2.27/Files.tar.xz 
-locale
-man locale
-localedef
-man localedef
-man repertoiremap
-cd /usr/share/i18n/ll
-cd /usr/share/i18n
-less C
-locale -a
-ll  | less
-cd ,,
-cd charmaps/
-ll | less
-zless UTF-8.gz 
-cd locales/
-less de_DE
-poco shell
-less POSIX 
-ls -l en_*
-less en_IE
-less en_IN
-less en_IS
-less en_IU
-less en_US
-less C 
-cd /Data/Variable/
-cd Store/
-cd Boots/
-cd Compile/
-cd Build/
-cd ..
-cd Roots/
-mv Boots BootsX
-pogo boots build 504
-pogo boots harvest 504
-cd /Data/Variable/Store/Boots
-cd Binutils1-2.30/
-ll
-cd
-pogo boots clean
-pogo boots build-all
-ping www.google.de
-lua
-pogo boots build 504
-pogo boots harvest 504
-cd /Data/Variable/Store/Boots
-cd Binutils1-2.30/
-pogo boots clean
-ping www.google.de
-pogo boots build-all
-time pogo boots build-all
-cd /Data/Compile/
-cd Roots/
-ll
-tar cvaf Boots.tar.xz Boots
-cd
-lua
-poco shell
-poco lua new
-pogo tools build-all
-pogo tools build-all | less
-poc
-poc tools
-poc tools x
-pg
-man pg
-bob
-poc tools build
-poco build
-poco build lua
-poco lua
-env
-EnterWorldOfPogo
-EnterWorldOfPogo Core
-env
-set
-set | less
-EnterWorldOfPogo
-EnterWorldOfPogo Core
-env
-set
-set | less
-poco lua
 cd /Data/Compile/Roots/
 tar cvaf Boots.tar.xz Boots/
 tar cvaf Tools.tar.xz Tools/
@@ -498,3 +384,117 @@ ll
 less t-linux
 less t-linux64 
 grep lib64 *
+strings ld-2.27.so  | less
+rm -rv xxx
+cd
+pocore glibc
+pocore glibcx
+pocore glibcx done
+pocore --shell
+cd /Data
+cd Variable/
+mv Archives ../Compile/
+mv Store/ ../Compile/
+cd /Data/Compile/Store/Tools/
+cd linux-headers-4.15.3/
+potools Core/linux-headers
+potools Core/linux-headers done
+less Bom 
+ll#
+ll
+cd ..
+potools --build-all
+mv Archives ../Compile/
+mv Store/ ../Compile/
+cd /Data/Compile/Store/Tools/
+cd linux-headers-4.15.3/
+potools Core/linux-headers
+potools Core/linux-headers done
+less Bom 
+ll#
+potools --build-all
+ls -la
+cd /tools/lib
+ls -la gcc
+ls -l gcc
+cd ..
+cd /usr/lib
+lll
+cd gcc
+cd x86_64-pc-linux-gnu/
+cd 7.3.0/
+ll
+cd
+./configure --help | less
+./configure --help
+./configure --help | more
+./configure | less
+./configure | more
+./configure --help | more
+gcc -dumpspec
+gcc -dumpspecs | less
+gcc -dumpspecs | grep 64
+gcc -dumpspecs | grep 64 | less
+cd x86_64-pc-linux-gnu/
+cd 7.3.0/
+ldd cc1plus
+cd /lib
+ldd libc.so.6 
+cd /usr/libexec/
+cd x86_64-pc-linux-gnu/7.3.0/
+ldd cc1
+gcc -dumpspecs
+gcc -dumpspecs | grep lib64
+gcc
+cd ..
+find . -name spec
+find . -name specs
+pocore glibc
+pocore glibcx
+pocore glibcx done
+>>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8
+pocore --shell
+cd /Data/Compile/Sources/gcc-7.3.0/
+find . -type f -exec grep lib64 {} \+
+find . -type f -exec grep lib64 {} \+ | less
+cd gcc/config/i386/
+less linux64.h
+less t-linux
+less t-linux64 
+grep lib64 *
+strings ld-2.27.so  | less
+rm -rv xxx
+pocore glibc
+pocore glibcx
+pocore glibcx done
+pocore --shell
+cd /Data
+cd Variable/
+mv Archives ../Compile/
+mv Store/ ../Compile/
+cd /Data/Compile/Store/Tools/
+cd linux-headers-4.15.3/
+potools Core/linux-headers
+potools Core/linux-headers done
+less Bom 
+ll#
+cd ..
+cd /Data/Compile/Roots/Boots/
+cd tools/lib
+cd gcc
+ll
+ls -la
+cd
+potools --build
+man mv
+potools glibc break
+less /Data/Compile/Store/Tools/glibc-2.27/Bom 
+potools --clean-all
+potools --build-all
+cd
+potools --build
+man mv
+potools glibc break
+potools --clean-all
+potools --build-all
+less /Data/Compile/Store/Tools/glibc-2.27/Bom 

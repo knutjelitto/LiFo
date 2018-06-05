@@ -1,0 +1,18 @@
+#!/bin/bash
+
+Title="The GNU C Library (glibc)"
+Home="https://www.gnu.org/software/libc/"
+Name=glibc
+Version=2.27
+BuildDeps=(linux-headers)
+Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
+
+Build() 
+{
+    mkdir -pv /usr/lib/locale
+    
+    localedef -i de_DE -f UTF-8 de_DE.UTF-8
+    localedef -i de_DE -f ISO-8859-1 de_DE
+    localedef -i en_US -f UTF-8 en_US.UTF-8
+}   localedef -i en_US -f ISO-8859-1 en_US
+     

@@ -23,6 +23,11 @@ RemoveDir ()
     rm $verbose --force --recursive "$@"
 }
 
+MoveInto ()
+{
+    mv $verbose --force --target-directory "$@"
+}
+
 RemoveFile ()
 {
     local file

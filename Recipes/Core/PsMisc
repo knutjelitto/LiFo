@@ -4,7 +4,7 @@ Title="PSMisc"
 Home=(http://psmisc.sourceforge.net/)
 Name=psmisc
 Version=23.1
-Supplies=(https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-$Version.tar.xz)
+Supplies=(https://sourceforge.net/projects/$Name/files/$Name/$Name-$Version.tar.xz)
 
 Build()
 {

@@ -88,6 +88,7 @@ Build_Make () # recipe-token
 
 Build_Done () # recipe
 {
+    :
 }
 
 
@@ -373,6 +374,8 @@ MakeToolsRootfs ()
     RootMakeDir 0775 usr/share/terminfo
     RootMakeDir 0775 usr/share/zoneinfo
     RootMakeDir 0775 usr/share/man/man{1..8}
+
+    RootSymLink usr/lib64               lib
 
     RootSymLink bin/bash                /tools/bin/bash
     RootSymLink bin/sh                  bash

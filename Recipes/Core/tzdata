@@ -4,8 +4,11 @@ Title="Timezone Data"
 Home=(https://www.iana.org/time-zones/)
 Name=tzdata
 Version=2018e
-BuildDeps=(GLibc)
-Supplies=(http://www.iana.org/time-zones/repository/releases/tzdata$Version.tar.gz)
+BuildDeps=(glibc)
+Supplies=(
+    https://ftpmirror.gnu.org/gnu/glibc/glibc-2.27.tar.xz
+    http://www.iana.org/time-zones/repository/releases/tzdata$Version.tar.gz
+)
 
 Build()
 {

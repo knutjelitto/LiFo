@@ -5,6 +5,9 @@ Assert_Pool
 Recipes_List=(
     linux-headers
     glibc
+    locale
+    tzdata
+    
     binutils
     zlib
     gmp

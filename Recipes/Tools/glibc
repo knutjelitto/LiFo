@@ -1,0 +1,90 @@
+#!/bin/bash
+
+Title="6.9. Glibc-2.27"
+Name=glibc
+Version=2.27
+BuildIn=build
+Supplies=(
+    https://ftpmirror.gnu.org/gnu/glibc/$Name-$Version.tar.xz
+    http://www.linuxfromscratch.org/patches/lfs/8.2/glibc-2.27-fhs-1.patch
+    http://www.iana.org/time-zones/repository/releases/tzdata2018c.tar.gz
+)
+
+Prepare ()
+{
+    patch -Np1 -i ../glibc-2.27-fhs-1.patch
+}
+
+Build() 
+{
+    ln -sfv /tools/lib/gcc /usr/lib
+
+    GCC_INCDIR=/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include
+    ln -sfv ../lib/ld-linux-x86-64.so.2 /usr/lib64
+    ln -sfv ../lib/ld-linux-x86-64.so.2 /usr/lib64/ld-lsb-x86-64.so.3
+
+    rm -f /usr/include/limits.h
+
+    CC="gcc -isystem $GCC_INCDIR -isystem /usr/include" \
+    ../configure \
+        --prefix=/usr                   \
+        --exec-prefix=/usr              \
+        --libexecdir=/usr/lib           \
+        --disable-werror                \
+        --enable-stack-protector=strong \
+        libc_cv_slibdir=/usr/lib
+
+    unset GCC_INCDIR
+
+    make
+    touch /etc/ld.so.conf
+    sed '/test-installation/s@$(PERL)@echo not running@' -i ../Makefile
+    make install
+    rm /etc/ld.so.conf
+
+    cp -v ../nscd/nscd.conf /etc/nscd.conf
+    mkdir -pv /var/cache/nscd
+
+    cat > /etc/nsswitch.conf << "EOF"
+# Begin /etc/nsswitch.conf
+
+passwd: files
+group: files
+shadow: files
+
+hosts: files dns
+networks: files
+
+protocols: files
+services: files
+ethers: files
+rpc: files
+
+# End /etc/nsswitch.conf
+EOF
+
+    #cp --verbose ../../tzdata2018c/* .
+    #
+    #ZONEINFO=/usr/share/zoneinfo
+    #mkdir -pv $ZONEINFO/{posix,right}
+    #
+    #for tz in etcetera southamerica northamerica europe africa antarctica  \
+    #        asia australasia backward pacificnew systemv; do
+    #    zic -L /dev/null   -d $ZONEINFO       -y "sh yearistype.sh" ${tz}
+    #    zic -L /dev/null   -d $ZONEINFO/posix -y "sh yearistype.sh" ${tz}
+    #    zic -L leapseconds -d $ZONEINFO/right -y "sh yearistype.sh" ${tz}
+    #done
+    #
+    #cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
+    #zic -d $ZONEINFO -p America/New_York
+    #unset ZONEINFO
+    #
+    #echo PARTIALLY DONE
+}
+
+Cleanup ()
+{
+    RemoveDir usr/share/locale
+    MoveInto usr/bin sbin/*
+    MoveInto usr/bin usr/sbin/*
+}

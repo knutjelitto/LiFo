@@ -1,0 +1,13 @@
+#!/bin/bash
+
+Title="The GNU C Library (glibc)"
+Home="https://www.gnu.org/software/libc/"
+Name=glibc
+Version=2.27
+BuildDeps=(linux-headers)
+Supplies=(none)
+
+Build() 
+{
+    tar --extract --verbose --exclude=usr/lib/gcc --directory=/ --file /Data/Variable/Store/Tools/glibc-2.27/Files.tar.xz
+}    
