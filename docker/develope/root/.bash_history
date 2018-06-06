@@ -1,135 +1,3 @@
-poco bc
-poco bc done
-poco hello done
-poco hello
-poco hello new
-poco file done
-poco file
-poco ed
-poco ed done
-poco bc
-poco bc done
-poco hello new
-poco hello
-poco hello done
-poco --download
-cd /LiFo/Recipes/Tools/
-ls -l
-ls -1
-ls -1 >../xxx.txt
-rm xxx.txt 
-cd -
-ls -1 >../../xxx.txt
-poto --download
-cd Boots/
-ls -1 >../../xxx.txt 
-pobo --download
-cd
-cd lfs
-cd ..
-rm -rv lfs/
-ll
-man sed
-pobo --build-all
-time poto --build-all
-time poco --build-all
-ls -1 >../../xxx.txt
-poto --download
-cd Boots/
-ls -1 >../../xxx.txt 
-pobo --download
-cd lfs
-rm -rv lfs/
-man sed
-pobo --build-all
-time poto --build-all
-time poco --build-all
-poco --build-all | less
-cd /Data/Compile/Roots/
-cd Build/
-do Tools/
-du Tools/
-find Tools -ls
-cd ..
-cd Roots/
-rm *.tar.xz
-cd /Data/Variable/Archives/
-ll
-poto --build-all
-cd
-poco --build-all
-<<<<<<< HEAD
-cd /Data/Variable/Archives/
-poto --build-all
-cd
-poco --rebuild-all
-poco --build-all
-poco readline new
-poco gettext new
-poco gettext donw
-poco gettext done
-cd /Data/Compile/Roots/Core/
-cd etc
-cd ssl
-less openssl.cnf.dist 
-cd /etc/ssl/
-ll
-less openssl.cnf 
-cd -
-diff openssl.cnf.dist /etc/ssl/openssl.cnf 
-poco --shell
-poto --build-all
-poco --build-all
-cd /Data/Variable/Archives/
-poto --build-all
-poco --rebuild-all
-poco --build-all
-poco readline new
-poco gettext new
-poco gettext donw
-poco gettext done
-cd /Data/Compile/Roots/Core/
-cd etc
-cd ssl
-less openssl.cnf.dist 
-cd /etc/ssl/
-less openssl.cnf 
-cd -
-diff openssl.cnf.dist /etc/ssl/openssl.cnf 
-poco --shell
-cd /Data/Compile/Roots/
-rm Boots.tar.xz 
-du -h core
-du -h Core/
-du -h Core/ | less
-cd bin
-cd Core/
-cd bin/
-tar cvaf Core.tar.xz Core
-tar caf Core.tar.xz Core &
-cd Variable/Store/Tools/ll
-cd Variable/
-cd Store/
-cd Tools/ll
-cd Tools
-cd GLibc-2.27/
-less Bom 
-grep gcc Bom
-man tar
-cd ..
-cd ../Core/
-öes glibc-2.27/
-cd glibc-2.27/
-poco glibc build
-poco glibc new
-poco glibc
-poco glibc done
-cd /Data/Variable/Store/Tools/
-ll
-cd
-poco linux-headers
-poco linux-headers done
-=======
 ls -1 >../../xxx.txt 
 pobo --download
 cd lfs
@@ -498,3 +366,135 @@ cd ..
 cd libexec/
 cd gcc
 ll
+find -xtype l
+cd libexec/
+cd gcc
+cd usr/lib
+find . 
+find .  -ls
+find .  -ls | grep tools
+cd ..
+ll
+which
+which ls
+which bash
+ll
+which bash
+cd System/
+cd Index/
+ll
+cd ..
+env
+which file
+ncursesw6-config 
+ncursesw6-config --mandir
+ncursesw6-config --prefix
+ncursesw6-config --cflags
+ll
+flex
+./configure --help
+cd gcc/config/i386/
+less linux64.h
+less t-linux
+less t-linux64 
+grep lib64 *
+strings ld-2.27.so  | less
+rm -rv xxx
+pocore glibc
+pocore glibcx
+pocore glibcx done
+pocore --shell
+cd /Data
+cd Variable/
+mv Archives ../Compile/
+mv Store/ ../Compile/
+cd /Data/Compile/Store/Tools/
+cd linux-headers-4.15.3/
+potools Core/linux-headers
+potools Core/linux-headers done
+less Bom 
+ll#
+cd /Data/Compile/Roots/Boots/
+cd tools/lib
+cd gcc
+ls -la
+potools --build
+man mv
+potools glibc break
+less /Data/Compile/Store/Tools/glibc-2.27/Bom 
+potools --build
+man mv
+potools glibc break
+less /Data/Compile/Store/Tools/glibc-2.27/Bom 
+potools glibc break
+less /Data/Compile/Store/Tools/glibc-2.27/Bom 
+potools --build
+man mv
+potools glibc break
+less /Data/Compile/Store/Tools/glibc-2.27/Bom 
+env
+which gcc
+cd /
+cd lib64
+ls -la
+cd .marks/
+cd..
+cd -
+cd bin
+ldd catchsegv 
+ldd gencat 
+ldd gencat 
+cd bin
+env
+cd /usr/lib
+ldd libgmpxx.so.4.5.2 
+ldd libgmpxx.so.4.5.2 
+find -xtype l
+find -xtype l
+cd usr/lib
+cd libexec/
+cd gcc
+potools Core/zlib new
+potools --clean-all
+cd /Pogo/
+du gobo/
+rm -rv gobo/
+cd Data
+cd Compile/
+cd Build/
+cd Roots/
+rm -rv BootsX
+rm Core.tar.xz 
+cd tools
+cd bin/
+cd lib
+cd gcc/x86_64-pc-linux-gnu/7.3.0
+cd x86_64-pc-linux-gnu/bin/
+cd Tools/
+cd etc/
+less /Data/Compile/Store/Tools/ncurses-6.1/Bom 
+potools --shell
+potools --break Core/
+potools --break Core/bc
+potools Core/bc --break
+potools Core/bc break
+potools Core/bison break
+less /Data/Compile/Store/Tools/flex-2.6.4/Bom 
+cd /Data/Compile/
+cd /Data/Compile/Roots/Tools/
+cd usr/
+find . -type f
+find . -type
+man grep
+check-tools 
+check-tools | less
+potools --build-all
+cd /Data/Compile/Roots/Tools/usr/share/aclocal/
+less pkg.m4 
+cd ..
+cd gcc-7.3.0/python/libstdcxx/
+cd v6/
+ll
+less __init__.py 
+cd
+check-tools

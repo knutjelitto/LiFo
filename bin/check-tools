@@ -1,0 +1,55 @@
+#!/bin/bash -eu
+
+#
+# check in files for maybe /tools references
+# 
+cd /Data/Compile/Roots/Tools/usr
+
+#find . -ls | grep 'tools'
+
+find . -type f -exec file --mime {} \+ | while IFS=$': ' read name type; do
+    echo -n "."
+    case $type in
+    text/plain\;*) continue ;;
+    text/html\;*) continue ;;
+    text/xml\;*) continue ;;
+    text/troff\;*) continue ;;
+    text/x-asm\;*) continue ;;
+    text/x-c\;*) continue ;;
+    text/x-c\+\+\;*) continue ;;
+
+    application/x-archive\;*) continue ;;
+    application/gzip\;*) continue ;;
+    application/postscript\;*) continue ;;
+    application/pdf\;*) continue ;;
+    application/x-dvi\;*) continue ;;
+    application/x-terminfo\;*) continue ;;
+    application/octet-stream\;\ charset=binary) continue ;;
+
+    text/x-perl\;* | text/x-shellscript\;* | text/x-m4\;* |  text/x-python\;*)
+        if grep --quiet '/tools' "$name"; then
+            echo ""
+            echo "SUSPECT: $name"
+            break;
+        fi
+        ;;
+    
+    application/x-executable\;* | application/x-sharedlib\;* | application/x-object\;*) 
+        if strings "$name" | grep --quiet '/tools'; then
+            echo ""
+            echo "SUSPECT: $name"
+            strings "$name" | grep '/tools'
+            break
+        fi
+        ;;
+
+    *) 
+        echo ""
+        echo "$name: unknown type $type"
+        break
+        ;;
+    esac
+done
+#find . -type f | while read file; do
+#    echo "XXXX: $file"
+#done

@@ -61,6 +61,8 @@ Build_Make () # recipe-token
     fi
 
     if [[ "build" == "$command" ]]; then
+        echo "BUILD: ${Recipe_Tag}"
+
         if [[ ! -f $buildMarker || "$Recipe_File" -nt "$buildMarker" ]]; then
             RemoveFile $buildMarker $harvestMarker $rolloutMarker
             _build_Build
@@ -271,8 +273,6 @@ RootSymLink ()
     if ! ln "$verbose" --symbolic "$target" "$link"; then
         Fatal "can't symlink $link -> $target"
     fi
-
-    ls -l $Box_Root
 }
 
 MakeCoreRootfs ()

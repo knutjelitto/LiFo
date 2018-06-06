@@ -18,6 +18,5 @@ Build()
         --infodir=/usr/share/info
 
     make
-    #echo "quit" | ./bc/bc -l Test/checklib.b
     make install
 }
