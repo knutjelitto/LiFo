@@ -30,6 +30,7 @@ find . -type f -exec file --mime {} \+ | while IFS=$': ' read name type; do
         if grep --quiet '/tools' "$name"; then
             echo ""
             echo "SUSPECT: $name"
+            grep '/tools' "$name"
             break;
         fi
         ;;
