@@ -11,8 +11,7 @@ Build()
     ./configure \
         --prefix=/usr       \
         --enable-cxx        \
-        --disable-static    \
-        --docdir=/usr/share/doc/gmp
+        --disable-static
 
     make
     make html

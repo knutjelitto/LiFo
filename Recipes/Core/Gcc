@@ -12,10 +12,9 @@ Build()
 {
     sed -e '/m64=/s/lib64/lib/' -i.orig ../gcc/config/i386/t-linux64
 
-    # optional: --disable-bootstrap
-
     ../configure                    \
         --prefix=/usr               \
+        --libexecdir=/usr/lib       \
         --disable-nls               \
         --disable-bootstrap         \
         --disable-multilib          \
@@ -29,10 +28,8 @@ Build()
     mkdir -pv /usr/share/gdb/auto-load/usr/lib
     mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
 
-    chown -v -R root:root /usr/lib/gcc/*linux-gnu/7.3.0/include{,-fixed}
-
     ln -vsf ../usr/bin/cpp /lib
     ln -vsf gcc /usr/bin/cc
     install -v -dm755 /usr/lib/bfd-plugins
-    ln -vsf ../../libexec/gcc/$(gcc -dumpmachine)/7.3.0/liblto_plugin.so /usr/lib/bfd-plugins/
+    ln -vsf ../../lib/gcc/$(gcc -dumpmachine)/7.3.0/liblto_plugin.so /usr/lib/bfd-plugins/
 }

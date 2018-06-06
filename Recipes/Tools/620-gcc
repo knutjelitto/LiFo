@@ -19,14 +19,11 @@ Build ()
     ../configure --prefix=/usr              \
                  --disable-nls              \
                  --enable-languages=c,c++   \
-                 --disable-multilib         \
                  --disable-bootstrap        \
+                 --disable-multilib         \
                  --with-system-zlib
     
     make
-
-    #make -k check
-
     make install
 
     ln -sv ../usr/bin/cpp /lib

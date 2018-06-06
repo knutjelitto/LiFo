@@ -1,46 +1,3 @@
-cd /Data/Compile/Roots/
-tar cvaf Boots.tar.xz Boots/
-tar cvaf Tools.tar.xz Tools/
-du - Core
-tar cvaf Core.tar.xz Core/
-ll
-cd
-pocox lua´
-pocox lua
-clear
-pocox lua
-pocox lua | less
-pocox lua
-ll
-cd
-pocox lua´
-clear
-pocox lua | less
-set
-pid
-help declare
-pocox lua
-ll
-pocox lua | less
-set
-pid
-help declare
-pocox lua
-clear
-ll
-poco tree break
-poco tree
-poco tree new
-poco tree done
-poco file
-poco tree break
-poco tree
-poco tree new
-poco tree done
-poco file done
-poco file
-poco ed
-poco ed done
 poco bc
 poco bc done
 poco hello done
@@ -498,3 +455,46 @@ potools glibc break
 potools --clean-all
 potools --build-all
 less /Data/Compile/Store/Tools/glibc-2.27/Bom 
+potools glibc break
+less /Data/Compile/Store/Tools/glibc-2.27/Bom 
+potools --clean-all
+potools --build-all
+potools --build
+man mv
+potools glibc break
+potools --clean-all
+potools --build-all
+less /Data/Compile/Store/Tools/glibc-2.27/Bom 
+env
+which gcc
+cd
+cd /
+cd lib64
+cd lib
+ls -la
+cd .marks/
+cd..
+cd ..
+cd -
+cd usr/
+cd bin
+ll
+ldd catchsegv 
+ldd gencat 
+ldd gencat 
+cd bin
+ll
+cd ..
+env
+cd /usr/lib
+ll
+ldd libgmpxx.so.4.5.2 
+ldd libgmpxx.so.4.5.2 
+cd usr/
+find -xtype l
+find -xtype l
+cd usr/lib
+cd ..
+cd libexec/
+cd gcc
+ll

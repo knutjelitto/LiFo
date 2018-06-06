@@ -102,6 +102,7 @@ _harvest_Bom () # bomFile topDir
         $6 ~ /^usr\/lib\/pkgconfig$/ { next; }
         $6 ~ /^usr\/include$/ { next; }
         $6 ~ /^usr\/share$/ { next; }
+        $6 ~ /^usr\/share\/i18n$/ { next; }
         $6 ~ /^usr\/share\/locale$/ { next; }
         $6 ~ /^usr\/share\/doc$/ { next; }
         $6 ~ /^usr\/share\/info$/ { next; }

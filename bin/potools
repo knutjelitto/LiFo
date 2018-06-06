@@ -4,19 +4,29 @@ Assert_Pool
 
 Recipes_List=(
     Core/linux-headers      # 6.07
-    Tools/glibc             # 6.08
-    #609-glibc
+    Tools/glibc             # 6.09
+    Tools/adjusting         # 6.10
+    Core/binutils           # 6.16
+    Core/zlib               # 6.11
+    Core/gmp                # 6.17
+    Core/isl                # -.--
+    Core/mpfr               # 6.18
+    Core/mpc                # 6.19
+    Core/gcc                # 6.20
+
+    #.#.#607-linux-headers
+    #.#.#609-glibc
+    #.#.#610-adjusting
+    #.#.#611-zlib
+    #.#.#616-binutils
     #608-man-pages
-    #610-adjusting
-    #611-zlib
     #612-file
     #613-readline
     #614-m4
     #615-bc
-    #616-binutils
-    #617-gmp
-    #618-mpfr
-    #619-mpc
+    #.#.#617-gmp
+    #.#.#618-mpfr
+    #.#.#619-mpc
     #620-gcc
     #621-bzip2
     #622-pkg-config

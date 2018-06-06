@@ -4,7 +4,7 @@ Title="Lib ZLib"
 Home=(https://zlib.net/)
 Name=zlib
 Version=1.2.11
-Supplies=(https://zlib.net/zlib-$Version.tar.xz)
+Supplies=(https://zlib.net/$Name-$Version.tar.xz)
 
 Build()
 {

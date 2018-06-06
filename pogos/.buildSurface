@@ -271,6 +271,8 @@ RootSymLink ()
     if ! ln "$verbose" --symbolic "$target" "$link"; then
         Fatal "can't symlink $link -> $target"
     fi
+
+    ls -l $Box_Root
 }
 
 MakeCoreRootfs ()
@@ -338,11 +340,7 @@ MakeToolsRootfs ()
 
     RootMakeDir 0775 LiFo
     RootMakeDir 0775 root
-    RootMakeDir 0775 bin
-    RootMakeDir 0775 sbin
     RootMakeDir 0775 etc
-    RootMakeDir 0775 lib
-    RootMakeDir 0775 lib64
     RootMakeDir 1777 tmp
     RootMakeDir 1777 dev
     RootMakeDir 1777 proc
@@ -358,10 +356,12 @@ MakeToolsRootfs ()
     RootMakeDir 1777 var/tmp
 
     RootMakeDir 0775 usr/bin
-    RootMakeDir 0775 usr/sbin
+    RootSymLink      usr/sbin           bin
     RootMakeDir 0775 usr/include
     RootMakeDir 0775 usr/lib
+    RootSymLink      usr/lib64          lib
     RootMakeDir 0775 usr/lib/pkgconfig
+    RootSymLink      usr/local          .
     RootMakeDir 0775 usr/libexec
     RootMakeDir 0775 usr/share
     RootMakeDir 0775 usr/share/color
@@ -369,13 +369,17 @@ MakeToolsRootfs ()
     RootMakeDir 0775 usr/share/doc
     RootMakeDir 0775 usr/share/info
     RootMakeDir 0775 usr/share/locale
+    RootMakeDir 0775 usr/share/i18n
     RootMakeDir 0775 usr/share/man
     RootMakeDir 0775 usr/share/misc
     RootMakeDir 0775 usr/share/terminfo
     RootMakeDir 0775 usr/share/zoneinfo
     RootMakeDir 0775 usr/share/man/man{1..8}
 
-    RootSymLink usr/lib64               lib
+    RootSymLink lib                     usr/lib
+    RootSymLink lib64                   usr/lib
+    RootSymLink bin                     usr/bin
+    RootSymLink sbin                    usr/bin
 
     RootSymLink bin/bash                /tools/bin/bash
     RootSymLink bin/sh                  bash

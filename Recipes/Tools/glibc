@@ -20,8 +20,8 @@ Build()
     ln -sfv /tools/lib/gcc /usr/lib
 
     GCC_INCDIR=/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include
-    ln -sfv ../lib/ld-linux-x86-64.so.2 /usr/lib64
-    ln -sfv ../lib/ld-linux-x86-64.so.2 /usr/lib64/ld-lsb-x86-64.so.3
+    #ln -sfv ../lib/ld-linux-x86-64.so.2 /usr/lib64
+    #ln -sfv ../lib/ld-linux-x86-64.so.2 /usr/lib64/ld-lsb-x86-64.so.3
 
     rm -f /usr/include/limits.h
 
@@ -41,6 +41,8 @@ Build()
     sed '/test-installation/s@$(PERL)@echo not running@' -i ../Makefile
     make install
     rm /etc/ld.so.conf
+
+    rm /usr/lib/gcc
 
     cp -v ../nscd/nscd.conf /etc/nscd.conf
     mkdir -pv /var/cache/nscd
@@ -85,6 +87,4 @@ EOF
 Cleanup ()
 {
     RemoveDir usr/share/locale
-    MoveInto usr/bin sbin/*
-    MoveInto usr/bin usr/sbin/*
 }
