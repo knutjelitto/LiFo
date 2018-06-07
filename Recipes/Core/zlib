@@ -4,6 +4,7 @@ Title="Lib ZLib"
 Home=(https://zlib.net/)
 Name=zlib
 Version=1.2.11
+ToolDeps=(bootstrap)
 Supplies=(https://zlib.net/$Name-$Version.tar.xz)
 
 Build()

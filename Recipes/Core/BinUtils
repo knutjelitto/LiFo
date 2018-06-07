@@ -4,6 +4,8 @@ Title="BinUtils"
 Home=(https://www.gnu.org/software/binutils/)
 Name=binutils
 Version=2.30
+ToolDeps=(bootstrap)
+LinkDeps=(zlib)
 BuildIn=build
 Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz)
 

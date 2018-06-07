@@ -12,6 +12,9 @@ Supplies=(
 
 Build()
 {
+    cp --verbose ../tzdata2018e/* .
+    bash -l
+
     local ZONEINFO=/usr/share/zoneinfo
     local timezone
     mkdir -pv $ZONEINFO/{posix,right}

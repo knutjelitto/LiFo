@@ -6,6 +6,7 @@ Recipes_List=(
     Core/linux-headers      # 6.07
     Tools/glibc             # 6.09
     Tools/adjusting         # 6.10
+    Core/tzdata             # -.--
     Core/zlib               # 6.11
     Core/binutils           # 6.16
     Core/gmp                # 6.17

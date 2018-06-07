@@ -1,21 +1,3 @@
-ls -1 >../../xxx.txt 
-pobo --download
-cd lfs
-rm -rv lfs/
-man sed
-pobo --build-all
-time poto --build-all
-time poco --build-all
-poco --build-all | less
-cd /Data/Compile/Roots/
-cd Build/
-do Tools/
-du Tools/
-find Tools -ls
-rm *.tar.xz
-cd /Data/Variable/Archives/
-poto --build-all
-poco --build-all
 cd /Data/Variable/Store/
 cd Tools/
 cd glibc-2.27/
@@ -498,3 +480,21 @@ ll
 less __init__.py 
 cd
 check-tools
+ll
+./configure --help
+less /Data/Compile/Archives/glibc-2.27-fhs-1.patch 
+./configure --help | more
+cd
+check-tools
+potools --clean-all
+check-tools 
+potools Core/acl break
+less /Data/Compile/Archives/glibc-2.27-fhs-1.patch 
+potools Tools/glibc break
+potools --build-all
+less /Data/Compile/Archives/glibc-2.27-fhs-1.patch 
+potools Tools/glibc break
+check-tools 
+potools --build-all
+potools --clean-all
+time potools --build-all

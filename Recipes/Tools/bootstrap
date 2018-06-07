@@ -1,0 +1,15 @@
+#!/bin/bash
+
+Title="Bootstrap"
+Home=(http://www.linuxfromscratch.org/lfs/view/development/chapter05/introduction.html)
+Name=bootstrap
+Version=lfs-developemnt
+ToolDeps=()
+Supplies=(none)
+
+Build()
+{
+    # provides
+    #   binutils, gcc, linux-headers, glibc, libcpp, tcl-core, expect, dejagnu, m4, ncurses, bash, bison, bzip2, coreutils,
+    #   diffutils, file, findutils, gawk, gettext, grep, gzip, make, patch, perlm sed, tar, texinfo, util-linix, xz-tools
+}

@@ -3,11 +3,12 @@
 Title="6.9. Glibc-2.27"
 Name=glibc
 Version=2.27
+ToolDeps=(bootstrap)
 BuildIn=build
 Supplies=(
     https://ftpmirror.gnu.org/gnu/glibc/$Name-$Version.tar.xz
     http://www.linuxfromscratch.org/patches/lfs/8.2/glibc-2.27-fhs-1.patch
-    http://www.iana.org/time-zones/repository/releases/tzdata2018c.tar.gz
+    http://www.iana.org/time-zones/repository/releases/tzdata2018e.tar.gz
 )
 
 Prepare ()
@@ -17,7 +18,9 @@ Prepare ()
 
 Build() 
 {
-    ln -sfv /tools/lib/gcc /usr/lib
+    if [[ ! -d /usr/lib/gcc ]]; then
+        ln -sfv /tools/lib/gcc /usr/lib
+    fi
 
     GCC_INCDIR=/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include
     #ln -sfv ../lib/ld-linux-x86-64.so.2 /usr/lib64
@@ -31,6 +34,8 @@ Build()
         --exec-prefix=/usr              \
         --libexecdir=/usr/lib           \
         --disable-werror                \
+        --disable-nscd                  \
+        --disable-build-nscd            \
         --enable-stack-protector=strong \
         libc_cv_slibdir=/usr/lib
 
@@ -42,7 +47,9 @@ Build()
     make install
     rm /etc/ld.so.conf
 
-    rm /usr/lib/gcc
+    if [[ ! -d /usr/lib/gcc ]]; then
+        rm /usr/lib/gcc
+    fi
 
     cp -v ../nscd/nscd.conf /etc/nscd.conf
     mkdir -pv /var/cache/nscd

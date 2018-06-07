@@ -10,47 +10,46 @@ cd /Data/Compile/Roots/Tools/usr
 find . -type f -exec file --mime {} \+ | while IFS=$': ' read name type; do
     echo -n "."
     case $type in
-    text/plain\;*) continue ;;
-    text/html\;*) continue ;;
-    text/xml\;*) continue ;;
-    text/troff\;*) continue ;;
-    text/x-asm\;*) continue ;;
-    text/x-c\;*) continue ;;
-    text/x-c\+\+\;*) continue ;;
+        text/plain\;*) continue ;;
+        text/html\;*) continue ;;
+        text/xml\;*) continue ;;
+        text/troff\;*) continue ;;
+        text/x-asm\;*) continue ;;
+        text/x-c\;*) continue ;;
+        text/x-c\+\+\;*) continue ;;
 
-    application/x-archive\;*) continue ;;
-    application/gzip\;*) continue ;;
-    application/postscript\;*) continue ;;
-    application/pdf\;*) continue ;;
-    application/x-dvi\;*) continue ;;
-    application/x-terminfo\;*) continue ;;
-    application/octet-stream\;\ charset=binary) continue ;;
+        application/x-archive\;*) continue ;;
+        application/gzip\;*) continue ;;
+        application/postscript\;*) continue ;;
+        application/pdf\;*) continue ;;
+        application/x-dvi\;*) continue ;;
+        application/x-terminfo\;*) continue ;;
+        application/octet-stream\;\ charset=binary) continue ;;
 
-    text/x-perl\;* | text/x-shellscript\;* | text/x-m4\;* |  text/x-python\;*)
-        if grep --quiet '/tools' "$name"; then
+        text/x-perl\;* | text/x-shellscript\;* | text/x-m4\;* |  text/x-python\;*)
+            if grep --quiet -e '/tools' -e 'tools/' "$name"; then
+                echo ""
+                echo "SUSPECT: $name"
+                grep -e '/tools' -e 'tools/'  "$name"
+                break;
+            fi
+            ;;
+        
+        application/x-executable\;* | application/x-sharedlib\;* | application/x-object\;*) 
+            if strings "$name" | grep --quiet -e '/tools' -e 'tools/' ; then
+                echo ""
+                echo "SUSPECT: $name"
+                strings "$name" | grep -e '/tools' -e 'tools/' 
+                break
+            fi
+            ;;
+
+        *) 
             echo ""
-            echo "SUSPECT: $name"
-            grep '/tools' "$name"
-            break;
-        fi
-        ;;
-    
-    application/x-executable\;* | application/x-sharedlib\;* | application/x-object\;*) 
-        if strings "$name" | grep --quiet '/tools'; then
-            echo ""
-            echo "SUSPECT: $name"
-            strings "$name" | grep '/tools'
+            echo "$name: unknown type $type"
             break
-        fi
-        ;;
-
-    *) 
-        echo ""
-        echo "$name: unknown type $type"
-        break
-        ;;
+            ;;
     esac
 done
-#find . -type f | while read file; do
-#    echo "XXXX: $file"
-#done
+
+echo ""

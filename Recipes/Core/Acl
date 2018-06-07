@@ -4,7 +4,8 @@ Title="Acl"
 Home=(https://savannah.nongnu.org/projects/acl/)
 Name=acl
 Version=2.2.52
-Supplies=(http://download.savannah.gnu.org/releases/acl/acl-$Version.src.tar.gz)
+ToolDeps=(attr bash binutils coreutils gcc gettext grep m4 make perl sed texinfo)
+Supplies=(http://download.savannah.gnu.org/releases/$Name/$Name-$Version.src.tar.gz)
 
 Build ()
 {
