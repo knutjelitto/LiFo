@@ -1,26 +1,3 @@
-cd /Data/Variable/Store/
-cd Tools/
-cd glibc-2.27/
-poco glibc
-poco shell
-poco --shell
-cd linux-headers-4.15.3/
-poco --cleanall
-poco --clean
-time poco --build
-cd /Data
-cd Variable/
-cd Store/
-du -hs *
-cd Core/
-cd ..
-cd Compile/
-du Lfs/
-cd Roots/
-du -sh *
-cd Core
-cd bin
-man wdctl
 wdctl
 cd /dev/
 cd
@@ -498,3 +475,26 @@ check-tools
 potools --build-all
 potools --clean-all
 time potools --build-all
+check-tools 
+svn
+subversion
+potools Tools/glibc break
+check-tools 
+time potools --build-all
+check-tools 
+subversion
+svn
+mkdir lfs
+cd lfs
+svn co svn://svn.linuxfromscratch.org/LFS/trunk/BOOK/
+cd BOOK/
+cd appendices/
+l
+less scripts.xml 
+less dependencies.xml 
+cd ..
+cd
+cd /
+ll
+potools --clean-all
+potools --build-all

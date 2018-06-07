@@ -9,7 +9,7 @@ ENV TERM xterm-256color
 RUN    apt-get update -y \
     && apt-get install -y apt-utils build-essential bison file gawk texinfo wget lzip \
                           curl sudo man-db info less tree nano strace libarchive-tools \
-                          locales \
+                          locales subversion \
     && apt-get -q -y autoremove \ 
     && rm -rvf /var/lib/apt/lists/*
 
