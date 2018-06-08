@@ -1,0 +1,4 @@
+groupadd -g 999 pogo
+useradd -r -u 999 -g pogo pogo
+mkdir -p /home/pogo
+chown pogo:pogo /home/pogo
