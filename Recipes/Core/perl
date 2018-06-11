@@ -19,6 +19,8 @@ Build()
                       -Dpager="/usr/bin/less -isR"  \
                       -Duseshrplib                  \
                       -Dusethreads
+
+    bash -l
     make
     make install
 }

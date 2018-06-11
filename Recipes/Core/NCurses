@@ -19,6 +19,7 @@ Build()
                 --without-normal        \
                 --enable-pc-files       \
                 --enable-widec
+#                --without-cxx-binding   \
 
     make
 

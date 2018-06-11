@@ -47,7 +47,7 @@ Build()
     make install
     rm /etc/ld.so.conf
 
-    if [[ ! -d /usr/lib/gcc ]]; then
+    if [[ -L /usr/lib/gcc ]]; then
         rm /usr/lib/gcc
     fi
 

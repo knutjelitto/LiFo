@@ -3,81 +3,81 @@ source "$Pogos/.pogoConfig" Tools
 Assert_Pool
 
 Recipes_List=(
-    Core/linux-headers      # 6.07
-    Tools/glibc             # 6.09
-    Tools/adjusting         # 6.10
-    Core/tzdata             # -.--
-    Core/zlib               # 6.11
-    Core/binutils           # 6.16
-    Core/gmp                # 6.17
-    Core/isl                # -.--
-    Core/mpfr               # 6.18
-    Core/mpc                # 6.19
-    Core/gcc                # 6.20
-    Core/which              # -.--
-    Core/file               # 6.12
-    Core/ncurses            # 6.23
-    Core/readline           # 6.13
-    Core/m4                 # 6.14
-    Core/ed                 # -.--
-    Core/sed                # 6.27
-    Core/flex               # 6.32
-    Core/bc                 # 6.15
-    Core/man-pages          # 6.08
-    Core/bzip2              # 6.21
-    Core/bison              # 6.31
-    Core/pkg-config         # 6.22
-    Core/attr               # 6.24
-    Core/acl                # 6.25
-    Core/libcap             # 6.26
-    Core/psmisc             # 6.29
-    Core/iana-etc           # 6.30
-    Core/grep               # 6.33
-    Core/bash               # 6.34
-
-    #635-libtool
-    #636-gdbm
-    #637-gperf
-    #638-expat
-    #639-inetutils
-    #640-perl
-    #641-xml-parser
-    #642-intltool
-    #643-autoconf
-    #644-automake
-    #645-xz-tools
+    Core/linux-headers
+    Tools/glibc
+    Tools/adjusting
+    Core/tzdata
+    Core/zlib
+    Core/binutils
+    Core/gmp
+    Core/isl
+    Core/mpfr
+    Core/mpc
+    Core/gcc
+    Core/which
+    Core/file
+    Core/ncurses
+    Core/readline
+    Core/m4
+    Core/ed
+    Core/sed
+    Core/flex
+    Core/bc
+    Core/man-pages
+    Core/bzip2
+    Core/bison
+    Core/pkg-config
+    Core/attr
+    Core/acl
+    Core/libcap
+    Core/psmisc
+    Core/iana-etc
+    Core/grep
+    Core/libiconv
+    Core/bash
+    Core/less
+    Core/libtool
+    Core/gdbm
+    Core/gperf
+    Core/expat
+    Core/inetutils
+    #Core/perl
+    #Core/perl-xml-parser
+    #Core/intltool
+    Core/autoconf
+    Core/automake
+    Core/xz-utils
     #646-kmod
-    #647-gettext
-    #648-libelf
-    #649-libffi
+    Core/gettext
+    Core/libelf
+    Core/libffi
     #650-openssl
     #651-python3
     #652-ninja
     #653-meson
-    #654-procps-ng
-    #655-e2fsprogs
-    #656-coreutils
+    Core/procps-ng
+    Core/e2fsprogs
+    Core/coreutils
     #657-check
-    #658-diffutils
-    #659-gawk
-    #660-findutils
-    #661-groff
+    Core/diffutils
+    Core/gawk
+    Core/findutils
+    Core/groff
     #662-grub
-    #663-less
-    #664-gzip
+    Core/gzip
     #665-iproute
     #666-kbd
-    #667-libpipeline
-    #668-make
-    #669-patch
+    Core/libpipeline
+    Core/make
+    Core/patch
     #670-sysklogd
     #671-sysvinit
     #672-eudev
-    #673-utillinux
-    #674-man-db
-    #675-tar
-    #676-texinfo
-    #677-vim
+    Core/util-linux
+    Core/man-db
+    Core/tar
+    Core/texinfo
+    Core/nano
 )
 
 Build_Master "$@"

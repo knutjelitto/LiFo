@@ -8,10 +8,11 @@ Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
 
 Build()
 {
-    ./configure --prefix=/usr       \
-                --disable-nls       \
-                --disable-static    \
-                --enable-libgdbm-compat    
+    ./configure \
+        --prefix=/usr       \
+        --disable-nls       \
+        --disable-static    \
+        --enable-libgdbm-compat    
 
     make
     make install

@@ -1,100 +1,3 @@
-wdctl
-cd /dev/
-cd
-ll
-poco linux-headers
-cleare
-clear
-poco linux-headers new
-poco
-poco --download
-lfspider 
-ping www.google.de
-tree
-poco linux-headers
-cleare
-clear
-poco linux-headers new
-poco
-poco --download
-lfspider 
-ping www.google.de
-tree
-ls
-ls -la
-cd .marks/
-cd
-cd /l
-cd /
-cd lib64
-cd tmp/
-cd ..
-cd var
-find
-cd lib/nss_db/
-make
-less passwd.db 
-less services.db 
-ll
-less Makefile 
-makedb 
-makedb --usage
-find Tools -ls
-rm *.tar.xz
-cd /Data/Variable/Archives/
-poto --build-all
-poco --build-all
-cd /Data/Variable/Store/
-cd Tools/
-poco glibc
-poco shell
-poco --shell
-cd linux-headers-4.15.3/
-poco --cleanall
-poco --clean
-time poco --build
-cd /Data
-cd Variable/
-cd Store/
-du -hs *
-cd Core/
-cd Compile/
-du Lfs/
-cd Roots/
-du -sh *
-cd Core
-cd bin
-man wdctl
-wdctl
-cd /dev/
-poco linux-headers
-cleare
-clear
-poco linux-headers new
-poco
-poco --download
-ping www.google.de
-lfspider 
-cd /tmp/
-cd crux/
-cd crux.nu/ports/crux-3.4/
-cd co
-cd core/
-less glibc
-cd glibc
-less ld.so.conf 
-less post-install 
-less Pkgfile 
-tar cvaf crux-3.4.tar.xz crux-3.4/
-mv crux-3.4.tar.xz /LiFo/
-rm -rv crux/
-pocore glibc new
-cd /Data/Variable/Store/Core/
-less gl*
-cd glibc-2.27/
-cd glibc-2.27/cd
-bom-diff 
-cd -
 bom-diff | less
 strings ldd
 strings ldd | less
@@ -498,3 +401,100 @@ cd /
 ll
 potools --clean-all
 potools --build-all
+wget
+cd /LiFo/docker/sourcemage/
+ll
+wget http://download.sourcemage.org/image/official/test/smgl-test-0.63-20170806_0000-basesystem-x86_64.tar.xz
+g++
+gcc
+./configure --help
+./configure --help | less
+./configure --help | mor
+./configure --help | more
+check-tools 
+check-tools 
+subversion
+svn
+mkdir lfs
+cd lfs
+svn co svn://svn.linuxfromscratch.org/LFS/trunk/BOOK/
+cd BOOK/
+cd appendices/
+less scripts.xml 
+less dependencies.xml 
+cd /
+wget
+cd /LiFo/docker/sourcemage/
+wget http://download.sourcemage.org/image/official/test/smgl-test-0.63-20170806_0000-basesystem-x86_64.tar.xz
+potools --shell
+potools ncurses break
+cd /Data/Compile/Sources/flex-2.6.4/
+cd Build/Tools/flex-2.6.4/
+cd ch
+cd Changes/
+l
+cd Data/Compile/Sources/flex-2.6.4/
+cd src/
+cd .libs/
+potools --build-all
+cd /Data/Compile/Roots/Tools/usr/lib/
+cd gcc
+cd usr/
+ls -la
+cd lib/
+cd ..
+cd Store/Tools/
+cd gcc-7.3.0/
+ll
+less Bom 
+help test
+cd
+potools --rebuild-all
+potools --clean-all
+time potools --build-all
+time potools --build-all
+find
+make
+echo $?
+find . -type f -exec grep mktables.lst {} \;
+find . -type f -exec grep Updating {} \;
+less make_patchnum.pl 
+more make_patchnum.pl 
+grep Updating *
+grep Updating */*
+grep Updating */* | less
+grep Updating */* | more
+find . -type f -exec grep Updating {} \+
+find . -type f -exec grep Updating {} \+
+make
+echo $?
+cd cpan/Encode/Unicode/
+ll
+find . -type f -exec Update {} \+
+find . -type f -exec grep Update {} \+
+cd ..
+find . -type f -exec grep mktable.lst {} \+
+find . -type f -exec grep mktables.lst {} \+
+pwd
+make
+find / -xtype l
+find /Data/Compile/Build/Tools/ -xtype l
+find /Data/Compile/Build/Tools/usr -xtype l
+find /Data/Compile/Roots/Tools/ -xtype l
+find . -type f -exec grep mktables.lst {} \+
+make
+find . -type f -exec grep mktables.lst {} \+
+less ./lib/unicore/mktables.lst 
+less ./lib/unicore/mktables
+less ./lib/unicore/mktables
+env
+cd /usr/local
+ll
+ls -l
+cd ..
+ls -la
+potools --clean-all
+potools perl break
+potools perl build
+potools --shell
+time potools --build-all

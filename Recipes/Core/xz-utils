@@ -2,9 +2,9 @@
 
 Title="XZ Utils"
 Home=(https://tukaani.org/xz/)
-Name=xz
+Name=xz-utils
 Version=5.2.4
-Supplies=(https://tukaani.org/$Name/$Name-$Version.tar.xz)
+Supplies=(https://tukaani.org/xz/xz-$Version.tar.xz)
 
 Build()
 {

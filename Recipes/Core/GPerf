@@ -8,7 +8,9 @@ Supplies=(https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.gz)
 
 Build()
 {
-    ./configure --prefix=/usr --disable-nls
+    ./configure \
+        --prefix=/usr \
+        --disable-nls
 
     make
     make install
