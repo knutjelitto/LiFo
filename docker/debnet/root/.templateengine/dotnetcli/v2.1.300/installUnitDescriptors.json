@@ -1,0 +1,11 @@
+{
+  "InstalledItems": {
+    "c8e775a0-ffbd-4204-acff-549c122a4774": "Microsoft.DotNet.Common.ItemTemplates",
+    "d6cd4f3b-d029-4ac8-88a5-947378e5c9fd": "Microsoft.DotNet.Web.Spa.ProjectTemplates",
+    "7ee7e3de-ebde-49bd-8ed0-236762719a56": "Microsoft.DotNet.Common.ProjectTemplates.2.1",
+    "0f9d4458-1c3b-4ce2-9a60-cde3614acd7e": "Microsoft.DotNet.Test.ProjectTemplates.2.1",
+    "2ef6abaa-71f7-4955-88ef-87f22ca99b58": "Microsoft.DotNet.Web.ItemTemplates",
+    "9e164f06-09f1-4544-98f9-c2b3dd290b3d": "Microsoft.DotNet.Web.ProjectTemplates.2.1"
+  },
+  "Descriptors": {}
+}

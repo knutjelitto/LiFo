@@ -16,7 +16,8 @@ RUN apt-get update -y && \
     apt-get install -y powershell
 
 ENV TERM=xterm
+ENV PATH=/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin
 
 WORKDIR /root
 
-CMD [ "bash" ]
+CMD [ "pwsh", "-NoLogo" ]

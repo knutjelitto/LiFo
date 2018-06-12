@@ -17,6 +17,5 @@ Build()
     
     make
     make install
-    #ln -vfsr /usr/bin/bash /bin/bash
     ln -vfs bash /usr/bin/sh
 }

@@ -1,0 +1,67 @@
+Midnight Commander TreeStore v 2.0
+1:/
+0:/LiFo
+0:5 /.git
+0:10 /hooks
+0:11 info
+0:11 logs
+0:11 objects
+0:11 refs
+0:7 vscode
+0:6 LFS-8.2
+0:13 /lfs-packages-8.2
+0:6 Recipes
+0:13 /Boots
+0:14 Core
+0:14 Tools
+0:6 Samples
+0:13 /HelloWorld
+0:24 /bin
+0:28 /Debug
+0:34 /netcoreapp2.1
+0:25 obj
+0:28 /Debug
+0:6 bin
+0:6 cmd
+0:6 docker
+0:12 /alpine-dotnet
+0:13 debnet
+0:15 velope
+0:13 gentoo
+0:13 sourcemage
+0:13 tools
+0:6 pogos
+0:7 wsh
+0:6 scripts
+0:6 tools
+0:/Pogo
+0:/bin
+0:/boot
+0:/dev
+0:4 /bsg
+0:5 cpu
+0:5 input
+0:5 mapper
+0:6 queue
+0:5 net
+0:5 pts
+0:5 shm
+0:/etc
+0:/home
+0:/lib
+0:4 64
+0:/media
+0:/mnt
+0:/opt
+0:/proc
+0:/root
+0:5 /.cache
+0:8 onfig
+0:7 local
+0:/run
+0:/sbin
+0:/srv
+0:/sys
+0:/tmp
+0:/usr
+0:/var
