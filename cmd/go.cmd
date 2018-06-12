@@ -1,2 +1,2 @@
 @echo off
-start /D .\docker\develope
+start /D .\docker\debnet
