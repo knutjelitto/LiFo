@@ -1,0 +1,12 @@
+#!/usr/bin/env pwsh (source-only)
+
+$McTitle="This is a thing title"
+$McSummary="This thing rules"
+$McDescription=@'
+Really?
+'@
+
+$McName="templeate"
+$McVersion="1.0.0"
+
+$McHome=@("https://www.google.com")

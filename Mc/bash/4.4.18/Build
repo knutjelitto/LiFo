@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+case "${1,,}" in
+    -configure) 
+        ;;
+    -make)
+        ;;
+    -install)
+        ;;
+    *) exit 127 ;;
+esac

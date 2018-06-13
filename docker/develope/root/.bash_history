@@ -1,26 +1,3 @@
-bom-diff | less
-strings ldd
-strings ldd | less
-cd .
-cd glibcx-2.27/
-mkdir xxx
-cd xxx
-tar xvf ../Files.tar.xz 
-cd usr/bin/
-diff ldd /Data/Compile/Roots/Core/usr/bin/ldd
-ll | less
-cd lio
-cd lib
-string ld-2.27.so 
-strings ld-2.27.so 
-strings ld-2.27.so  | less
-cd ..
-ll
-rm -rv xxx
-cd
-pocore glibc
-pocore glibcx
-pocore glibcx done
 pocore --shell
 >>>>>>> ada4fb4f5a2de4591e3513904a741a994ce188b8
 diff ldd /Data/Compile/Roots/Core/usr/bin/ldd
@@ -498,3 +475,26 @@ potools perl break
 potools perl build
 potools --shell
 time potools --build-all
+env
+cd /usr/local
+ls -l
+potools --clean-all
+potools perl break
+potools perl build
+potools --shell
+time potools --build-all
+lfspider 
+cd /tmp/
+cd crux/
+cd crux.nu/ports/crux-3.4/
+rm -rv core.1 
+ls -la
+cd core/
+cd m4
+cd zlib/
+less Pkgfile 
+cd ..
+ll
+tar cvaf crux-3.4.tar.bz2 crux-3.4/
+ls -kla
+mv crux-3.4.tar.bz2 /LiFo/Others/Crux/

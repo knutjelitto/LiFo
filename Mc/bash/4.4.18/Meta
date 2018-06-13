@@ -1,0 +1,11 @@
+#!/usr/bin/env pwsh (source-only)
+
+$McTitle='The GNU Bourne-Again SHell'
+$McSummary=''
+
+$McName='bash'
+$McVersion='4.4.18'
+
+$McHome=@("https://www.gnu.org/software/bash/", "https://tiswww.case.edu/php/chet/bash/bashtop.html")
+$McBuildDeps=@("readline", "libiconv", "gettext", "ncurses")
+$McUpstream="https://ftpmirror.gnu.org/gnu/$McName/$McName-$McVersion.tar.gz"
