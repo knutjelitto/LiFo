@@ -1,0 +1,13 @@
+I need some SQL Server Database restore on a Virtual Server running in the DMZ.
+
+Server: DE01WSVRCL01
+SQLServer Instance: VeriCalUS
+Databases: Juno / JunoTest / JunoTraining
+
+The Backups should be from before 12.06.2018 11:28:28 (so a nightly from 12.06. or before seems to be ok)
+
+Plesed triple-check its the right SQLServer instance (VeriCalUS)
+
+Last time such an incident was handled by Felix Zantner (see ticket 243258)
+
+Thx

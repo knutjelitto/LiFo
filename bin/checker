@@ -1,0 +1,96 @@
+#!/usr/bin/env pwsh
+
+class Recipe
+{
+    [string]   $Title
+    [string[]] $Page
+    [string]   $Name
+    [string]   $Version
+    [string[]] $Supplies
+    [string]   $Configure
+    [string]   $Build
+    [string]   $Install
+
+    hidden Recipe()
+    {
+    }
+
+    static [Recipe] OutTheAir()
+    {
+        $recipe=[Recipe]::new()
+
+        if (Test-Path variable:global:title)       { $recipe.Title = $global:title }
+        if (Test-Path variable:global:page)        { $recipe.Page = $global:page }
+        if (Test-Path variable:global:name)        { $recipe.Name = $global:name }
+        if (Test-Path Variable:global:version)     { $recipe.Version = $global:version }
+        if (Test-Path variable:global:supplies)    { $recipe.Supplies = $global:supplies }
+        if (Test-Path variable:global:configure)   { $recipe.Configure = $global:configure }
+        if (Test-Path variable:global:build)       { $recipe.Build = $global:build }
+        if (Test-Path Variable:global:install)     { $recipe.Install = $global:install }
+    
+        return $recipe
+        }
+
+    Recipe([string]$title, [string[]]$page, [string]$name, [string]$version, [string[]]$supplies, [string]$configure, [string]$build, [string]$install)
+    {
+        $this.Title = $title
+        $this.Page = $page
+        $this.Name = $name
+        $this.Version = $version
+        $this.Supplies = $supplies
+        $this.Configure = $configure
+        $this.Build = $build
+        $this.Install = $install
+    }
+}
+
+function Recipify()
+{
+    $recipe=[Recipe]::new()
+
+    if (Test-Path variable:title)       { $recipe.Title = $title }
+    if (Test-Path variable:page)        { $recipe.Page = $page }
+    if (Test-Path variable:name)        { $recipe.Name = $name }
+    if (Test-Path Variable:version)     { $recipe.Version = $version }
+    if (Test-Path variable:supplies)    { $recipe.Supplies = $supplies }
+    if (Test-Path variable:configure)   { $recipe.Configure = $configure }
+    if (Test-Path variable:build)       { $recipe.Build = $build }
+    if (Test-Path Variable:install)     { $recipe.Install = $install }
+
+    return $recipe
+}
+
+$title="The GNU Bourne-Again SHell"
+$page=@("https://www.gnu.org/software/bash/", "https://tiswww.case.edu/php/chet/bash/bashtop.html")
+$name="bash"
+$version='4.4.18'
+$supplies=@("https://ftpmirror.gnu.org/gnu/$name/$name-$version.tar.gz")
+$configure=@'
+./configure \
+--prefix=/usr \
+--disable-nls \
+--without-bash-malloc \
+--with-installed-readline
+'@
+$build=@'
+make
+'@
+$install=@'
+make install
+'@
+
+$recipe=[Recipe]::OutTheAir()
+
+Write-Host "checked"
+Write-Host $recipe
+
+Write-Host $recipe.Title
+Write-Host $recipe.Page
+Write-Host $recipe.Name
+Write-Host $recipe.Version
+Write-Host $recipe.Supplies
+Write-Host $recipe.Configure
+Write-Host $recipe.Build
+Write-Host $recipe.Install
+
+ConvertTo-Json $recipe | ConvertFrom-Json
