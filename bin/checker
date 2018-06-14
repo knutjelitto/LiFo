@@ -2,12 +2,13 @@
 
 class LiFo
 {
+    static [string] $Root = "/LiFo"
     static [string] $Mc = "/LiFo/Mc"
 }
 
 class PoGo
 {
-    static [string] $Root = "/PoGo"
+    static [string] $Root = "/Pogo"
 }
 
 if ($false)
@@ -41,7 +42,7 @@ if ($false)
             if (Test-Path Variable:global:install)     { $recipe.Install = $global:install }
         
             return $recipe
-            }
+        }
     
         Recipe([string]$title, [string[]]$page, [string]$name, [string]$version, [string[]]$supplies, [string]$configure, [string]$build, [string]$install)
         {
@@ -55,72 +56,61 @@ if ($false)
             $this.Install = $install
         }
     }
-    
-    function Recipify()
-    {
-        $recipe=[Recipe]::new()
-    
-        if (Test-Path variable:title)       { $recipe.Title = $title }
-        if (Test-Path variable:page)        { $recipe.Page = $page }
-        if (Test-Path variable:name)        { $recipe.Name = $name }
-        if (Test-Path Variable:version)     { $recipe.Version = $version }
-        if (Test-Path variable:supplies)    { $recipe.Supplies = $supplies }
-        if (Test-Path variable:configure)   { $recipe.Configure = $configure }
-        if (Test-Path variable:build)       { $recipe.Build = $build }
-        if (Test-Path Variable:install)     { $recipe.Install = $install }
-    
-        return $recipe
-    }
-    
-    $title="The GNU Bourne-Again SHell"
-    $page=@("https://www.gnu.org/software/bash/", "https://tiswww.case.edu/php/chet/bash/bashtop.html")
-    $name="bash"
-    $version='4.4.18'
-    $supplies=@("https://ftpmirror.gnu.org/gnu/$name/$name-$version.tar.gz")
-    $configure=@'
-./configure \
---prefix=/usr \
---disable-nls \
---without-bash-malloc \
---with-installed-readline
-'@
-    $build=@'
-make
-'@
-    $install=@'
-make install
-'@
+}
 
-    $recipe=[Recipe]::OutTheAir()
-
-    Write-Host $recipe
-
-    Write-Host $recipe.Title
-    Write-Host $recipe.Page
-    Write-Host $recipe.Name
-    Write-Host $recipe.Version
-    Write-Host $recipe.Supplies
-    Write-Host $recipe.Configure
-    Write-Host $recipe.Build
-    Write-Host $recipe.Install
-
-    ConvertTo-Json $recipe | ConvertFrom-Json
+Function Download()
+{
+    param([string]$url)
 }
 
 function Load()
 {
     param([string]$meta)
+
+    $variables = "McName", "McVersion", "McTitle", "McDescription", "McHome", "McUpstream"
+
+    [string]$McName=$null
+    [string]$McVersion=$null
+    [string]$McTitle=$null
+    [string]$McDescription=$null
+    [string[]]$McHome=$()
+    [string]$McUpstream=$null
+    [string]$McAssets=$null
+
     Invoke-Expression (Get-content $meta | Out-String)
-    if (-not (Test-Path variable:McTitle))       { "HAVE McTitle" }
-    if (Test-Path variable:McUpstream)    { "HAVE McUpstream" }
+
+    if ($McUpstream -and $false)
+    { 
+        "HAVE McUpstream"
+        $McUpstream
+        Split-Path -Qualifier $McUpstream
+        $filename=(Split-Path -Leaf $McUpstream)
+        $signature=$filename + ".sig"
+
+        if (-not (Test-Path $filename))
+        {
+            Invoke-WebRequest -SkipCertificateCheck $McUpstream -OutFile $filename
+        }
+        if (-not (Test-Path $signature))
+        {
+            Invoke-WebRequest -SkipCertificateCheck ($McUpstream + ".sig") -OutFile $signature
+        }
+    }
+
+    $props = @{}
+
+    foreach ($variable in $variables)
+    {
+        $value = (Get-Item variable:$variable | Select-Object -ExpandProperty Value)
+        $props.Add($variable, $value)
+    }
+
+    ConvertTo-Json $props
+    $props
+
 }
 
-"XXXXXXXXXXXXXXXXXXXXXX"
 foreach ($meta in Get-ChildItem -Path $([LiFo]::Mc) -Recurse -Depth 2 -Include Meta | Select-Object -ExpandProperty FullName)
 {
     Load $meta
 }
-
-#Load /LiFo/Mc/patch/2.7.6/Meta
-#Get-ChildItem variable:
-"XXXXXXXXXXXXXXXXXXXXXX"

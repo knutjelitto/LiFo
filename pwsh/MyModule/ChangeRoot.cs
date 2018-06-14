@@ -18,7 +18,6 @@ namespace MyModule
         private static extern int chroot(string path);
         protected override void EndProcessing()
         {
-            
             var pid = getpid();
             string timestamp = DateTime.Now.ToString("u");
             this.WriteObject($"[{timestamp}] - {this.Path} - {pid}");

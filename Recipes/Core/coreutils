@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Title="GNU core utilies"
+Title="GNU core utilities"
 Home=(https://www.gnu.org/software/coreutils/)
 Name=coreutils
 Version=8.29

@@ -2,10 +2,18 @@
 
 case "${1,,}" in
     -configure) 
+        ./configure \
+            --prefix=/usr               \
+            --disable-nls               \
+            --without-bash-malloc       \
+            --with-installed-readline
         ;;
     -make)
-        ;;
+        make
+         ;;
     -install)
+        make install
+        ln -vfs bash /usr/bin/sh
         ;;
     *) exit 127 ;;
 esac

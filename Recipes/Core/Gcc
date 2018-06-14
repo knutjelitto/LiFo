@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Title="GCC"
+Title="GCC, the GNU Compiler Collection"
 Home=(https://www.gnu.org/software/gcc/)
 Name=gcc
 Version=7.3.0
