@@ -1,0 +1,14 @@
+#!/usr/bin/env pwsh (source-only)
+
+$McTitle="GNU core utilies"
+$McSummary="GNU patch (savannah)"
+$McDescription=@'
+Patch takes a patch file containing a difference listing produced by the diff program and applies those
+differences to one or more original files, producing patched versions.
+'@
+
+$McName="patch"
+$McVersion="2.7.6"
+
+$McHome=@("https://www.gnu.org/software/patch/")
+$McUpstream="https://ftpmirror.gnu.org/gnu/$McName/$McName-$McVersion.tar.gz"
