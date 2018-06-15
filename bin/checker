@@ -79,11 +79,8 @@ function Load()
 
     Invoke-Expression (Get-content $meta | Out-String)
 
-    if ($McUpstream -and $false)
+    if ($McUpstream -and $true)
     { 
-        "HAVE McUpstream"
-        $McUpstream
-        Split-Path -Qualifier $McUpstream
         $filename=(Split-Path -Leaf $McUpstream)
         $signature=$filename + ".sig"
 
@@ -105,12 +102,18 @@ function Load()
         $props.Add($variable, $value)
     }
 
-    ConvertTo-Json $props
-    $props
+    return $props
 
 }
 
+[hashtable[]]$mcs = @{}
 foreach ($meta in Get-ChildItem -Path $([LiFo]::Mc) -Recurse -Depth 2 -Include Meta | Select-Object -ExpandProperty FullName)
 {
-    Load $meta
+    $rc=$(Load $meta)
+    #$rc
+    $homes=$rc['McHome']
+    foreach ($h in $homes)
+    {
+        echo $("home: " + $h)
+    }
 }
