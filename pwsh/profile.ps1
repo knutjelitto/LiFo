@@ -2,6 +2,10 @@ $env:PATH='/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin'
 $env:PAGER='less'
 $env:LESS='-XR'
 
+$ErrorActionPreference='Stop'
+
+Set-PSReadlineOption -HistoryNoDuplicates
+
 function Prompt
 {
     $(if (test-path variable:/PSDebugContext) {'[DBG]: '} else {''})  +`

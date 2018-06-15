@@ -1,14 +1,15 @@
-#!/usr/bin/env pwsh (source-only)
-
-$McTitle="GNU core utilies"
-$McSummary="GNU patch (savannah)"
-$McDescription=@'
-The GNU Core Utilities are the basic file, shell and text manipulation utilities of the GNU operating system.
-These are the core utilities which are expected to exist on every operating system. 
+#!/usr/bin/env pwsh
+@{
+Title="GNU core utilies"
+Description=@'
+GNU Coreutils includes all of the basic command-line tools that are expected in a POSIX system.
+These provide the basic file, shell and text manipulation functions of the GNU system. Most of
+these tools offer extended functionality beyond that which is outlined in the POSIX standard.
 '@
 
-$McName="coreutils"
-$McVersion="8.29"
+Name='coreutils'
+Version='8.29'
 
-$McHome=@("https://www.gnu.org/software/coreutils/")
-$McUpstream="https://ftpmirror.gnu.org/gnu/$McName/$McName-$McVersion.tar.xz"
+Home=@('https://www.gnu.org/software/coreutils/')
+Upstream='https://ftpmirror.gnu.org/gnu/$Name/$Name-$Version.tar.xz'
+}
