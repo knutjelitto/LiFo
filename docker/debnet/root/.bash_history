@@ -113,3 +113,75 @@ make gnu/less
 less INSTALL 
 make help
 make -C pkg/gnu/less
+cd util/
+./bootstrap 
+./configure
+cd gsrc/
+make pkg-info
+cd pkg/
+dir
+cd gnu
+cd gcc
+cd less
+less Makefile 
+make gnu/less
+less INSTALL 
+make help
+make -C pkg/gnu/less
+cd /Morph/
+dotnet run
+morph 
+cd /var/lib/
+cd dpkg/
+less available 
+less diversions
+cd info/
+less tzdata.config 
+less coreutils.list 
+less coreutils.md5sums 
+less coreutils.postinst 
+less coreutils.postrm 
+less xz-utils.list 
+cd /
+cd lib64
+cd /etc/alternatives/
+cd ..
+cd /lib
+cd x86_64-linux-gnu/
+cd /etc/ca-certificates
+cd update.d/
+ll
+cd
+cls
+clrea
+clear
+clrea
+clear
+cd /Morph/
+dir
+cd MedallionShell/
+rm -rv .git
+rm -rv .gitignore 
+dll
+ll
+cat License.txt 
+cd
+morph 
+morph
+ll
+cat License.txt 
+cd
+morph 
+morph >xxx
+cat xxx
+rm -rv /Pogo/McMorph/Data/Archives/*
+morph
+ll
+cat License.txt 
+cd
+morph 
+morph >xxx
+cat xxx
+rm -rv /Pogo/McMorph/Data/Archives/*
+morph
+clear
