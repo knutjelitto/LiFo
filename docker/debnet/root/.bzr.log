@@ -88,3 +88,30 @@ Wed 2018-06-20 09:57:36 +0000
 KeyboardInterrupt
 
 9.232  return code 3
+
+Wed 2018-06-20 16:24:27 +0000
+0.080  bazaar version: 2.8.0dev1
+0.080  bzr arguments: [u'checkout', u'bzr://bzr.savannah.gnu.org/gsrc/trunk/', u'gsrc']
+0.086  looking for plugins in /root/.bazaar/plugins
+0.087  looking for plugins in /usr/lib/python2.7/dist-packages/bzrlib/plugins
+0.104  encoding stdout as sys.stdout encoding 'UTF-8'
+1.898  creating repository in file:///root/gsrc/.bzr/.
+1.963  creating branch <bzrlib.branch.BzrBranchFormat6 object at 0x7f76d1694950> in file:///root/gsrc/
+4.313  Using fetch logic to copy between RemoteRepository(bzr://bzr.savannah.gnu.org/gsrc/.bzr/)(RemoteRepositoryFormat(_network_name='Bazaar pack repository format 1 with rich root (needs bzr 1.0)\n')) and KnitPackRepository('file:///root/gsrc/.bzr/repository/')(RepositoryFormatKnitPack4())
+4.314  fetching: <SearchResult search:(set(['carlhansen1234@gmail.com-20180618011134-ddmh66rhf6niw4ur']), set(['null:']), 5853)>
+29.671  trying to create missing lock '/root/gsrc/.bzr/checkout/dirstate'
+29.683  opening working tree '/root/gsrc'
+75.522  Transferred: 36168kB (481.3kB/s r:36166kB w:2kB)
+75.523  return code 0
+
+Wed 2018-06-20 16:27:03 +0000
+0.030  bazaar version: 2.8.0dev1
+0.030  bzr arguments: [u'checkout', u'--lightweight', u'bzr://bzr.savannah.gnu.org/gsrc/trunk/', u'gsrc']
+0.034  looking for plugins in /root/.bazaar/plugins
+0.034  looking for plugins in /usr/lib/python2.7/dist-packages/bzrlib/plugins
+0.041  encoding stdout as sys.stdout encoding 'UTF-8'
+1.577  creating branch reference in file:///root/gsrc/
+2.730  trying to create missing lock '/root/gsrc/.bzr/checkout/dirstate'
+2.766  opening working tree '/root/gsrc'
+57.550  Transferred: 8391kB (146.3kB/s r:8025kB w:366kB)
+57.551  return code 0

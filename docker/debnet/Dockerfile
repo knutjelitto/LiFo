@@ -1,18 +1,19 @@
 FROM microsoft/dotnet:2.1.300-sdk-stretch
 
-RUN    apt-get update -y \
-    && apt-get install -y \
-       apt-transport-https \
-       xz-utils \
-       less \
-       tree \
-       man \
-       manpages \
-       dirmngr \
-       bzr \
-       lzip \
-    && apt-get -q -y autoremove \ 
-    && rm -rvf /var/lib/apt/lists/*
+RUN    apt-get update -y && apt-get install -y \
+apt-transport-https \
+xz-utils \
+less \
+tree \
+man \
+manpages \
+dirmngr \
+bzr \
+lzip \
+autoconf \
+build-essential \
+&& apt-get -q -y autoremove \ 
+&& rm -rvf /var/lib/apt/lists/*
 
 #RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - 
 #RUN echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main" > /etc/apt/sources.list.d/microsoft.list

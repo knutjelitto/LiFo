@@ -75,3 +75,41 @@ tar tvf ed-1.14.2.tar.lz
 cd
 cd /Morph/
 dotnet run
+tar tvf ed-1.14.2.tar.lz 
+cd
+cd /Morph/
+dotnet run
+bzr checkout bzr://bzr.savannah.gnu.org/gsrc/trunk/ gsrc
+env
+rm -rv gsrc/
+gscr
+gsrc
+cd gsrc/
+./bootstrap 
+less INSTALL 
+cd util/
+ll
+cd ..
+cd ..
+cd gsrc/
+./bootstrap 
+./configure
+less INSTALL 
+make help
+cd util/
+./bootstrap 
+./configure
+cd gsrc/
+make pkg-info
+cd pkg/
+dir
+cd gnu
+cd gcc
+cd less
+ll
+less Makefile 
+cd ..
+make gnu/less
+less INSTALL 
+make help
+make -C pkg/gnu/less

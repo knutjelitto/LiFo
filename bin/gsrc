@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bzr checkout --lightweight bzr://bzr.savannah.gnu.org/gsrc/trunk/ gsrc
+
