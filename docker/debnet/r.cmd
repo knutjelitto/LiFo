@@ -1,1 +1,1 @@
-@docker run --privileged -v %cd%\root:/root -v %cd%\..\..:/LiFo -v %cd%\..\..\..\McMorph:/Morph -v Pogo:/Pogo -it debnet
+@docker run --privileged -v %cd%\root:/root -v %cd%\..\..:/root/LiFo -v %cd%\..\..\..\McMorph:/root/McMorph -v Pogo:/Pogo -it debnet

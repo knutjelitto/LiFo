@@ -185,3 +185,85 @@ cat xxx
 rm -rv /Pogo/McMorph/Data/Archives/*
 morph
 clear
+rm -rv /Pogo/McMorph/Data/Archives/*
+cat License.txt 
+cd
+morph 
+morph >xxx
+cat xxx
+rm -rv /Pogo/McMorph/Data/Archives/*
+clear
+morph
+cd /Pogo/
+cd Data/
+cd Compile/
+cd Sources/
+du
+du -h
+du -hs *
+cd Build/
+cd bo
+cd Boots/
+du -sh *
+cd ..
+ll
+cat xxx
+rm -rv /Pogo/McMorph/Data/Archives/*
+cat License.txt 
+morph 
+morph >xxx
+cat xxx
+rm -rv /Pogo/McMorph/Data/Archives/*
+clear
+rm -rv /Pogo/McMorph/Data/Archives/*
+cat License.txt 
+morph 
+morph >xxx
+cat xxx
+rm -rv /Pogo/McMorph/Data/Archives/*
+clear
+cd Data/
+cd Compile/
+cd Sources/
+du -h
+du -hs *
+cd Build/
+cd bo
+cd Boots/
+rm -rv /McMorph/Data/Archives/*
+morph
+cd /
+#cd Morph/
+cd Morph/
+rm McMorph
+cd Pogo/
+cd McMorph/
+cd Data/Archives/
+du -sh *
+cd root/
+cd .local/
+cd share/
+löl
+cd powershell/
+cd /Pogo/
+rm -rv *
+du
+cd ..
+ls -la
+cd
+rm bash-4.4.18.tar.gz* gcc-8.1.0.tar.xz* patch-2.7.6.tar.gz* xxx
+cd coreutils-8.29.tar.xz*
+rm coreutils-8.29.tar.xz*
+ll
+cd /
+ll
+morph
+ll
+rm bash-4.4.18.tar.gz* gcc-8.1.0.tar.xz* patch-2.7.6.tar.gz* xxx
+cd coreutils-8.29.tar.xz*
+rm coreutils-8.29.tar.xz*
+morph
+cd /
+cd Pogo/
+cd ..
+ll

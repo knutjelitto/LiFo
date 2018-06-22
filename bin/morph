@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /Morph
+cd /root/McMorph
 dotnet run
 
 

@@ -21,11 +21,9 @@ build-essential \
 #RUN apt-get update -y && \
 #    apt-get install -y powershell
 
-RUN   mkdir -p /Pogo && ln -sf Pogo/McMorph /McMorph
-
 ENV TERM=xterm
-ENV PATH=/sbin:/bin:/usr/sbin:/usr/bin:/LiFo/bin
-ENV PSModulePath=/LiFo/pwsh/Modules
+ENV PATH=/sbin:/bin:/usr/sbin:/usr/bin:/root/LiFo/bin
+# ENV PSModulePath=/LiFo/pwsh/Modules
 
 WORKDIR /root
 
